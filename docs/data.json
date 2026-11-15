@@ -1,0 +1,13 @@
+{
+ "date": "2026-11-16",
+ "dayLabel": "Monday, November 16",
+ "stops": [
+  {"start": "9:00 AM", "end": "9:45 AM", "title": "178 Fisher Loop — electrical underground", "who": "BR Ross Construction", "address": "178 Fisher Loop, Ocklawaha, FL", "note": "County inspection today · Permit BLDR-26-07-18596", "driveFromPrev": null},
+  {"start": "10:25 AM", "end": "11:10 AM", "title": "614 Marion Oaks Trail — underground", "who": "Z Brothers Construction", "address": "614 Marion Oaks Trail, Ocala, FL", "note": "Santiago Plan 2118 · Block 971, Lot 09", "driveFromPrev": 40},
+  {"start": "11:20 AM", "end": "11:50 AM", "title": "14065 SW 48th Ave — TUG install", "who": "EXJ Root", "address": "14065 SW 48th Ave, Ocala, FL", "note": "TUG inspection Tue 11/17 · #261557-2026", "driveFromPrev": 10},
+  {"start": "12:00 PM", "end": "12:30 PM", "title": "16321 SW 26th Terrace Rd — TUG install", "who": "EXJ Root", "address": "16321 SW 26th Terrace Rd, Ocala, FL", "note": "TUG inspection Tue 11/17 · #261558-2026", "driveFromPrev": 10},
+  {"start": "12:35 PM", "end": "1:05 PM", "title": "601 Marion Oaks Golf Rd — TUG install", "who": "EXJ Root", "address": "601 Marion Oaks Golf Rd, Ocala, FL", "note": "TUG inspection Tue 11/17 · #261556-2026", "driveFromPrev": 5},
+  {"start": "1:40 PM", "end": "2:40 PM", "title": "W Eunice Dr — walk", "who": "Z Brothers", "address": "W Eunice Dr, Citrus Springs, FL", "note": "House number to confirm", "driveFromPrev": 35}
+ ],
+ "updatedAt": "2026-11-15T19:10:00-05:00"
+}

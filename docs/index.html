@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>My Day — Sharma Electric &amp; HVAC</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; background:#f2f5f9; color:#14202e; }
+  header { background:#0058a3; color:#fff; padding:22px 18px 18px; }
+  header .brand { font-size:13px; letter-spacing:2px; text-transform:uppercase; opacity:.85; }
+  header h1 { font-size:34px; font-weight:800; margin-top:2px; }
+  header .day { font-size:17px; margin-top:2px; opacity:.95; }
+  main { max-width:640px; margin:0 auto; padding:14px 12px 30px; }
+  .drive { display:flex; align-items:center; gap:8px; margin:10px 4px; color:#5a6b7d; font-size:14px; font-weight:600; }
+  .drive::before, .drive::after { content:""; flex:1; border-top:2px dashed #c3d2e2; }
+  .stop { background:#fff; border-radius:14px; padding:16px; box-shadow:0 1px 4px rgba(10,40,70,.10); border-left:6px solid #0058a3; }
+  .stop .time { font-size:21px; font-weight:800; color:#0058a3; }
+  .stop h2 { font-size:19px; font-weight:700; margin-top:3px; line-height:1.25; }
+  .stop .who { font-size:15px; color:#40536a; margin-top:2px; }
+  .stop .note { font-size:14px; color:#5a6b7d; margin-top:6px; }
+  .stop a.nav { display:inline-block; margin-top:10px; background:#0058a3; color:#fff; text-decoration:none; font-weight:700; font-size:15px; padding:10px 16px; border-radius:9px; }
+  .stop a.nav:active { background:#004a87; }
+  .addr { font-size:15px; margin-top:6px; color:#14202e; }
+  footer { max-width:640px; margin:0 auto; padding:0 16px 26px; color:#7b8b9d; font-size:13px; text-align:center; }
+  .empty { background:#fff; border-radius:14px; padding:22px 16px; text-align:center; font-size:17px; box-shadow:0 1px 4px rgba(10,40,70,.10); }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">Sharma Electric &amp; HVAC</div>
+  <h1>MY DAY</h1>
+  <div class="day" id="dayLabel">Loading…</div>
+</header>
+<main id="stops"></main>
+<footer id="foot"></footer>
+<script>
+fetch('data.json', {cache:'no-store'}).then(r => r.json()).then(d => {
+  document.getElementById('dayLabel').textContent = d.dayLabel || '';
+  const main = document.getElementById('stops');
+  if (!d.stops || !d.stops.length) {
+    main.innerHTML = '<div class="empty">Nothing scheduled today. Enjoy the clear day.</div>';
+  } else {
+    d.stops.forEach((s, i) => {
+      if (s.driveFromPrev) {
+        const dv = document.createElement('div');
+        dv.className = 'drive';
+        dv.textContent = '🚗 ' + s.driveFromPrev + ' min drive';
+        main.appendChild(dv);
+      }
+      const el = document.createElement('section');
+      el.className = 'stop';
+      const maps = 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(s.address || s.title);
+      el.innerHTML =
+        '<div class="time">' + s.start + ' – ' + s.end + '</div>' +
+        '<h2>' + s.title + '</h2>' +
+        (s.who ? '<div class="who">' + s.who + '</div>' : '') +
+        (s.address ? '<div class="addr">📍 ' + s.address + '</div>' : '') +
+        (s.note ? '<div class="note">' + s.note + '</div>' : '') +
+        '<a class="nav" href="' + maps + '" target="_blank" rel="noopener">Navigate →</a>';
+      main.appendChild(el);
+    });
+  }
+  document.getElementById('foot').textContent =
+    'Sharma standard: TUG install 30 min · Underground 45 min · Drive time between stops included. Updated ' +
+    new Date(d.updatedAt).toLocaleString('en-US', {month:'short', day:'numeric', hour:'numeric', minute:'2-digit'});
+}).catch(() => {
+  document.getElementById('dayLabel').textContent = 'Could not load the schedule.';
+});
+</script>
+</body>
+</html>
