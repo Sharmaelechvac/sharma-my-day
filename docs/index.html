@@ -24,29 +24,30 @@
   header{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:3px solid var(--gold);background:#fff;}
   header img{height:40px;width:auto;display:block;}
   header .wordmark{font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:20px;color:var(--navy-dark);letter-spacing:.01em;line-height:1;}
-  header .sub{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--gray);text-align:right;}
 
-  main{padding:20px 16px 8px;}
+  /* Sticky day strip */
+  .daystrip{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line);padding:8px 16px 10px;}
+  .daystrip .d{font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:20px;line-height:24px;color:var(--navy-dark);}
+  .daystrip .t{margin-top:2px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--gray);display:flex;justify-content:space-between;gap:12px;}
+  .daystrip .bar{margin-top:8px;height:3px;background:var(--line);}
+  .daystrip .bar i{display:block;height:3px;background:var(--gold);width:0;}
 
-  /* Day heading */
-  h1{font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:25px;line-height:28px;color:var(--navy-dark);}
-  .summary{margin-top:4px;font-size:13px;color:var(--gray);}
-  .summary .n{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--navy);font-weight:500;}
-
-  /* Section heading + label */
-  h2{font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:20px;line-height:24px;color:var(--navy-dark);border-bottom:2px solid var(--gold);padding-bottom:6px;}
-  .label{font-size:12px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--navy);}
+  main{padding:16px 16px 8px;}
   section{margin-top:24px;}
-  section:first-of-type{margin-top:20px;}
+  section:first-of-type{margin-top:0;}
 
-  /* Start block */
+  /* Panels (summary blocks: Start, Load the Truck) */
+  .panel{border:1px solid var(--line);border-radius:var(--radius);padding:12px;}
+  .panel h2{font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:20px;line-height:24px;color:var(--navy-dark);border-bottom:2px solid var(--gold);padding-bottom:6px;}
+  .label{font-size:12px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--navy);}
   .start-row{display:flex;align-items:center;gap:12px;padding-top:8px;}
   .start-row .addr{font-size:16px;line-height:22px;font-weight:500;flex:1;min-width:0;}
   .start-note{margin-top:4px;font-size:13px;color:var(--gray);}
 
   /* Buttons */
-  .nav-btn{display:inline-flex;align-items:center;justify-content:center;height:44px;min-width:116px;padding:0 16px;background:var(--navy);color:#fff;font-size:15px;font-weight:600;text-decoration:none;border-radius:var(--radius);flex:none;}
-  .nav-btn:active{background:var(--navy-dark);}
+  .nav-btn{display:inline-flex;align-items:center;justify-content:center;height:48px;min-width:116px;padding:0 16px;background:var(--navy);color:#fff;font-size:15px;font-weight:600;text-decoration:none;border-radius:var(--radius);flex:none;border:1px solid var(--navy);}
+  .nav-btn.outline{background:#fff;color:var(--navy);}
+  .nav-btn:active{background:var(--navy-dark);color:#fff;}
 
   /* Load the truck */
   .load-list{list-style:none;margin-top:8px;}
@@ -58,36 +59,38 @@
   /* Timeline */
   .tl{margin-top:4px;}
   .stop{display:grid;grid-template-columns:56px 18px 1fr;}
-  .stop .time{padding-top:13px;text-align:right;font-family:'IBM Plex Mono',monospace;}
-  .stop .time .t{font-size:13px;font-weight:600;color:var(--navy);line-height:16px;white-space:nowrap;}
-  .stop .time .e{font-size:11.5px;color:var(--gray);line-height:15px;white-space:nowrap;}
+  .stop .time{padding-top:12px;text-align:right;font-family:'IBM Plex Mono',monospace;}
+  .stop .time .t{font-size:15px;font-weight:600;color:var(--ink);line-height:18px;white-space:nowrap;font-variant-numeric:tabular-nums;}
+  .stop .time .e{font-size:12px;color:var(--gray);line-height:16px;white-space:nowrap;}
   .rail{position:relative;}
   .rail::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line);transform:translateX(-0.5px);}
   .rail::after{content:"";position:absolute;left:50%;top:17px;width:8px;height:8px;background:var(--navy);transform:translateX(-50%);}
   .stop.first .rail::before{top:21px;}
   .stop.last .rail::before{bottom:auto;height:21px;}
-  .leg{display:grid;grid-template-columns:56px 18px 1fr;}
+  .leg{display:grid;grid-template-columns:56px 18px 1fr;height:26px;align-items:center;position:relative;}
   .leg .rail::after{display:none;}
-  .leg .drive{padding:1px 0;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--gray);white-space:nowrap;}
+  .leg .drive{position:absolute;left:0;right:0;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--gray);white-space:nowrap;}
+  .leg .drive span{background:#fff;padding:0 8px;}
+  .stop .time .t .mer{font-size:10.5px;font-weight:600;}
   .stop .body{padding:12px 0 16px 10px;border-bottom:1px solid var(--line);}
   .stop.last .body{border-bottom:none;}
-  .stop.first .body{border-left:3px solid var(--gold);padding-left:7px;}
+  .stop.next .body{border-left:3px solid var(--gold);padding-left:7px;}
   .title-row{display:flex;align-items:flex-start;gap:12px;}
-  .stop h3{font-size:16px;line-height:22px;font-weight:600;color:var(--ink);flex:1;min-width:0;}
-  .stop.first h3{font-weight:700;}
-  .stop .who{margin-top:2px;font-size:14.5px;line-height:20px;color:var(--gray);}
-  .stop .addr{margin-top:2px;font-size:16px;line-height:22px;}
-  .stop .note{margin-top:4px;font-size:13px;line-height:18px;color:var(--gray);}
+  .stop .street{font-size:17px;line-height:22px;font-weight:600;color:var(--ink);flex:1;min-width:0;}
+  .stop.next .street{font-size:19px;line-height:24px;font-weight:700;}
+  .stop .job{margin-top:2px;font-size:15px;line-height:20px;color:var(--navy);}
+  .stop .meta{margin-top:4px;font-size:13px;line-height:18px;color:var(--gray);}
+  .stop.done{opacity:.55;}
+  .stop.done .street{text-decoration:line-through;}
 
-  /* Materials */
-  details.mats{margin-top:8px;border-top:1px solid var(--line);}
-  details.mats summary{min-height:44px;display:flex;align-items:center;gap:8px;cursor:pointer;list-style:none;font-size:15px;font-weight:500;color:var(--navy);}
-  details.mats summary::-webkit-details-marker{display:none;}
-  details.mats summary .cnt{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--gray);font-weight:400;}
-  details.mats summary .chev{margin-left:auto;font-size:13px;color:var(--gray);}
-  details.mats ul{list-style:none;padding-bottom:8px;}
-  details.mats li{font-size:15px;line-height:21px;padding:2px 0 2px 14px;position:relative;}
-  details.mats li::before{content:"";position:absolute;left:0;top:10px;width:5px;height:5px;background:var(--gold);}
+  /* Materials inside the stop */
+  .mats{margin-top:8px;}
+  .mats .mlabel{font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--navy);border-bottom:2px solid var(--gold);padding-bottom:4px;}
+  .mats ul{list-style:none;margin-top:6px;}
+  .mats li{font-size:14px;line-height:20px;padding:0 0 6px 14px;position:relative;}
+  .mats li:last-child{padding-bottom:0;}
+  .mats li::before{content:"";position:absolute;left:0;top:7px;width:5px;height:5px;background:var(--gold);}
+  .mats .q{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--gray);}
 
   footer{margin-top:24px;padding:12px 16px 20px;border-top:1px solid var(--line);font-size:13px;color:var(--gray);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;}
   footer .mono{font-family:'IBM Plex Mono',monospace;font-size:12.5px;}
@@ -99,8 +102,12 @@
   <header>
     <img src="logo.png" alt="Sharma Electric &amp; HVAC">
     <div class="wordmark">My Day</div>
-    <div class="sub" id="hdrDate"></div>
   </header>
+  <div class="daystrip" id="daystrip" hidden>
+    <div class="d" id="dsDate"></div>
+    <div class="t"><span id="dsTotals"></span><span id="dsProg"></span></div>
+    <div class="bar"><i id="dsBar"></i></div>
+  </div>
   <main id="app"><div class="err">Loading the day…</div></main>
   <footer>
     <div>Sharma Electric &amp; HVAC · EC13013924 · CAC1823596</div>
@@ -114,51 +121,85 @@ const mapsDir = (dest, origin) => {
   return u;
 };
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const parseTime = (dateStr, t) => {
+  const m = /(\d+):(\d+)\s*(AM|PM)/i.exec(t || '');
+  if (!m) return null;
+  let hh = parseInt(m[1], 10) % 12;
+  if (/PM/i.test(m[3])) hh += 12;
+  const d = new Date(dateStr + 'T00:00:00');
+  d.setHours(hh, parseInt(m[2], 10), 0, 0);
+  return d;
+};
+const matHTML = m => {
+  const q = /\(([^)]*)\)\s*$/.exec(m);
+  if (q) return esc(m.slice(0, q.index)) + '<span class="q">(' + esc(q[1]) + ')</span>';
+  return esc(m);
+};
 
 fetch('data.json', {cache:'no-store'}).then(r => r.json()).then(d => {
-  document.getElementById('hdrDate').textContent = d.dayLabel || '';
   const stops = d.stops || [];
   const totalDrive = stops.reduce((a, s) => a + (s.driveFromPrev || 0), 0);
+  const now = new Date();
+  const ends = stops.map(s => parseTime(d.date, s.end));
+  let doneCount = ends.filter(e => e && now > e).length;
+  if (d.date && now.toDateString() !== new Date(d.date + 'T00:00:00').toDateString()) {
+    doneCount = (new Date(d.date + 'T00:00:00') < new Date(now.toDateString())) ? stops.length : 0;
+  }
+  const nextIdx = doneCount < stops.length ? doneCount : -1;
+
+  /* Sticky day strip */
+  document.getElementById('dsDate').textContent = d.dayLabel || '';
+  document.getElementById('dsTotals').textContent =
+    stops.length + ' stops · ' + totalDrive + ' min driving' + (stops.length ? ' · first stop ' + stops[0].start : '');
+  document.getElementById('dsProg').textContent =
+    stops.length ? (nextIdx >= 0 ? 'Stop ' + (nextIdx + 1) + ' of ' + stops.length : 'Day complete') : '';
+  document.getElementById('dsBar').style.width = stops.length ? (doneCount / stops.length * 100) + '%' : '0%';
+  document.getElementById('daystrip').hidden = false;
+
   const loadMap = new Map();
   stops.forEach(s => (s.materials || []).forEach(m => loadMap.set(m, (loadMap.get(m) || 0) + 1)));
   const load = [...loadMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
 
   let h = '';
-  h += '<h1>' + esc(d.dayLabel || 'My Day') + '</h1>';
-  h += '<div class="summary"><span class="n">' + stops.length + '</span> stops · <span class="n">' + totalDrive + ' min</span> driving' +
-       (stops.length ? ' · first stop <span class="n">' + esc(stops[0].start) + '</span>' : '') + '</div>';
-
   if (d.start) {
-    h += '<section><div class="label">Start</div><div class="start-row"><div class="addr">' + esc(d.start) + '</div>' +
+    h += '<section><div class="panel"><div class="label">Start</div><div class="start-row"><div class="addr">' + esc(d.start) + '</div>' +
          (stops.length ? '<a class="nav-btn" href="' + mapsDir(stops[0].address, d.start) + '">Navigate</a>' : '') +
-         '</div><div class="start-note">First leg: home to ' + esc(stops[0] ? stops[0].title : '') + '</div></section>';
+         '</div><div class="start-note">First leg: home to ' + esc(stops[0] ? stops[0].title : '') + '</div></div></section>';
   }
 
   if (load.length) {
-    h += '<section><h2>Load the Truck</h2><ul class="load-list">';
+    h += '<section><div class="panel"><h2>Load the Truck</h2><ul class="load-list">';
     load.forEach(([name, n]) => { h += '<li><span>' + esc(name) + '</span>' + (n > 1 ? '<span class="cnt">×' + n + '</span>' : '') + '</li>'; });
-    h += '</ul></section>';
+    h += '</ul></div></section>';
   }
 
-  h += '<section><h2>Route</h2><div class="tl">';
+  h += '<section><div class="tl">';
   stops.forEach((s, i) => {
     if (s.driveFromPrev) {
-      h += '<div class="leg"><div class="drive">' + s.driveFromPrev + ' min</div><div class="rail"></div><div></div></div>';
+      h += '<div class="leg"><div></div><div class="rail"></div><div></div><div class="drive"><span>' + s.driveFromPrev + ' min drive</span></div></div>';
     }
-    const cls = 'stop' + (i === 0 ? ' first' : '') + (i === stops.length - 1 ? ' last' : '');
+    const isDone = i < doneCount, isNext = i === nextIdx;
+    const cls = 'stop' + (i === 0 ? ' first' : '') + (i === stops.length - 1 ? ' last' : '') + (isNext ? ' next' : '') + (isDone ? ' done' : '');
+    const street = (s.address || '').split(',')[0];
+    const rest = (s.address || '').split(',').slice(1).join(',').trim();
+    const job = (s.title || '').includes(' — ') ? s.title.split(' — ')[1] : s.title;
     h += '<div class="' + cls + '">';
-    h += '<div class="time"><div class="t">' + esc(s.start) + '</div><div class="e">' + esc(s.end || '') + '</div></div>';
+    const st = /^(.*?)\s*(AM|PM)$/i.exec(s.start || '');
+    const stHTML = st ? esc(st[1]) + ' <span class="mer">' + esc(st[2].toUpperCase()) + '</span>' : esc(s.start);
+    h += '<div class="time"><div class="t">' + stHTML + '</div><div class="e">' + esc(s.end || '') + '</div></div>';
     h += '<div class="rail"></div>';
     h += '<div class="body">';
-    h += '<div class="title-row"><h3>' + esc(s.title) + '</h3><a class="nav-btn" href="' + mapsDir(s.address) + '">Navigate</a></div>';
-    if (s.who) h += '<div class="who">' + esc(s.who) + '</div>';
-    h += '<div class="addr">' + esc(s.address) + '</div>';
-    if (s.note) h += '<div class="note">' + esc(s.note) + '</div>';
+    h += '<div class="title-row"><div class="street">' + esc(street) + '</div>' +
+         (isDone ? '' : '<a class="nav-btn' + (isNext ? '' : ' outline') + '" href="' + mapsDir(s.address) + '">Navigate</a>') + '</div>';
+    if (job) h += '<div class="job">' + esc(job) + '</div>';
+    const meta = [s.who, rest].filter(Boolean).join(' · ');
+    if (meta) h += '<div class="meta">' + esc(meta) + '</div>';
+    if (s.note) h += '<div class="meta">' + esc(s.note) + '</div>';
     const mats = s.materials || [];
     if (mats.length) {
-      h += '<details class="mats"><summary>Materials <span class="cnt">' + mats.length + ' items</span><span class="chev">▾</span></summary><ul>';
-      mats.forEach(m => { h += '<li>' + esc(m) + '</li>'; });
-      h += '</ul></details>';
+      h += '<div class="mats"><div class="mlabel">Materials</div><ul>';
+      mats.forEach(m => { h += '<li>' + matHTML(m) + '</li>'; });
+      h += '</ul></div>';
     }
     h += '</div></div>';
   });
