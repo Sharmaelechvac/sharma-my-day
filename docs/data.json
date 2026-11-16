@@ -12,7 +12,7 @@
    "note": "Pickup for the three EXJ TUG installs",
    "driveFromPrev": null,
    "materials": [
-    "Meters (3)",
+    "Siemens meter combos (3)",
     "Grounding bridges (3)",
     "Bell boxes",
     "½-in PVC (2 sticks)",
@@ -59,7 +59,7 @@
    "note": "TUG inspection Tue 11/17 · #261557-2026",
    "driveFromPrev": 10,
    "materials": [
-    "Eaton Type BR meter main combo",
+    "Siemens meter main combo",
     "GFCI outlet + breaker",
     "Extra-duty while-in-use (bubble) cover",
     "Intersystem grounding bridge",
@@ -78,7 +78,7 @@
    "note": "TUG inspection Tue 11/17 · #261558-2026",
    "driveFromPrev": 10,
    "materials": [
-    "Eaton Type BR meter main combo",
+    "Siemens meter main combo",
     "GFCI outlet + breaker",
     "Extra-duty while-in-use (bubble) cover",
     "Intersystem grounding bridge",
@@ -97,7 +97,7 @@
    "note": "TUG inspection Tue 11/17 · #261556-2026",
    "driveFromPrev": 5,
    "materials": [
-    "Eaton Type BR meter main combo",
+    "Siemens meter main combo",
     "GFCI outlet + breaker",
     "Extra-duty while-in-use (bubble) cover",
     "Intersystem grounding bridge",
