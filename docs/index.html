@@ -37,7 +37,7 @@
   .stat .v { font-family:var(--mono); font-weight:600; font-size:19px; color:#fff; white-space:nowrap; }
   .stat .k { font-size:11.5px; font-weight:600; letter-spacing:1.4px; color:#aebadd; text-transform:uppercase; margin-top:1px; }
   .prog { margin-top:15px; }
-  .prog .bar { height:9px; background:#3a4f86; border-radius:3px; overflow:hidden; }
+  .prog .bar { height:10px; background:#54649c; border-radius:3px; overflow:hidden; }
   .prog .fill { height:100%; background:var(--gold); width:0%; transition:width .35s ease; }
   .prog .lbl { display:flex; justify-content:space-between; margin-top:6px; font-family:var(--mono); font-size:13px; color:#e8ecf6; }
   .prog .lbl b { color:var(--gold); font-weight:600; }
@@ -221,19 +221,30 @@ fetch('data.json', {cache:'no-store'}).then(r => r.json()).then(d => {
         if (a !== null && nowMin < a && nextIdx === -1) nextIdx = i;
       });
     }
-    const focusIdx = nowIdx >= 0 ? nowIdx : (nextIdx >= 0 ? nextIdx : 0);
+    let focusIdx = nowIdx >= 0 ? nowIdx : (nextIdx >= 0 ? nextIdx : 0);
+    if (doneSet.has(focusIdx)) {
+      const firstOpen = stops.findIndex((_, i) => !doneSet.has(i));
+      if (firstOpen >= 0) focusIdx = firstOpen;
+    }
+    const allDone = stops.every((_, i) => doneSet.has(i));
 
     /* ---------- up next ---------- */
-    const fs = stops[focusIdx];
-    const fmaps = 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(fs.address || fs.title);
     const un = document.createElement('section');
     un.className = 'upnext';
-    un.innerHTML =
-      '<div class="kick">' + (nowIdx >= 0 ? 'Happening <b>now</b>' : (d.date === todayStr ? 'Up <b>next</b>' : 'First <b>up</b>')) + '</div>' +
-      '<h2>' + fs.title + '</h2>' +
-      '<div class="meta">' + fs.start + ' &ndash; ' + fs.end + (fs.who ? ' &middot; ' + fs.who : '') + '</div>' +
-      (fs.address ? '<div class="addr">' + fs.address + '</div>' : '') +
-      '<a class="nav" href="' + fmaps + '" target="_blank" rel="noopener">Navigate</a>';
+    if (allDone) {
+      un.innerHTML = '<div class="kick">Day <b>complete</b></div>' +
+        '<h2>Every stop done. Nice work.</h2>' +
+        '<div class="meta">' + stops.length + ' stops &middot; finished ' + stops[stops.length - 1].end + '</div>';
+    } else {
+      const fs = stops[focusIdx];
+      const fmaps = 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(fs.address || fs.title);
+      un.innerHTML =
+        '<div class="kick">' + (nowIdx >= 0 && focusIdx === nowIdx ? 'Happening <b>now</b>' : (d.date === todayStr ? 'Up <b>next</b>' : 'First <b>up</b>')) + '</div>' +
+        '<h2>' + fs.title + '</h2>' +
+        '<div class="meta">' + fs.start + ' &ndash; ' + fs.end + (fs.who ? ' &middot; ' + fs.who : '') + '</div>' +
+        (fs.address ? '<div class="addr">' + fs.address + '</div>' : '') +
+        '<a class="nav" href="' + fmaps + '" target="_blank" rel="noopener">Navigate</a>';
+    }
     document.getElementById('upnext').appendChild(un);
 
     /* ---------- load the truck ---------- */
@@ -284,7 +295,7 @@ fetch('data.json', {cache:'no-store'}).then(r => r.json()).then(d => {
       const nodeTxt = done ? '&#10003;' : (i + 1);
       const a = parseTime(s.start), b = parseTime(s.end);
       const dur = (a !== null && b !== null && b > a) ? '<span class="dur">' + fmtDur(b - a) + '</span>' : '';
-      const insp = /inspection/i.test(s.note || '') ? '<span class="tag insp">Inspection day</span>' : '';
+      const insp = /inspection today/i.test(s.note || '') ? '<span class="tag insp">Inspection day</span>' : '';
       const nextTag = (!done && i === focusIdx) ? '<span class="tag">' + (nowIdx >= 0 ? 'Now' : 'Next up') + '</span>' : '';
       const maps = 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(s.address || s.title);
       row.innerHTML = '<div class="' + nodeCls + '">' + nodeTxt + '</div>' +
@@ -321,7 +332,14 @@ fetch('data.json', {cache:'no-store'}).then(r => r.json()).then(d => {
     main.addEventListener('change', (e) => {
       const cb = e.target.closest('input[data-check]');
       if (cb) {
-        if (cb.checked) checkSet.add(cb.dataset.check); else checkSet.delete(cb.dataset.check);
+        /* keep the Load list and the stop lists in sync by material name */
+        const mat = cb.dataset.check.split('|').slice(1).join('|');
+        main.querySelectorAll('input[data-check]').forEach(o => {
+          if (o.dataset.check.split('|').slice(1).join('|') === mat) {
+            o.checked = cb.checked;
+            if (cb.checked) checkSet.add(o.dataset.check); else checkSet.delete(o.dataset.check);
+          }
+        });
         store.set(key + '-check', [...checkSet]);
       }
     });
