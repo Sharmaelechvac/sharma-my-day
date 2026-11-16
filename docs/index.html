@@ -107,6 +107,9 @@
   .mats li::before{display:none;}
   .stopck{padding-top:3px;}
   .stopck .chk{width:21px;height:21px;}
+  .taskicon{width:42px;height:42px;border-radius:10px;flex:none;display:block;}
+  .actions{display:flex;align-items:center;gap:14px;margin-top:8px;flex-wrap:wrap;}
+  .actions .track{margin-top:0;}
 
   /* Builder brand + job page link */
   .brand{display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap;}
@@ -264,18 +267,20 @@ fetch('data.json', {cache:'no-store'}).then(r => r.json()).then(d => {
     h += '<div class="time"><div class="t">' + stHTML + '</div><div class="e">' + esc(s.end || '') + '</div></div>';
     h += '<div class="rail"></div>';
     h += '<div class="body">';
-    h += '<div class="title-row"><label class="ck stopck"><input type="checkbox" class="chk" data-done="' + i + '"' + (isDone ? ' checked' : '') + '></label><div class="street">' + esc(street) + '</div>' +
-         '<a class="nav-btn' + (isNext ? '' : ' outline') + '" href="' + mapsDir(s.address) + '"' + (isDone ? ' style="display:none"' : '') + '>Navigate</a></div>';
+    const icon = /TUG/i.test(s.title) ? 'icons/tug.png' : /underground/i.test(s.title) ? 'icons/underground.png' : /walk/i.test(s.title) ? 'icons/walk.png' : null;
+    h += '<div class="title-row"><label class="ck stopck"><input type="checkbox" class="chk" data-done="' + i + '"' + (isDone ? ' checked' : '') + '></label>' +
+         (icon ? '<img class="taskicon" src="' + icon + '" alt="">' : '') +
+         '<div class="street">' + esc(street) + '</div></div>';
     if (job) h += '<div class="job">' + esc(job) + '</div>';
     const meta = [s.who, rest].filter(Boolean).join(' · ');
     if (meta) h += '<div class="meta">' + esc(meta) + '</div>';
     if (s.note) h += '<div class="meta">' + esc(s.note) + '</div>';
-    if (s.trackUrl) h += '<div class="track"><a href="' + esc(s.trackUrl) + '">Job page</a></div>';
+    h += '<div class="actions"><a class="nav-btn' + (isNext ? '' : ' outline') + '" href="' + mapsDir(s.address) + '"' + (isDone ? ' style="display:none"' : '') + '>Navigate</a>' +
+         (s.trackUrl ? '<span class="track"><a href="' + esc(s.trackUrl) + '">SHARMATRACK job page</a></span>' : '') + '</div>';
     const b = brandFor(s);
     if (b) {
       h += '<div class="brand">' +
         (b.logo ? '<img src="' + b.logo + '" alt="' + esc(b.alt) + '">' : '<span class="bbadge">' + esc(b.badge) + '</span>') +
-        (b.link ? '<a class="joblink" href="' + b.link + '" target="_blank" rel="noopener">SHARMATRACK job page</a>' : '') +
         '</div>';
     }
     const mats = s.materials || [];
