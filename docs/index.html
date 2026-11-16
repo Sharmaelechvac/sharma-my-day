@@ -82,6 +82,7 @@
   .stop.next .street{font-size:23px;line-height:28px;font-weight:700;}
   .stop .job{margin-top:3px;font-size:17px;line-height:22px;color:var(--navy);}
   .stop .meta{margin-top:5px;font-size:15px;line-height:20px;color:var(--gray);}
+  .stop .sf{margin-top:6px;font-size:17px;line-height:23px;font-weight:700;color:var(--ink);}
   .stop .track{margin-top:6px;font-size:16px;line-height:22px;}
   .stop .track a{color:var(--navy);font-weight:600;text-decoration:none;border-bottom:2px solid var(--gold);}
   .stop.done{opacity:.55;}
@@ -307,6 +308,10 @@ fetch('data.json', {cache:'no-store'}).then(r => r.json()).then(d => {
     const meta = [s.who, rest].filter(Boolean).join(' · ');
     if (meta) h += '<div class="meta">' + esc(meta) + '</div>';
     if (s.note) h += '<div class="meta">' + esc(s.note) + '</div>';
+    if (s.address && s.who) {
+      const sfVal = v => (v === null || v === undefined || v === '') ? 'not on file' : (typeof v === 'number' ? v.toLocaleString('en-US') : esc(String(v)));
+      h += '<div class="sf">Living SF: ' + sfVal(s.livingSf ?? s.livingSF) + ' &middot; Under Roof SF: ' + sfVal(s.underRoofSf ?? s.underRoofSF) + '</div>';
+    }
     const b = brandFor(s);
     const jobUrl = s.trackUrl || (b && b.link);
     h += '<div class="actions"><a class="nav-btn' + (isNext ? '' : ' outline') + '" href="' + mapsDir(s.address) + '"' + (isDone ? ' style="display:none"' : '') + '>Navigate</a>' +
