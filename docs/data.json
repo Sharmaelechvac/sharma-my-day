@@ -17,7 +17,9 @@
     "Bell boxes",
     "½-in PVC (2 sticks)",
     "½-in male adapters",
-    "¾-in plastic Romex connectors"
+    "¾-in plastic Romex connectors",
+    "THHN/stripped Romex — 12 AWG copper",
+    "THHN/stripped Romex — 10 AWG CCA"
    ]
   },
   {
@@ -119,7 +121,9 @@
    "note": "Wire in bath fans · Replace ½-in grommets with ¾-in · House number to confirm",
    "driveFromPrev": 35,
    "materials": [
-    "¾-in plastic Romex connectors"
+    "¾-in plastic Romex connectors",
+    "THHN/stripped Romex — 12 AWG copper",
+    "THHN/stripped Romex — 10 AWG CCA"
    ],
    "trackUrl": "https://sharmaelechvac.github.io/sharmatrack-crew/"
   }
