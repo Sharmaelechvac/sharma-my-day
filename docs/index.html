@@ -95,6 +95,24 @@
   footer{margin-top:24px;padding:12px 16px 20px;border-top:1px solid var(--line);font-size:13px;color:var(--gray);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;}
   footer .mono{font-family:'IBM Plex Mono',monospace;font-size:12.5px;}
   .err{padding:24px 16px;font-size:16px;color:var(--gray);}
+  .print-btn{margin-left:auto;height:44px;padding:0 16px;background:#fff;color:var(--navy);border:1px solid var(--navy);border-radius:var(--radius);font-family:'Inter',sans-serif;font-size:15px;font-weight:600;cursor:pointer;flex:none;}
+  .print-btn:active{background:var(--navy);color:#fff;}
+
+  /* Print — the paper route sheet (Letter) */
+  @page{size:Letter;margin:.55in .5in;}
+  @media print{
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+    body{background:#fff;}
+    .sheet{max-width:none;border:none;min-height:0;}
+    .print-btn{display:none;}
+    .nav-btn{display:none;}
+    .daystrip{position:static;}
+    main{padding:12px 0 0;}
+    section{margin-top:18px;}
+    .panel,.stop{break-inside:avoid;}
+    .stop .body{padding-bottom:10px;}
+    footer{margin-top:16px;}
+  }
 </style>
 </head>
 <body>
@@ -102,6 +120,7 @@
   <header>
     <img src="logo.png" alt="Sharma Electric &amp; HVAC">
     <div class="wordmark">My Day</div>
+    <button class="print-btn" onclick="window.print()">Print / PDF</button>
   </header>
   <div class="daystrip" id="daystrip" hidden>
     <div class="d" id="dsDate"></div>
