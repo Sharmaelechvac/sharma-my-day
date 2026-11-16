@@ -80,6 +80,8 @@
   .stop.next .street{font-size:19px;line-height:24px;font-weight:700;}
   .stop .job{margin-top:2px;font-size:15px;line-height:20px;color:var(--navy);}
   .stop .meta{margin-top:4px;font-size:13px;line-height:18px;color:var(--gray);}
+  .stop .track{margin-top:6px;font-size:14.5px;line-height:20px;}
+  .stop .track a{color:var(--navy);font-weight:600;text-decoration:none;border-bottom:2px solid var(--gold);}
   .stop.done{opacity:.55;}
   .stop.done .street{text-decoration:line-through;}
 
@@ -91,6 +93,27 @@
   .mats li:last-child{padding-bottom:0;}
   .mats li::before{content:"";position:absolute;left:0;top:7px;width:5px;height:5px;background:var(--gold);}
   .mats .q{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--gray);}
+
+  /* Checklists — tick, cross out, fade */
+  .ck{display:flex;align-items:flex-start;gap:9px;cursor:pointer;}
+  .chk{appearance:none;-webkit-appearance:none;flex:0 0 auto;width:19px;height:19px;margin-top:1px;background:#fff;border:2px solid var(--navy);border-radius:4px;cursor:pointer;position:relative;}
+  .chk:checked{background:var(--gold);border-color:var(--gold);}
+  .chk:checked::after{content:"";position:absolute;left:5.5px;top:2px;width:5px;height:9px;border:solid var(--navy-dark);border-width:0 3px 3px 0;transform:rotate(42deg);}
+  .off .txt{color:var(--gray);text-decoration:line-through;}
+  .load-list li{display:block;}
+  .load-list .ck{justify-content:flex-start;}
+  .load-list .cnt{margin-left:auto;padding-left:12px;}
+  .mats li{padding-left:0;}
+  .mats li::before{display:none;}
+  .stopck{padding-top:3px;}
+  .stopck .chk{width:21px;height:21px;}
+
+  /* Builder brand + job page link */
+  .brand{display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap;}
+  .brand img{height:22px;max-width:120px;object-fit:contain;display:block;}
+  .bbadge{font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:.08em;color:var(--navy-dark);border:1.5px solid var(--navy);border-radius:4px;padding:2px 8px 1px;}
+  .joblink{font-size:13.5px;font-weight:600;color:var(--navy);text-decoration:none;border-bottom:1.5px solid var(--gold);padding-bottom:1px;}
+  .pdflink{margin-left:8px;height:44px;padding:0 14px;display:inline-flex;align-items:center;background:#fff;color:var(--navy);border:1px solid var(--navy);border-radius:var(--radius);font-size:15px;font-weight:600;text-decoration:none;flex:none;}
 
   footer{margin-top:24px;padding:12px 16px 20px;border-top:1px solid var(--line);font-size:13px;color:var(--gray);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;}
   footer .mono{font-family:'IBM Plex Mono',monospace;font-size:12.5px;}
@@ -105,12 +128,20 @@
     body{background:#fff;}
     .sheet{max-width:none;border:none;min-height:0;}
     .print-btn{display:none;}
+    .pdflink{display:none;}
     .nav-btn{display:none;}
+    .chk:checked{background:#fff;border-color:var(--navy);}
+    .chk:checked::after{content:none;}
+    .off .txt{color:var(--ink);text-decoration:none;}
+    .stop.done{opacity:1;}
+    .stop.done .street{text-decoration:none;}
     .daystrip{position:static;}
     main{padding:12px 0 0;}
     section{margin-top:18px;}
     .panel,.stop{break-inside:avoid;}
     .stop .body{padding-bottom:10px;}
+    .stop .track a{border-bottom:none;}
+    .stop .track a::after{content:" — " attr(href);font-weight:400;font-size:11px;color:var(--gray);}
     footer{margin-top:16px;}
   }
 </style>
@@ -121,6 +152,7 @@
     <img src="logo.png" alt="Sharma Electric &amp; HVAC">
     <div class="wordmark">My Day</div>
     <button class="print-btn" onclick="window.print()">Print / PDF</button>
+    <a class="pdflink" id="pdflink" hidden>PDF file</a>
   </header>
   <div class="daystrip" id="daystrip" hidden>
     <div class="d" id="dsDate"></div>
@@ -154,26 +186,45 @@ const matHTML = m => {
   if (q) return esc(m.slice(0, q.index)) + '<span class="q">(' + esc(q[1]) + ')</span>';
   return esc(m);
 };
+const brandFor = s => {
+  const who = s.who || '', addr = s.address || '', title = s.title || '';
+  if (/city electric/i.test(title + ' ' + addr)) return { logo: 'logos/ces.png', alt: 'City Electric Supply' };
+  if (/EXJ Root/i.test(who)) {
+    const house = ['14065', '16321', '17385', '212', '601'].find(n => addr.includes(n));
+    return { logo: 'logos/exj.png', alt: 'EXJ Root', link: 'https://sharmaelechvac.github.io/exj-root-tracker/' + (house ? house + '/' : '') };
+  }
+  if (/Z Brothers/i.test(who)) {
+    const house = ['3131', '3262', '3274', '3286'].find(n => addr.includes(n));
+    return { logo: 'logos/zbros.png', alt: 'Z Brothers Construction', link: 'https://sharmaelechvac.github.io/sharmatrack-crew/' + (house ? house + '/' : '') };
+  }
+  if (/BR Ross/i.test(who)) return { badge: 'BR ROSS' };
+  return null;
+};
 
 fetch('data.json', {cache:'no-store'}).then(r => r.json()).then(d => {
   const stops = d.stops || [];
   const totalDrive = stops.reduce((a, s) => a + (s.driveFromPrev || 0), 0);
-  const now = new Date();
-  const ends = stops.map(s => parseTime(d.date, s.end));
-  let doneCount = ends.filter(e => e && now > e).length;
-  if (d.date && now.toDateString() !== new Date(d.date + 'T00:00:00').toDateString()) {
-    doneCount = (new Date(d.date + 'T00:00:00') < new Date(now.toDateString())) ? stops.length : 0;
-  }
-  const nextIdx = doneCount < stops.length ? doneCount : -1;
+  const lsGet = (k, f) => { try { return JSON.parse(localStorage.getItem(k)) ?? f; } catch { return f; } };
+  const lsSet = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
+  const doneSet = new Set(lsGet('myday-' + d.date + '-done', []));
+  const checkSet = new Set(lsGet('myday-' + d.date + '-check', []));
+  const doneCount = () => stops.filter((_, i) => doneSet.has(i)).length;
+  const nextIdx = () => stops.findIndex((_, i) => !doneSet.has(i));
 
-  /* Sticky day strip */
+  /* Sticky day strip — progress runs off the real ticks */
   document.getElementById('dsDate').textContent = d.dayLabel || '';
   document.getElementById('dsTotals').textContent =
     stops.length + ' stops · ' + totalDrive + ' min driving' + (stops.length ? ' · first stop ' + stops[0].start : '');
-  document.getElementById('dsProg').textContent =
-    stops.length ? (nextIdx >= 0 ? 'Stop ' + (nextIdx + 1) + ' of ' + stops.length : 'Day complete') : '';
-  document.getElementById('dsBar').style.width = stops.length ? (doneCount / stops.length * 100) + '%' : '0%';
+  const paintStrip = () => {
+    const nx = nextIdx();
+    document.getElementById('dsProg').textContent =
+      stops.length ? (nx >= 0 ? 'Stop ' + (nx + 1) + ' of ' + stops.length : 'Day complete') : '';
+    document.getElementById('dsBar').style.width = stops.length ? (doneCount() / stops.length * 100) + '%' : '0%';
+  };
+  paintStrip();
   document.getElementById('daystrip').hidden = false;
+  const pdfLink = document.getElementById('pdflink');
+  if (d.date) { pdfLink.href = 'my-day-' + d.date + '.pdf'; pdfLink.hidden = false; }
 
   const loadMap = new Map();
   stops.forEach(s => (s.materials || []).forEach(m => loadMap.set(m, (loadMap.get(m) || 0) + 1)));
@@ -188,7 +239,12 @@ fetch('data.json', {cache:'no-store'}).then(r => r.json()).then(d => {
 
   if (load.length) {
     h += '<section><div class="panel"><h2>Load the Truck</h2><ul class="load-list">';
-    load.forEach(([name, n]) => { h += '<li><span>' + esc(name) + '</span>' + (n > 1 ? '<span class="cnt">×' + n + '</span>' : '') + '</li>'; });
+    load.forEach(([name, n]) => {
+      const id = 'load|' + name;
+      h += '<li' + (checkSet.has(id) ? ' class="off"' : '') + '><label class="ck"><input type="checkbox" class="chk" data-check="' + esc(id) + '"' +
+        (checkSet.has(id) ? ' checked' : '') + '><span class="txt">' + esc(name) + '</span>' +
+        (n > 1 ? '<span class="cnt">×' + n + '</span>' : '') + '</label></li>';
+    });
     h += '</ul></div></section>';
   }
 
@@ -197,27 +253,39 @@ fetch('data.json', {cache:'no-store'}).then(r => r.json()).then(d => {
     if (s.driveFromPrev) {
       h += '<div class="leg"><div></div><div class="rail"></div><div></div><div class="drive"><span>' + s.driveFromPrev + ' min drive</span></div></div>';
     }
-    const isDone = i < doneCount, isNext = i === nextIdx;
+    const isDone = doneSet.has(i), isNext = i === nextIdx();
     const cls = 'stop' + (i === 0 ? ' first' : '') + (i === stops.length - 1 ? ' last' : '') + (isNext ? ' next' : '') + (isDone ? ' done' : '');
     const street = (s.address || '').split(',')[0];
     const rest = (s.address || '').split(',').slice(1).join(',').trim();
     const job = (s.title || '').includes(' — ') ? s.title.split(' — ')[1] : s.title;
-    h += '<div class="' + cls + '">';
+    h += '<div class="' + cls + '" id="stop-' + i + '">';
     const st = /^(.*?)\s*(AM|PM)$/i.exec(s.start || '');
     const stHTML = st ? esc(st[1]) + ' <span class="mer">' + esc(st[2].toUpperCase()) + '</span>' : esc(s.start);
     h += '<div class="time"><div class="t">' + stHTML + '</div><div class="e">' + esc(s.end || '') + '</div></div>';
     h += '<div class="rail"></div>';
     h += '<div class="body">';
-    h += '<div class="title-row"><div class="street">' + esc(street) + '</div>' +
-         (isDone ? '' : '<a class="nav-btn' + (isNext ? '' : ' outline') + '" href="' + mapsDir(s.address) + '">Navigate</a>') + '</div>';
+    h += '<div class="title-row"><label class="ck stopck"><input type="checkbox" class="chk" data-done="' + i + '"' + (isDone ? ' checked' : '') + '></label><div class="street">' + esc(street) + '</div>' +
+         '<a class="nav-btn' + (isNext ? '' : ' outline') + '" href="' + mapsDir(s.address) + '"' + (isDone ? ' style="display:none"' : '') + '>Navigate</a></div>';
     if (job) h += '<div class="job">' + esc(job) + '</div>';
     const meta = [s.who, rest].filter(Boolean).join(' · ');
     if (meta) h += '<div class="meta">' + esc(meta) + '</div>';
     if (s.note) h += '<div class="meta">' + esc(s.note) + '</div>';
+    if (s.trackUrl) h += '<div class="track"><a href="' + esc(s.trackUrl) + '">Job page</a></div>';
+    const b = brandFor(s);
+    if (b) {
+      h += '<div class="brand">' +
+        (b.logo ? '<img src="' + b.logo + '" alt="' + esc(b.alt) + '">' : '<span class="bbadge">' + esc(b.badge) + '</span>') +
+        (b.link ? '<a class="joblink" href="' + b.link + '" target="_blank" rel="noopener">SHARMATRACK job page</a>' : '') +
+        '</div>';
+    }
     const mats = s.materials || [];
     if (mats.length) {
       h += '<div class="mats"><div class="mlabel">Materials</div><ul>';
-      mats.forEach(m => { h += '<li>' + matHTML(m) + '</li>'; });
+      mats.forEach(m => {
+        const id = 's' + i + '|' + m;
+        h += '<li' + (checkSet.has(id) ? ' class="off"' : '') + '><label class="ck"><input type="checkbox" class="chk" data-check="' + esc(id) + '"' +
+          (checkSet.has(id) ? ' checked' : '') + '><span class="txt">' + matHTML(m) + '</span></label></li>';
+      });
       h += '</ul></div>';
     }
     h += '</div></div>';
@@ -225,6 +293,46 @@ fetch('data.json', {cache:'no-store'}).then(r => r.json()).then(d => {
   h += '</div></section>';
 
   document.getElementById('app').innerHTML = h;
+
+  /* Tick interactions — checks sync by material name; done ticks drive the day */
+  const app = document.getElementById('app');
+  const paintDay = () => {
+    const nx = nextIdx();
+    stops.forEach((_, i) => {
+      const el = document.getElementById('stop-' + i);
+      if (!el) return;
+      el.classList.toggle('done', doneSet.has(i));
+      el.classList.toggle('next', i === nx);
+      const nav = el.querySelector('.nav-btn');
+      if (nav) {
+        nav.style.display = doneSet.has(i) ? 'none' : '';
+        nav.classList.toggle('outline', i !== nx);
+      }
+    });
+    paintStrip();
+  };
+  app.addEventListener('change', e => {
+    const cb = e.target;
+    if (cb.matches('input[data-check]')) {
+      const mat = cb.dataset.check.split('|').slice(1).join('|');
+      app.querySelectorAll('input[data-check]').forEach(o => {
+        if (o.dataset.check.split('|').slice(1).join('|') === mat) {
+          o.checked = cb.checked;
+          const li = o.closest('li');
+          if (li) li.classList.toggle('off', cb.checked);
+          if (cb.checked) checkSet.add(o.dataset.check); else checkSet.delete(o.dataset.check);
+        }
+      });
+      lsSet('myday-' + d.date + '-check', [...checkSet]);
+    }
+    if (cb.matches('input[data-done]')) {
+      const i = +cb.dataset.done;
+      if (cb.checked) doneSet.add(i); else doneSet.delete(i);
+      lsSet('myday-' + d.date + '-done', [...doneSet]);
+      paintDay();
+    }
+  });
+
   if (d.updatedAt) {
     const t = new Date(d.updatedAt);
     document.getElementById('updated').textContent = 'Updated ' + t.toLocaleString('en-US', {month:'short', day:'numeric', hour:'numeric', minute:'2-digit'});
