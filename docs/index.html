@@ -1,365 +1,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex">
 <title>My Day — Sharma Electric &amp; HVAC</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --navy:#264387; --dnavy:#1a2f61; --gold:#F0A846; --ink:#1d2433;
-    --gray:#5b6478; --line:#dfe4ee; --page:#f4f6fb;
-    --head:'Barlow Semi Condensed',sans-serif; --body:'Inter',sans-serif; --mono:'IBM Plex Mono',monospace;
+    --navy:#264387; --navy-dark:#1a2f61; --gold:#F0A846;
+    --ink:#1d2433; --gray:#5b6478; --line:#dfe4ee; --page:#f4f6fb;
+    --radius:5px;
   }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  html { -webkit-text-size-adjust:100%; }
-  body { font-family:var(--body); background:var(--page); color:var(--ink); font-size:16px; line-height:1.45; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{background:var(--page);color:var(--ink);font-family:'Inter',system-ui,sans-serif;font-size:16px;line-height:1.4;}
+  .sheet{background:#fff;max-width:880px;margin:0 auto;min-height:100vh;}
+  @media (min-width:900px){ .sheet{border-left:1px solid var(--line);border-right:1px solid var(--line);} }
 
-  header { background:#fff; border-bottom:3px solid var(--gold); }
-  .head-in { max-width:780px; margin:0 auto; padding:13px 16px; display:flex; align-items:center; justify-content:space-between; gap:14px; }
-  .head-in img.logo { height:52px; width:auto; display:block; }
-  .head-in .app { font-family:var(--head); font-weight:700; font-size:27px; color:var(--dnavy); letter-spacing:.6px; white-space:nowrap; text-transform:uppercase; }
+  /* Header */
+  header{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:3px solid var(--gold);background:#fff;}
+  header img{height:40px;width:auto;display:block;}
+  header .wordmark{font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:20px;color:var(--navy-dark);letter-spacing:.01em;line-height:1;}
+  header .sub{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--gray);text-align:right;}
 
-  main { max-width:780px; margin:0 auto; padding:0 14px 34px; }
+  main{padding:20px 16px 8px;}
 
-  /* ---- mission band ---- */
-  .mission { background:var(--dnavy); color:#fff; margin:0 -14px; padding:22px 18px 20px; }
-  .mission .kick { font-family:var(--head); font-weight:700; font-size:14px; letter-spacing:2.2px; color:var(--gold); text-transform:uppercase; }
-  .mission h1 { font-family:var(--head); font-weight:700; font-size:38px; line-height:1.02; margin-top:3px; }
-  .mission .plan { margin-top:7px; font-size:16.5px; color:#e8ecf6; }
-  .mission .plan b { color:#fff; }
-  .stats { display:flex; gap:0; margin-top:16px; border-top:1px solid #3a4f86; }
-  .stat { flex:1; padding:10px 10px 2px 0; }
-  .stat + .stat { padding-left:14px; border-left:1px solid #3a4f86; }
-  .stat .v { font-family:var(--mono); font-weight:600; font-size:19px; color:#fff; white-space:nowrap; }
-  .stat .k { font-size:11.5px; font-weight:600; letter-spacing:1.4px; color:#aebadd; text-transform:uppercase; margin-top:1px; }
-  .prog { margin-top:15px; }
-  .prog .bar { height:10px; background:#54649c; border-radius:3px; overflow:hidden; }
-  .prog .fill { height:100%; background:var(--gold); width:0%; transition:width .35s ease; }
-  .prog .lbl { display:flex; justify-content:space-between; margin-top:6px; font-family:var(--mono); font-size:13px; color:#e8ecf6; }
-  .prog .lbl b { color:var(--gold); font-weight:600; }
+  /* Day heading */
+  h1{font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:25px;line-height:28px;color:var(--navy-dark);}
+  .summary{margin-top:4px;font-size:13px;color:var(--gray);}
+  .summary .n{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--navy);font-weight:500;}
 
-  /* ---- up next ---- */
-  .upnext { background:#fff; border:2px solid var(--gold); border-radius:5px; padding:15px 17px 16px; margin-top:18px; }
-  .upnext .kick { font-family:var(--head); font-weight:700; font-size:14px; letter-spacing:2px; color:var(--navy); text-transform:uppercase; }
-  .upnext .kick b { color:#b97c1e; }
-  .upnext h2 { font-family:var(--head); font-weight:700; font-size:27px; line-height:1.08; color:var(--ink); margin-top:3px; }
-  .upnext .meta { font-family:var(--mono); font-size:14.5px; color:var(--navy); font-weight:600; margin-top:4px; }
-  .upnext .addr { margin-top:3px; color:var(--gray); font-size:15.5px; }
-  .upnext a.nav { margin-top:12px; }
+  /* Section heading + label */
+  h2{font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:20px;line-height:24px;color:var(--navy-dark);border-bottom:2px solid var(--gold);padding-bottom:6px;}
+  .label{font-size:12px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--navy);}
+  section{margin-top:24px;}
+  section:first-of-type{margin-top:20px;}
 
-  /* ---- panels ---- */
-  .panel { background:#fff; border:1px solid var(--line); border-radius:5px; padding:16px 18px; }
-  .panel h2.sec { font-family:var(--head); font-weight:700; font-size:22px; color:var(--navy);
-    border-bottom:2px solid var(--gold); padding-bottom:6px; margin-bottom:10px; }
-  .load { margin-top:18px; }
-  .load .hint { font-size:13.5px; color:var(--gray); margin:-4px 0 8px; }
+  /* Start block */
+  .start-row{display:flex;align-items:center;gap:12px;padding-top:8px;}
+  .start-row .addr{font-size:16px;line-height:22px;font-weight:500;flex:1;min-width:0;}
+  .start-note{margin-top:4px;font-size:13px;color:var(--gray);}
 
-  /* checklists */
-  ul.check { list-style:none; }
-  ul.check li { padding:4px 0; }
-  ul.check label { display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:16px; padding:3px 0; }
-  ul.check input { appearance:none; flex:0 0 auto; width:21px; height:21px; margin-top:1px;
-    border:2px solid var(--navy); border-radius:4px; background:#fff; cursor:pointer; position:relative; }
-  ul.check input:checked { background:var(--gold); border-color:var(--gold); }
-  ul.check input:checked::after { content:""; position:absolute; left:6px; top:2px; width:5px; height:10px;
-    border:solid var(--dnavy); border-width:0 3px 3px 0; transform:rotate(42deg); }
-  ul.check input:checked + span { color:var(--gray); text-decoration:line-through; }
-  .load .cnt { font-family:var(--mono); font-size:13px; color:var(--gray); margin-left:6px; text-decoration:none; display:inline-block; }
+  /* Buttons */
+  .nav-btn{display:inline-flex;align-items:center;justify-content:center;height:44px;min-width:116px;padding:0 16px;background:var(--navy);color:#fff;font-size:15px;font-weight:600;text-decoration:none;border-radius:var(--radius);flex:none;}
+  .nav-btn:active{background:var(--navy-dark);}
 
-  /* ---- drawn route ---- */
-  .route { position:relative; margin-top:8px; }
-  .route::before { content:""; position:absolute; left:19px; top:26px; bottom:30px; width:3px; background:var(--navy); }
-  .node-row { position:relative; padding-left:52px; }
-  .node { position:absolute; left:5px; top:16px; width:31px; height:31px; border-radius:50%;
-    background:var(--navy); color:#fff; font-family:var(--mono); font-weight:600; font-size:14.5px;
-    display:flex; align-items:center; justify-content:center; border:3px solid var(--page); z-index:1; }
-  .node.start, .node.finish { background:var(--dnavy); font-size:12px; letter-spacing:.3px; }
-  .node.next { background:var(--gold); color:var(--dnavy); }
-  .node.done { background:#fff; color:var(--navy); border-color:var(--navy); }
-  .driveleg { position:relative; margin:2px 0 2px 52px; }
-  .driveleg span { display:inline-block; font-family:var(--mono); font-size:12.5px; font-weight:600; letter-spacing:.6px;
-    color:var(--gray); background:var(--page); border:1px solid var(--line); border-radius:20px; padding:3px 11px; text-transform:uppercase; }
-  .startcard, .finishcard { margin:14px 0 14px 0; padding:13px 17px; }
-  .startcard .slabel, .finishcard .slabel { font-family:var(--head); font-weight:700; font-size:15px; letter-spacing:1.8px; color:var(--navy); text-transform:uppercase; }
-  .startcard .saddr { font-size:16px; margin-top:2px; }
-  .finishcard .saddr { font-family:var(--mono); font-size:15px; color:var(--gray); margin-top:2px; }
+  /* Load the truck */
+  .load-list{list-style:none;margin-top:8px;}
+  .load-list li{display:flex;justify-content:space-between;gap:12px;font-size:14.5px;line-height:20px;padding:3px 0;border-bottom:1px solid var(--line);}
+  .load-list li:last-child{border-bottom:none;}
+  .load-list .cnt{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--gray);flex:none;}
+  @media (min-width:640px){ .load-list{columns:2;column-gap:32px;} .load-list li{break-inside:avoid;} }
 
-  /* ---- stop cards ---- */
-  .stop { margin:12px 0; padding:15px 17px 16px; }
-  .stop.isnext { border:2px solid var(--gold); }
-  .stop.isdone { opacity:.62; }
-  .stop .top { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
-  .stop .time { font-family:var(--mono); font-weight:600; font-size:17.5px; color:var(--navy); }
-  .stop .dur { font-family:var(--mono); font-size:12.5px; font-weight:600; color:var(--gray);
-    border:1px solid var(--line); border-radius:20px; padding:2px 9px; }
-  .stop .tag { font-family:var(--head); font-weight:700; font-size:13px; letter-spacing:1.4px; text-transform:uppercase;
-    background:var(--gold); color:var(--dnavy); border-radius:3px; padding:3px 8px 2px; }
-  .stop .tag.insp { background:var(--dnavy); color:var(--gold); }
-  .stop h2.title { font-family:var(--head); font-weight:700; font-size:24px; line-height:1.12; color:var(--ink); margin-top:8px; }
-  .stop .who { display:inline-block; margin-top:5px; font-size:13px; font-weight:700; letter-spacing:1.1px;
-    text-transform:uppercase; color:var(--navy); background:var(--page); border:1px solid var(--line); border-radius:3px; padding:3px 8px 2px; }
-  .stop .addr { font-size:16px; margin-top:7px; }
-  .stop .note { font-size:15.5px; color:var(--gray); margin-top:4px; }
-  .stop .mats { margin-top:12px; border-top:1px solid var(--line); padding-top:10px; }
-  .stop .mats h3 { font-family:var(--head); font-weight:700; font-size:17px; color:var(--navy);
-    border-bottom:2px solid var(--gold); padding-bottom:5px; margin-bottom:7px; }
-  .stop .mats .none { font-size:15.5px; color:var(--gray); }
-  a.nav { display:flex; align-items:center; justify-content:center; min-height:49px; margin-top:13px;
-    background:var(--navy); color:#fff; text-decoration:none; font-weight:600; font-size:16px; border-radius:5px; }
-  a.nav:active { background:var(--dnavy); }
-  .donebtn { display:flex; align-items:center; justify-content:center; min-height:45px; width:100%; margin-top:9px;
-    background:#fff; color:var(--navy); border:2px solid var(--navy); border-radius:5px;
-    font-family:var(--body); font-weight:700; font-size:15.5px; cursor:pointer; }
-  .donebtn.on { background:var(--gold); border-color:var(--gold); color:var(--dnavy); }
+  /* Timeline */
+  .tl{margin-top:4px;}
+  .stop{display:grid;grid-template-columns:56px 18px 1fr;}
+  .stop .time{padding-top:13px;text-align:right;font-family:'IBM Plex Mono',monospace;}
+  .stop .time .t{font-size:13px;font-weight:600;color:var(--navy);line-height:16px;white-space:nowrap;}
+  .stop .time .e{font-size:11.5px;color:var(--gray);line-height:15px;white-space:nowrap;}
+  .rail{position:relative;}
+  .rail::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--line);transform:translateX(-0.5px);}
+  .rail::after{content:"";position:absolute;left:50%;top:17px;width:8px;height:8px;background:var(--navy);transform:translateX(-50%);}
+  .stop.first .rail::before{top:21px;}
+  .stop.last .rail::before{bottom:auto;height:21px;}
+  .leg{display:grid;grid-template-columns:56px 18px 1fr;}
+  .leg .rail::after{display:none;}
+  .leg .drive{padding:1px 0;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--gray);white-space:nowrap;}
+  .stop .body{padding:12px 0 16px 10px;border-bottom:1px solid var(--line);}
+  .stop.last .body{border-bottom:none;}
+  .stop.first .body{border-left:3px solid var(--gold);padding-left:7px;}
+  .title-row{display:flex;align-items:flex-start;gap:12px;}
+  .stop h3{font-size:16px;line-height:22px;font-weight:600;color:var(--ink);flex:1;min-width:0;}
+  .stop.first h3{font-weight:700;}
+  .stop .who{margin-top:2px;font-size:14.5px;line-height:20px;color:var(--gray);}
+  .stop .addr{margin-top:2px;font-size:16px;line-height:22px;}
+  .stop .note{margin-top:4px;font-size:13px;line-height:18px;color:var(--gray);}
 
-  .empty { margin-top:18px; font-size:16px; }
-  footer { max-width:780px; margin:0 auto; padding:4px 16px 30px; color:var(--gray); font-size:13.5px; text-align:center; }
-  footer .mono { font-family:var(--mono); }
-  @media (max-width:480px){
-    .head-in img.logo{height:44px} .head-in .app{font-size:23px}
-    .mission h1{font-size:33px} .stat .v{font-size:16.5px}
-    .route::before{left:17px} .node{left:3px}
-  }
+  /* Materials */
+  details.mats{margin-top:8px;border-top:1px solid var(--line);}
+  details.mats summary{min-height:44px;display:flex;align-items:center;gap:8px;cursor:pointer;list-style:none;font-size:15px;font-weight:500;color:var(--navy);}
+  details.mats summary::-webkit-details-marker{display:none;}
+  details.mats summary .cnt{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--gray);font-weight:400;}
+  details.mats summary .chev{margin-left:auto;font-size:13px;color:var(--gray);}
+  details.mats ul{list-style:none;padding-bottom:8px;}
+  details.mats li{font-size:15px;line-height:21px;padding:2px 0 2px 14px;position:relative;}
+  details.mats li::before{content:"";position:absolute;left:0;top:10px;width:5px;height:5px;background:var(--gold);}
+
+  footer{margin-top:24px;padding:12px 16px 20px;border-top:1px solid var(--line);font-size:13px;color:var(--gray);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+  footer .mono{font-family:'IBM Plex Mono',monospace;font-size:12.5px;}
+  .err{padding:24px 16px;font-size:16px;color:var(--gray);}
 </style>
 </head>
 <body>
-<header>
-  <div class="head-in">
-    <img class="logo" src="logo.png" alt="Sharma Electric &amp; HVAC">
-    <div class="app">My Day</div>
-  </div>
-</header>
-<main>
-  <div class="mission" id="mission" hidden>
-    <div class="kick">The mission</div>
-    <h1 id="dayLabel">Loading…</h1>
-    <div class="plan" id="planLine"></div>
-    <div class="stats" id="stats"></div>
-    <div class="prog" id="prog" hidden>
-      <div class="bar"><div class="fill" id="progFill"></div></div>
-      <div class="lbl"><span id="progText"></span><span id="progPct"></span></div>
-    </div>
-  </div>
-  <div id="upnext"></div>
-  <div id="stops"></div>
-</main>
-<footer id="foot"></footer>
+<div class="sheet">
+  <header>
+    <img src="logo.png" alt="Sharma Electric &amp; HVAC">
+    <div class="wordmark">My Day</div>
+    <div class="sub" id="hdrDate"></div>
+  </header>
+  <main id="app"><div class="err">Loading the day…</div></main>
+  <footer>
+    <div>Sharma Electric &amp; HVAC · EC13013924 · CAC1823596</div>
+    <div class="mono" id="updated"></div>
+  </footer>
+</div>
 <script>
-function parseTime(t) {
-  const m = /(\d+):(\d+)\s*(AM|PM)/i.exec(t || '');
-  if (!m) return null;
-  let h = +m[1] % 12; if (/PM/i.test(m[3])) h += 12;
-  return h * 60 + (+m[2]);
-}
-function fmtDur(min) {
-  if (!min) return '';
-  return min >= 60 ? Math.floor(min / 60) + 'h ' + String(min % 60).padStart(2, '0') + 'm' : min + ' min';
-}
-const store = {
-  get(k, f) { try { return JSON.parse(localStorage.getItem(k)) ?? f; } catch { return f; } },
-  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+const mapsDir = (dest, origin) => {
+  let u = 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(dest);
+  if (origin) u += '&origin=' + encodeURIComponent(origin);
+  return u;
 };
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
 fetch('data.json', {cache:'no-store'}).then(r => r.json()).then(d => {
+  document.getElementById('hdrDate').textContent = d.dayLabel || '';
   const stops = d.stops || [];
-  const key = 'myday-' + (d.date || '');
-  const doneSet = new Set(store.get(key + '-done', []));
-  const checkSet = new Set(store.get(key + '-check', []));
-  const main = document.getElementById('stops');
+  const totalDrive = stops.reduce((a, s) => a + (s.driveFromPrev || 0), 0);
+  const loadMap = new Map();
+  stops.forEach(s => (s.materials || []).forEach(m => loadMap.set(m, (loadMap.get(m) || 0) + 1)));
+  const load = [...loadMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
 
-  document.getElementById('dayLabel').textContent = d.dayLabel || '';
-  document.getElementById('mission').hidden = false;
+  let h = '';
+  h += '<h1>' + esc(d.dayLabel || 'My Day') + '</h1>';
+  h += '<div class="summary"><span class="n">' + stops.length + '</span> stops · <span class="n">' + totalDrive + ' min</span> driving' +
+       (stops.length ? ' · first stop <span class="n">' + esc(stops[0].start) + '</span>' : '') + '</div>';
 
-  if (!stops.length) {
-    main.innerHTML = '<div class="panel empty">Nothing scheduled today. Enjoy the quiet.</div>';
-    document.getElementById('planLine').textContent = 'No stops on the board.';
-  } else {
-    /* ---------- mission band ---------- */
-    const driveTotal = stops.reduce((a, s) => a + (s.driveFromPrev || 0), 0);
-    const kinds = [];
-    const count = (re) => stops.filter(s => re.test(s.title)).length;
-    const tug = count(/TUG install/i), und = count(/underground/i),
-          pick = count(/pickup/i), walk = count(/walk/i);
-    if (tug) kinds.push('<b>' + tug + '</b> TUG install' + (tug > 1 ? 's' : ''));
-    if (und) kinds.push('<b>' + und + '</b> underground' + (und > 1 ? 's' : ''));
-    if (pick) kinds.push('<b>' + pick + '</b> supply pickup');
-    if (walk) kinds.push('<b>' + walk + '</b> walkthrough');
-    const other = stops.length - tug - und - pick - walk;
-    if (other > 0) kinds.push('<b>' + other + '</b> more stop' + (other > 1 ? 's' : ''));
-    document.getElementById('planLine').innerHTML =
-      kinds.join(' &middot; ') + '. One truck, one route &mdash; let&rsquo;s roll.';
-    document.getElementById('stats').innerHTML =
-      '<div class="stat"><div class="v">' + stops[0].start + '</div><div class="k">First stop</div></div>' +
-      '<div class="stat"><div class="v">' + stops[stops.length - 1].end + '</div><div class="k">Day done</div></div>' +
-      '<div class="stat"><div class="v">' + fmtDur(driveTotal) + '</div><div class="k">Driving</div></div>' +
-      '<div class="stat"><div class="v">' + stops.length + '</div><div class="k">Stops</div></div>';
-
-    const prog = document.getElementById('prog');
-    function paintProgress() {
-      prog.hidden = false;
-      const n = stops.filter((_, i) => doneSet.has(i)).length;
-      document.getElementById('progFill').style.width = (stops.length ? (n / stops.length) * 100 : 0) + '%';
-      document.getElementById('progText').innerHTML =
-        n === stops.length ? '<b>Day complete.</b> Every stop done.' :
-        '<b>' + n + ' of ' + stops.length + '</b> stops done';
-      document.getElementById('progPct').textContent = Math.round((n / stops.length) * 100) + '%';
-    }
-
-    /* ---------- where are we in the day ---------- */
-    const now = new Date();
-    const todayStr = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
-    const nowMin = now.getHours() * 60 + now.getMinutes();
-    let nextIdx = -1, nowIdx = -1;
-    if (d.date === todayStr) {
-      stops.forEach((s, i) => {
-        const a = parseTime(s.start), b = parseTime(s.end);
-        if (a !== null && b !== null && nowMin >= a && nowMin < b) nowIdx = i;
-        if (a !== null && nowMin < a && nextIdx === -1) nextIdx = i;
-      });
-    }
-    let focusIdx = nowIdx >= 0 ? nowIdx : (nextIdx >= 0 ? nextIdx : 0);
-    if (doneSet.has(focusIdx)) {
-      const firstOpen = stops.findIndex((_, i) => !doneSet.has(i));
-      if (firstOpen >= 0) focusIdx = firstOpen;
-    }
-    const allDone = stops.every((_, i) => doneSet.has(i));
-
-    /* ---------- up next ---------- */
-    const un = document.createElement('section');
-    un.className = 'upnext';
-    if (allDone) {
-      un.innerHTML = '<div class="kick">Day <b>complete</b></div>' +
-        '<h2>Every stop done. Nice work.</h2>' +
-        '<div class="meta">' + stops.length + ' stops &middot; finished ' + stops[stops.length - 1].end + '</div>';
-    } else {
-      const fs = stops[focusIdx];
-      const fmaps = 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(fs.address || fs.title);
-      un.innerHTML =
-        '<div class="kick">' + (nowIdx >= 0 && focusIdx === nowIdx ? 'Happening <b>now</b>' : (d.date === todayStr ? 'Up <b>next</b>' : 'First <b>up</b>')) + '</div>' +
-        '<h2>' + fs.title + '</h2>' +
-        '<div class="meta">' + fs.start + ' &ndash; ' + fs.end + (fs.who ? ' &middot; ' + fs.who : '') + '</div>' +
-        (fs.address ? '<div class="addr">' + fs.address + '</div>' : '') +
-        '<a class="nav" href="' + fmaps + '" target="_blank" rel="noopener">Navigate</a>';
-    }
-    document.getElementById('upnext').appendChild(un);
-
-    /* ---------- load the truck ---------- */
-    const counts = {};
-    stops.forEach(s => (s.materials || []).forEach(m => { counts[m] = (counts[m] || 0) + 1; }));
-    const items = Object.keys(counts);
-    if (items.length) {
-      const load = document.createElement('section');
-      load.className = 'panel load';
-      load.innerHTML = '<h2 class="sec">Load the truck</h2>' +
-        '<div class="hint">Everything for the whole route, in one list. Tick it off as it goes on the truck.</div><ul class="check">' +
-        items.map(m => {
-          const id = 'load|' + m;
-          return '<li><label><input type="checkbox" data-check="' + id + '"' + (checkSet.has(id) ? ' checked' : '') + '><span>' +
-            m + (counts[m] > 1 ? '<span class="cnt">&times; ' + counts[m] + ' stops</span>' : '') + '</span></label></li>';
-        }).join('') + '</ul>';
-      main.appendChild(load);
-    }
-
-    /* ---------- the drawn route ---------- */
-    const route = document.createElement('div');
-    route.className = 'route';
-    main.appendChild(route);
-
-    if (d.start) {
-      const row = document.createElement('div');
-      row.className = 'node-row';
-      const firstNav = 'https://www.google.com/maps/dir/?api=1&origin=' + encodeURIComponent(d.start) +
-        '&destination=' + encodeURIComponent(stops[0].address || stops[0].title);
-      row.innerHTML = '<div class="node start">GO</div>' +
-        '<section class="panel startcard"><div class="slabel">Start</div>' +
-        '<div class="saddr">' + d.start + '</div>' +
-        '<a class="nav" href="' + firstNav + '" target="_blank" rel="noopener">Navigate to first stop</a></section>';
-      route.appendChild(row);
-    }
-
-    stops.forEach((s, i) => {
-      if (s.driveFromPrev) {
-        const dv = document.createElement('div');
-        dv.className = 'driveleg';
-        dv.innerHTML = '<span>' + s.driveFromPrev + ' min drive</span>';
-        route.appendChild(dv);
-      }
-      const row = document.createElement('div');
-      row.className = 'node-row';
-      const done = doneSet.has(i);
-      const nodeCls = 'node' + (done ? ' done' : (i === focusIdx ? ' next' : ''));
-      const nodeTxt = done ? '&#10003;' : (i + 1);
-      const a = parseTime(s.start), b = parseTime(s.end);
-      const dur = (a !== null && b !== null && b > a) ? '<span class="dur">' + fmtDur(b - a) + '</span>' : '';
-      const insp = /inspection today/i.test(s.note || '') ? '<span class="tag insp">Inspection day</span>' : '';
-      const nextTag = (!done && i === focusIdx) ? '<span class="tag">' + (nowIdx >= 0 ? 'Now' : 'Next up') + '</span>' : '';
-      const maps = 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(s.address || s.title);
-      row.innerHTML = '<div class="' + nodeCls + '">' + nodeTxt + '</div>' +
-        '<section class="panel stop' + (done ? ' isdone' : (!done && i === focusIdx ? ' isnext' : '')) + '">' +
-        '<div class="top"><div class="time">' + s.start + ' &ndash; ' + s.end + '</div>' + dur + insp + nextTag + '</div>' +
-        '<h2 class="title">' + s.title + '</h2>' +
-        (s.who ? '<div class="who">' + s.who + '</div>' : '') +
-        (s.address ? '<div class="addr">' + s.address + '</div>' : '') +
-        (s.note ? '<div class="note">' + s.note + '</div>' : '') +
-        '<div class="mats"><h3>Materials needed</h3>' +
-          ((s.materials && s.materials.length)
-            ? '<ul class="check">' + s.materials.map(m => {
-                const id = 'stop' + i + '|' + m;
-                return '<li><label><input type="checkbox" data-check="' + id + '"' + (checkSet.has(id) ? ' checked' : '') + '><span>' + m + '</span></label></li>';
-              }).join('') + '</ul>'
-            : '<div class="none">None &mdash; walkthrough only</div>') +
-        '</div>' +
-        '<a class="nav" href="' + maps + '" target="_blank" rel="noopener">Navigate</a>' +
-        '<button class="donebtn' + (done ? ' on' : '') + '" data-done="' + i + '">' + (done ? '&#10003; Done' : 'Mark stop done') + '</button>' +
-        '</section>';
-      route.appendChild(row);
-    });
-
-    const fin = document.createElement('div');
-    fin.className = 'node-row';
-    fin.innerHTML = '<div class="node finish">&#9873;</div>' +
-      '<section class="panel finishcard"><div class="slabel">Finish</div>' +
-      '<div class="saddr">Last stop ends ' + stops[stops.length - 1].end + ' &mdash; day complete.</div></section>';
-    route.appendChild(fin);
-
-    paintProgress();
-
-    /* ---------- interactions ---------- */
-    main.addEventListener('change', (e) => {
-      const cb = e.target.closest('input[data-check]');
-      if (cb) {
-        /* keep the Load list and the stop lists in sync by material name */
-        const mat = cb.dataset.check.split('|').slice(1).join('|');
-        main.querySelectorAll('input[data-check]').forEach(o => {
-          if (o.dataset.check.split('|').slice(1).join('|') === mat) {
-            o.checked = cb.checked;
-            if (cb.checked) checkSet.add(o.dataset.check); else checkSet.delete(o.dataset.check);
-          }
-        });
-        store.set(key + '-check', [...checkSet]);
-      }
-    });
-    main.addEventListener('click', (e) => {
-      const btn = e.target.closest('button[data-done]');
-      if (!btn) return;
-      const i = +btn.dataset.done;
-      if (doneSet.has(i)) doneSet.delete(i); else doneSet.add(i);
-      store.set(key + '-done', [...doneSet]);
-      location.reload();
-    });
+  if (d.start) {
+    h += '<section><div class="label">Start</div><div class="start-row"><div class="addr">' + esc(d.start) + '</div>' +
+         (stops.length ? '<a class="nav-btn" href="' + mapsDir(stops[0].address, d.start) + '">Navigate</a>' : '') +
+         '</div><div class="start-note">First leg: home to ' + esc(stops[0] ? stops[0].title : '') + '</div></section>';
   }
 
-  document.getElementById('foot').innerHTML =
-    'Sharma standard: TUG install 30 min &middot; Underground 45 min &middot; Drive time between stops included.<br>' +
-    'EC13013924 &middot; CAC1823596 &middot; Updated <span class="mono">' +
-    new Date(d.updatedAt).toLocaleString('en-US', {month:'short', day:'numeric', hour:'numeric', minute:'2-digit'}) + '</span>';
+  if (load.length) {
+    h += '<section><h2>Load the Truck</h2><ul class="load-list">';
+    load.forEach(([name, n]) => { h += '<li><span>' + esc(name) + '</span>' + (n > 1 ? '<span class="cnt">×' + n + '</span>' : '') + '</li>'; });
+    h += '</ul></section>';
+  }
+
+  h += '<section><h2>Route</h2><div class="tl">';
+  stops.forEach((s, i) => {
+    if (s.driveFromPrev) {
+      h += '<div class="leg"><div class="drive">' + s.driveFromPrev + ' min</div><div class="rail"></div><div></div></div>';
+    }
+    const cls = 'stop' + (i === 0 ? ' first' : '') + (i === stops.length - 1 ? ' last' : '');
+    h += '<div class="' + cls + '">';
+    h += '<div class="time"><div class="t">' + esc(s.start) + '</div><div class="e">' + esc(s.end || '') + '</div></div>';
+    h += '<div class="rail"></div>';
+    h += '<div class="body">';
+    h += '<div class="title-row"><h3>' + esc(s.title) + '</h3><a class="nav-btn" href="' + mapsDir(s.address) + '">Navigate</a></div>';
+    if (s.who) h += '<div class="who">' + esc(s.who) + '</div>';
+    h += '<div class="addr">' + esc(s.address) + '</div>';
+    if (s.note) h += '<div class="note">' + esc(s.note) + '</div>';
+    const mats = s.materials || [];
+    if (mats.length) {
+      h += '<details class="mats"><summary>Materials <span class="cnt">' + mats.length + ' items</span><span class="chev">▾</span></summary><ul>';
+      mats.forEach(m => { h += '<li>' + esc(m) + '</li>'; });
+      h += '</ul></details>';
+    }
+    h += '</div></div>';
+  });
+  h += '</div></section>';
+
+  document.getElementById('app').innerHTML = h;
+  if (d.updatedAt) {
+    const t = new Date(d.updatedAt);
+    document.getElementById('updated').textContent = 'Updated ' + t.toLocaleString('en-US', {month:'short', day:'numeric', hour:'numeric', minute:'2-digit'});
+  }
 }).catch(() => {
-  document.getElementById('dayLabel').textContent = 'Could not load the schedule.';
-  document.getElementById('mission').hidden = false;
+  document.getElementById('app').innerHTML = '<div class="err">Could not load the day. Check your connection and refresh.</div>';
 });
 </script>
 </body>
