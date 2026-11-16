@@ -28,7 +28,7 @@
    "note": "County inspection today · Permit BLDR-26-07-18596",
    "driveFromPrev": 75,
    "materials": [
-    "PVC conduit + 90° sweep (island run)",
+    "¾-in PVC + ¾-in 90s (island run)",
     "PVC cement",
     "Pull string",
     "Stub-up cap / protection"
@@ -43,12 +43,12 @@
    "note": "Santiago Plan 2118 · Block 971, Lot 09",
    "driveFromPrev": 40,
    "materials": [
-    "2-in Schedule 40 PVC",
-    "2-in 90° sweep",
+    "¾-in PVC + ¾-in 90s",
     "Mineralac straps (2 min)",
     "PVC cement",
     "Pull string"
-   ]
+   ],
+   "trackUrl": "https://sharmaelechvac.github.io/sharmatrack-crew/"
   },
   {
    "start": "12:05 PM",
@@ -66,7 +66,8 @@
     "½-in PVC for the ground run",
     "Male adapters, locknuts & bushings",
     "Straps"
-   ]
+   ],
+   "trackUrl": "https://sharmaelechvac.github.io/exj-root-tracker/14065/"
   },
   {
    "start": "12:45 PM",
@@ -84,7 +85,8 @@
     "½-in PVC for the ground run",
     "Male adapters, locknuts & bushings",
     "Straps"
-   ]
+   ],
+   "trackUrl": "https://sharmaelechvac.github.io/exj-root-tracker/16321/"
   },
   {
    "start": "1:20 PM",
@@ -102,7 +104,8 @@
     "½-in PVC for the ground run",
     "Male adapters, locknuts & bushings",
     "Straps"
-   ]
+   ],
+   "trackUrl": "https://sharmaelechvac.github.io/exj-root-tracker/601/"
   },
   {
    "start": "2:25 PM",
@@ -112,7 +115,8 @@
    "address": "W Eunice Dr, Citrus Springs, FL",
    "note": "House number to confirm",
    "driveFromPrev": 35,
-   "materials": []
+   "materials": [],
+   "trackUrl": "https://sharmaelechvac.github.io/sharmatrack-crew/"
   }
  ],
  "updatedAt": "2026-11-15T19:14:00-05:00"
