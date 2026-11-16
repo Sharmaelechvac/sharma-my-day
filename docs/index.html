@@ -108,12 +108,13 @@
   .stopck{padding-top:3px;}
   .stopck .chk{width:21px;height:21px;}
   .taskicon{width:42px;height:42px;border-radius:10px;flex:none;display:block;}
+  .matph{width:34px;height:34px;object-fit:cover;border-radius:4px;flex:none;border:1px solid var(--line);background:#fff;}
   .actions{display:flex;align-items:center;gap:14px;margin-top:8px;flex-wrap:wrap;}
   .actions .track{margin-top:0;}
 
   /* Builder brand + job page link */
   .brand{display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap;}
-  .brand img{height:22px;max-width:120px;object-fit:contain;display:block;}
+  .brand img{height:27px;max-width:130px;object-fit:contain;display:block;}
   .bbadge{font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:.08em;color:var(--navy-dark);border:1.5px solid var(--navy);border-radius:4px;padding:2px 8px 1px;}
   .joblink{font-size:13.5px;font-weight:600;color:var(--navy);text-decoration:none;border-bottom:1.5px solid var(--gold);padding-bottom:1px;}
   .pdflink{margin-left:8px;height:44px;padding:0 14px;display:inline-flex;align-items:center;background:#fff;color:var(--navy);border:1px solid var(--navy);border-radius:var(--radius);font-size:15px;font-weight:600;text-decoration:none;flex:none;}
@@ -189,6 +190,27 @@ const matHTML = m => {
   if (q) return esc(m.slice(0, q.index)) + '<span class="q">(' + esc(q[1]) + ')</span>';
   return esc(m);
 };
+const MATPH = {
+  'Siemens meter combos (3)': 'mat/siemens.jpg',
+  'Siemens meter main combo': 'mat/siemens.jpg',
+  'Grounding bridges (3)': 'mat/bridge.jpg',
+  'Intersystem grounding bridge': 'mat/bridge.jpg',
+  'Bell boxes': 'mat/bellbox.jpg',
+  '½-in PVC (2 sticks)': 'mat/pvc.jpg',
+  '½-in PVC for the ground run': 'mat/pvc.jpg',
+  '½-in male adapters': 'mat/adapter.jpg',
+  'Male adapters, locknuts & bushings': 'mat/locknut.jpg',
+  '¾-in PVC + ¾-in 90s': 'mat/elbow.jpg',
+  '¾-in PVC + ¾-in 90s (island run)': 'mat/elbow.jpg',
+  'PVC cement': 'mat/cement.jpg',
+  'Pull string': 'mat/pullstring.jpg',
+  'Stub-up cap / protection': 'mat/cap.jpg',
+  'Mineralac straps (2 min)': 'mat/mineralac.jpg',
+  'GFCI outlet + breaker': 'mat/gfci.jpg',
+  'Extra-duty while-in-use (bubble) cover': 'mat/bubble.jpg',
+  'Straps': 'mat/strap.jpg'
+};
+const matImg = m => MATPH[m] ? '<img class="matph" src="' + MATPH[m] + '" alt="">' : '';
 const brandFor = s => {
   const who = s.who || '', addr = s.address || '', title = s.title || '';
   if (/city electric/i.test(title + ' ' + addr)) return { logo: 'logos/ces.png', alt: 'City Electric Supply' };
@@ -245,7 +267,7 @@ fetch('data.json', {cache:'no-store'}).then(r => r.json()).then(d => {
     load.forEach(([name, n]) => {
       const id = 'load|' + name;
       h += '<li' + (checkSet.has(id) ? ' class="off"' : '') + '><label class="ck"><input type="checkbox" class="chk" data-check="' + esc(id) + '"' +
-        (checkSet.has(id) ? ' checked' : '') + '><span class="txt">' + esc(name) + '</span>' +
+        (checkSet.has(id) ? ' checked' : '') + '>' + matImg(name) + '<span class="txt">' + esc(name) + '</span>' +
         (n > 1 ? '<span class="cnt">×' + n + '</span>' : '') + '</label></li>';
     });
     h += '</ul></div></section>';
@@ -290,7 +312,7 @@ fetch('data.json', {cache:'no-store'}).then(r => r.json()).then(d => {
       mats.forEach(m => {
         const id = 's' + i + '|' + m;
         h += '<li' + (checkSet.has(id) ? ' class="off"' : '') + '><label class="ck"><input type="checkbox" class="chk" data-check="' + esc(id) + '"' +
-          (checkSet.has(id) ? ' checked' : '') + '><span class="txt">' + matHTML(m) + '</span></label></li>';
+          (checkSet.has(id) ? ' checked' : '') + '>' + matImg(m) + '<span class="txt">' + matHTML(m) + '</span></label></li>';
       });
       h += '</ul></div>';
     }
