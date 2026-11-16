@@ -22,6 +22,13 @@
   .stop .note { font-size:14px; color:#5a6b7d; margin-top:6px; }
   .stop a.nav { display:inline-block; margin-top:10px; background:#0058a3; color:#fff; text-decoration:none; font-weight:700; font-size:15px; padding:10px 16px; border-radius:9px; }
   .stop a.nav:active { background:#004a87; }
+  .stop .mats { margin-top:10px; background:#eef4fa; border-radius:9px; padding:10px 12px; }
+  .stop .mats .mh { font-size:13px; font-weight:800; letter-spacing:1px; color:#0058a3; text-transform:uppercase; }
+  .stop .mats ul { margin:6px 0 0 18px; font-size:15px; line-height:1.45; }
+  .load { background:#fff; border-radius:14px; padding:16px; box-shadow:0 1px 4px rgba(10,40,70,.10); border-top:6px solid #e8a33d; margin-bottom:6px; }
+  .load h2 { font-size:17px; font-weight:800; color:#14202e; }
+  .load ul { margin:8px 0 0 18px; font-size:15px; line-height:1.5; }
+  .load .cnt { color:#0058a3; font-weight:700; }
   .addr { font-size:15px; margin-top:6px; color:#14202e; }
   footer { max-width:640px; margin:0 auto; padding:0 16px 26px; color:#7b8b9d; font-size:13px; text-align:center; }
   .empty { background:#fff; border-radius:14px; padding:22px 16px; text-align:center; font-size:17px; box-shadow:0 1px 4px rgba(10,40,70,.10); }
@@ -42,6 +49,17 @@ fetch('data.json', {cache:'no-store'}).then(r => r.json()).then(d => {
   if (!d.stops || !d.stops.length) {
     main.innerHTML = '<div class="empty">Nothing scheduled today. Enjoy the clear day.</div>';
   } else {
+    const counts = {};
+    d.stops.forEach(s => (s.materials || []).forEach(m => { counts[m] = (counts[m] || 0) + 1; }));
+    const items = Object.keys(counts);
+    if (items.length) {
+      const load = document.createElement('section');
+      load.className = 'load';
+      load.innerHTML = '<h2>🧰 LOAD THE TRUCK — everything for today</h2><ul>' +
+        items.map(m => '<li>' + m + (counts[m] > 1 ? ' <span class="cnt">× ' + counts[m] + ' stops</span>' : '') + '</li>').join('') +
+        '</ul>';
+      main.appendChild(load);
+    }
     d.stops.forEach((s, i) => {
       if (s.driveFromPrev) {
         const dv = document.createElement('div');
@@ -58,6 +76,9 @@ fetch('data.json', {cache:'no-store'}).then(r => r.json()).then(d => {
         (s.who ? '<div class="who">' + s.who + '</div>' : '') +
         (s.address ? '<div class="addr">📍 ' + s.address + '</div>' : '') +
         (s.note ? '<div class="note">' + s.note + '</div>' : '') +
+        ((s.materials && s.materials.length)
+          ? '<div class="mats"><div class="mh">Materials needed</div><ul>' + s.materials.map(m => '<li>' + m + '</li>').join('') + '</ul></div>'
+          : '<div class="mats"><div class="mh">Materials needed</div><ul><li>None — walkthrough only</li></ul></div>') +
         '<a class="nav" href="' + maps + '" target="_blank" rel="noopener">Navigate →</a>';
       main.appendChild(el);
     });
