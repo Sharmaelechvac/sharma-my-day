@@ -1,132 +1,138 @@
 {
- "date": "2026-11-16",
- "dayLabel": "Monday, November 16",
- "start": "6117 Arbor Watch Loop, Orlando, FL",
- "stops": [
-  {
-   "start": "8:00 AM",
-   "end": "8:30 AM",
-   "title": "City Electric Supply — pickup",
-   "who": null,
-   "address": "City Electric Supply, Altamonte Springs, FL",
-   "note": "Pickup for the three EXJ TUG installs",
-   "driveFromPrev": null,
-   "materials": [
-    "Siemens meter main combo",
-    "Intersystem grounding bridge",
-    "Bell boxes",
-    "½-in PVC (2 sticks)",
-    "½-in male adapters",
-    "¾-in plastic Romex connectors",
-    "THHN/stripped Romex — 12 AWG copper",
-    "THHN/stripped Romex — 10 AWG CCA"
-   ]
-  },
-  {
-   "start": "9:45 AM",
-   "end": "10:30 AM",
-   "title": "178 Fisher Loop — electrical underground",
-   "who": "BR Ross Construction",
-   "address": "178 Fisher Loop, Ocklawaha, FL",
-   "note": "County inspection today · Permit BLDR-26-07-18596",
-   "driveFromPrev": 75,
-   "materials": [
-    "¾-in PVC",
-    "¾-in 90s",
-    "PVC cement",
-    "Pull string",
-    "Stub-up cap / protection"
-   ]
-  },
-  {
-   "start": "11:10 AM",
-   "end": "11:55 AM",
-   "title": "614 Marion Oaks Trail — underground",
-   "who": "Z Brothers Construction",
-   "address": "614 Marion Oaks Trail, Ocala, FL",
-   "note": "Santiago Plan 2118 · Block 971, Lot 09",
-   "driveFromPrev": 40,
-   "materials": [
-    "¾-in PVC",
-    "¾-in 90s",
-    "Mineralac straps (2 min)",
-    "PVC cement",
-    "Pull string"
-   ],
-   "trackUrl": "https://sharmaelechvac.github.io/sharmatrack-crew/"
-  },
-  {
-   "start": "12:05 PM",
-   "end": "12:35 PM",
-   "title": "14065 SW 48th Ave — TUG install",
-   "who": "EXJ Root",
-   "address": "14065 SW 48th Ave, Ocala, FL",
-   "note": "TUG inspection Tue 11/17 · #261557-2026",
-   "driveFromPrev": 10,
-   "materials": [
-    "Siemens meter main combo",
-    "GFCI outlet + breaker",
-    "Extra-duty while-in-use (bubble) cover",
-    "Intersystem grounding bridge",
-    "½-in PVC for the ground run",
-    "Male adapters, locknuts & bushings",
-    "Straps"
-   ],
-   "trackUrl": "https://sharmaelechvac.github.io/exj-root-tracker/14065/"
-  },
-  {
-   "start": "12:45 PM",
-   "end": "1:15 PM",
-   "title": "16321 SW 26th Terrace Rd — TUG install",
-   "who": "EXJ Root",
-   "address": "16321 SW 26th Terrace Rd, Ocala, FL",
-   "note": "TUG inspection Tue 11/17 · #261558-2026",
-   "driveFromPrev": 10,
-   "materials": [
-    "Siemens meter main combo",
-    "GFCI outlet + breaker",
-    "Extra-duty while-in-use (bubble) cover",
-    "Intersystem grounding bridge",
-    "½-in PVC for the ground run",
-    "Male adapters, locknuts & bushings",
-    "Straps"
-   ],
-   "trackUrl": "https://sharmaelechvac.github.io/exj-root-tracker/16321/"
-  },
-  {
-   "start": "1:20 PM",
-   "end": "1:50 PM",
-   "title": "601 Marion Oaks Golf Rd — TUG install",
-   "who": "EXJ Root",
-   "address": "601 Marion Oaks Golf Rd, Ocala, FL",
-   "note": "TUG inspection Tue 11/17 · #261556-2026",
-   "driveFromPrev": 5,
-   "materials": [
-    "Siemens meter main combo",
-    "GFCI outlet + breaker",
-    "Extra-duty while-in-use (bubble) cover",
-    "Intersystem grounding bridge",
-    "½-in PVC for the ground run",
-    "Male adapters, locknuts & bushings",
-    "Straps"
-   ],
-   "trackUrl": "https://sharmaelechvac.github.io/exj-root-tracker/601/"
-  },
-  {
-   "start": "2:25 PM",
-   "end": "3:25 PM",
-   "title": "W Eunice Dr — walk",
-   "who": "Z Brothers",
-   "address": "W Eunice Dr, Citrus Springs, FL",
-   "note": "Wire in bath fans · Replace ½-in grommets with ¾-in · House number to confirm",
-   "driveFromPrev": 35,
-   "materials": [
-    "¾-in plastic Romex connectors",
-    "THHN/stripped Romex — 12 AWG copper",
-    "THHN/stripped Romex — 10 AWG CCA"
-   ],
-   "trackUrl": "https://sharmaelechvac.github.io/sharmatrack-crew/"
-  }
- ],
- "updatedAt": "2026-11-15T19:14:00-05:00"
+  "date": "2026-11-16",
+  "dayLabel": "Monday, November 16",
+  "start": "6117 Arbor Watch Loop, Orlando, FL",
+  "stops": [
+    {
+      "start": "8:00 AM",
+      "end": "8:30 AM",
+      "title": "City Electric Supply — pickup",
+      "who": null,
+      "address": "City Electric Supply, Altamonte Springs, FL",
+      "note": "Pickup for the three EXJ TUG installs",
+      "driveFromPrev": null,
+      "materials": [
+        "Siemens meter main combo",
+        "Intersystem grounding bridge",
+        "Bell boxes",
+        "½-in PVC (2 sticks)",
+        "½-in male adapters",
+        "¾-in plastic Romex connectors",
+        "THHN/stripped Romex — 12 AWG copper",
+        "THHN/stripped Romex — 10 AWG CCA"
+      ]
+    },
+    {
+      "start": "9:45 AM",
+      "end": "10:30 AM",
+      "title": "178 Fisher Loop — electrical underground",
+      "who": "BR Ross Construction",
+      "address": "178 Fisher Loop, Ocklawaha, FL",
+      "note": "County inspection today · Permit BLDR-26-07-18596",
+      "driveFromPrev": 75,
+      "materials": [
+        "¾-in PVC",
+        "¾-in 90s",
+        "PVC cement",
+        "Pull string",
+        "Stub-up cap / protection"
+      ]
+    },
+    {
+      "start": "11:10 AM",
+      "end": "11:55 AM",
+      "title": "614 Marion Oaks Trail — underground",
+      "who": "Z Brothers Construction",
+      "address": "614 Marion Oaks Trail, Ocala, FL",
+      "note": "Santiago Plan 2118 · Block 971, Lot 09",
+      "driveFromPrev": 40,
+      "materials": [
+        "¾-in PVC",
+        "¾-in 90s",
+        "Mineralac straps (2 min)",
+        "PVC cement",
+        "Pull string"
+      ],
+      "trackUrl": "https://sharmaelechvac.github.io/sharmatrack-crew/"
+    },
+    {
+      "start": "12:05 PM",
+      "end": "12:35 PM",
+      "title": "14065 SW 48th Ave — TUG install",
+      "who": "EXJ Root",
+      "address": "14065 SW 48th Ave, Ocala, FL",
+      "note": "TUG inspection Tue 11/17 · #261557-2026",
+      "driveFromPrev": 10,
+      "materials": [
+        "Siemens meter main combo",
+        "GFCI outlet + breaker",
+        "Extra-duty while-in-use (bubble) cover",
+        "Intersystem grounding bridge",
+        "½-in PVC for the ground run",
+        "Male adapters, locknuts & bushings",
+        "Straps"
+      ],
+      "trackUrl": "https://sharmaelechvac.github.io/exj-root-tracker/14065/",
+      "livingSf": 2123,
+      "underRoofSf": 2788
+    },
+    {
+      "start": "12:45 PM",
+      "end": "1:15 PM",
+      "title": "16321 SW 26th Terrace Rd — TUG install",
+      "who": "EXJ Root",
+      "address": "16321 SW 26th Terrace Rd, Ocala, FL",
+      "note": "TUG inspection Tue 11/17 · #261558-2026",
+      "driveFromPrev": 10,
+      "materials": [
+        "Siemens meter main combo",
+        "GFCI outlet + breaker",
+        "Extra-duty while-in-use (bubble) cover",
+        "Intersystem grounding bridge",
+        "½-in PVC for the ground run",
+        "Male adapters, locknuts & bushings",
+        "Straps"
+      ],
+      "trackUrl": "https://sharmaelechvac.github.io/exj-root-tracker/16321/",
+      "livingSf": 2325,
+      "underRoofSf": 3076
+    },
+    {
+      "start": "1:20 PM",
+      "end": "1:50 PM",
+      "title": "601 Marion Oaks Golf Rd — TUG install",
+      "who": "EXJ Root",
+      "address": "601 Marion Oaks Golf Rd, Ocala, FL",
+      "note": "TUG inspection Tue 11/17 · #261556-2026",
+      "driveFromPrev": 5,
+      "materials": [
+        "Siemens meter main combo",
+        "GFCI outlet + breaker",
+        "Extra-duty while-in-use (bubble) cover",
+        "Intersystem grounding bridge",
+        "½-in PVC for the ground run",
+        "Male adapters, locknuts & bushings",
+        "Straps"
+      ],
+      "trackUrl": "https://sharmaelechvac.github.io/exj-root-tracker/601/",
+      "livingSf": 2325,
+      "underRoofSf": 3076
+    },
+    {
+      "start": "2:25 PM",
+      "end": "3:25 PM",
+      "title": "W Eunice Dr — walk",
+      "who": "Z Brothers",
+      "address": "W Eunice Dr, Citrus Springs, FL",
+      "note": "Wire in bath fans · Replace ½-in grommets with ¾-in · House number to confirm",
+      "driveFromPrev": 35,
+      "materials": [
+        "¾-in plastic Romex connectors",
+        "THHN/stripped Romex — 12 AWG copper",
+        "THHN/stripped Romex — 10 AWG CCA"
+      ],
+      "trackUrl": "https://sharmaelechvac.github.io/sharmatrack-crew/"
+    }
+  ],
+  "updatedAt": "2026-11-15T19:14:00-05:00"
 }
