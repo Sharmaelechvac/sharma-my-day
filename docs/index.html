@@ -275,9 +275,10 @@ fetch('data.json', {cache:'no-store'}).then(r => r.json()).then(d => {
     const meta = [s.who, rest].filter(Boolean).join(' · ');
     if (meta) h += '<div class="meta">' + esc(meta) + '</div>';
     if (s.note) h += '<div class="meta">' + esc(s.note) + '</div>';
-    h += '<div class="actions"><a class="nav-btn' + (isNext ? '' : ' outline') + '" href="' + mapsDir(s.address) + '"' + (isDone ? ' style="display:none"' : '') + '>Navigate</a>' +
-         (s.trackUrl ? '<span class="track"><a href="' + esc(s.trackUrl) + '">SHARMATRACK job page</a></span>' : '') + '</div>';
     const b = brandFor(s);
+    const jobUrl = s.trackUrl || (b && b.link);
+    h += '<div class="actions"><a class="nav-btn' + (isNext ? '' : ' outline') + '" href="' + mapsDir(s.address) + '"' + (isDone ? ' style="display:none"' : '') + '>Navigate</a>' +
+         (jobUrl ? '<span class="track"><a href="' + esc(jobUrl) + '">SHARMATRACK job page</a></span>' : '') + '</div>';
     if (b) {
       h += '<div class="brand">' +
         (b.logo ? '<img src="' + b.logo + '" alt="' + esc(b.alt) + '">' : '<span class="bbadge">' + esc(b.badge) + '</span>') +

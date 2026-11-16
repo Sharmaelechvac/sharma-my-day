@@ -142,6 +142,13 @@ def main():
         if s.get("note"):
             c.drawString(L + 18, y, s["note"])
             y -= 12
+        if s.get("trackUrl"):
+            c.setFillColor(NAVY)
+            c.setFont("Helvetica", 8.5)
+            c.drawString(L + 18, y, "Job page: " + s["trackUrl"])
+            c.setFillColor(GRAY)
+            c.setFont("Helvetica", 9.5)
+            y -= 12
         for m in mats:
             box(c, L + 18, y - 2, 8)
             c.setFillColor(INK)
