@@ -1,15 +1,32 @@
 {
  "date": "2026-11-16",
  "dayLabel": "Monday, November 16",
+ "start": "6117 Arbor Watch Loop, Orlando, FL",
  "stops": [
   {
-   "start": "9:00 AM",
-   "end": "9:45 AM",
+   "start": "8:00 AM",
+   "end": "8:30 AM",
+   "title": "City Electric Supply — pickup",
+   "who": null,
+   "address": "City Electric Supply, Altamonte Springs, FL",
+   "note": "Pickup for the three EXJ TUG installs",
+   "driveFromPrev": null,
+   "materials": [
+    "Meters (3)",
+    "Grounding bridges (3)",
+    "Bell boxes",
+    "½-in PVC (2 sticks)",
+    "½-in male adapters"
+   ]
+  },
+  {
+   "start": "9:45 AM",
+   "end": "10:30 AM",
    "title": "178 Fisher Loop — electrical underground",
    "who": "BR Ross Construction",
    "address": "178 Fisher Loop, Ocklawaha, FL",
    "note": "County inspection today · Permit BLDR-26-07-18596",
-   "driveFromPrev": null,
+   "driveFromPrev": 75,
    "materials": [
     "PVC conduit + 90° sweep (island run)",
     "PVC cement",
@@ -18,8 +35,8 @@
    ]
   },
   {
-   "start": "10:25 AM",
-   "end": "11:10 AM",
+   "start": "11:10 AM",
+   "end": "11:55 AM",
    "title": "614 Marion Oaks Trail — underground",
    "who": "Z Brothers Construction",
    "address": "614 Marion Oaks Trail, Ocala, FL",
@@ -34,8 +51,8 @@
    ]
   },
   {
-   "start": "11:20 AM",
-   "end": "11:50 AM",
+   "start": "12:05 PM",
+   "end": "12:35 PM",
    "title": "14065 SW 48th Ave — TUG install",
    "who": "EXJ Root",
    "address": "14065 SW 48th Ave, Ocala, FL",
@@ -53,8 +70,8 @@
    ]
   },
   {
-   "start": "12:00 PM",
-   "end": "12:30 PM",
+   "start": "12:45 PM",
+   "end": "1:15 PM",
    "title": "16321 SW 26th Terrace Rd — TUG install",
    "who": "EXJ Root",
    "address": "16321 SW 26th Terrace Rd, Ocala, FL",
@@ -72,8 +89,8 @@
    ]
   },
   {
-   "start": "12:35 PM",
-   "end": "1:05 PM",
+   "start": "1:20 PM",
+   "end": "1:50 PM",
    "title": "601 Marion Oaks Golf Rd — TUG install",
    "who": "EXJ Root",
    "address": "601 Marion Oaks Golf Rd, Ocala, FL",
@@ -91,8 +108,8 @@
    ]
   },
   {
-   "start": "1:40 PM",
-   "end": "2:40 PM",
+   "start": "2:25 PM",
+   "end": "3:25 PM",
    "title": "W Eunice Dr — walk",
    "who": "Z Brothers",
    "address": "W Eunice Dr, Citrus Springs, FL",

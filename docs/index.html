@@ -5,89 +5,343 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>My Day — Sharma Electric &amp; HVAC</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  :root{
+    --navy:#264387; --dnavy:#1a2f61; --gold:#F0A846; --ink:#1d2433;
+    --gray:#5b6478; --line:#dfe4ee; --page:#f4f6fb;
+    --head:'Barlow Semi Condensed',sans-serif; --body:'Inter',sans-serif; --mono:'IBM Plex Mono',monospace;
+  }
   * { margin:0; padding:0; box-sizing:border-box; }
-  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; background:#f2f5f9; color:#14202e; }
-  header { background:#0058a3; color:#fff; padding:22px 18px 18px; }
-  header .brand { font-size:13px; letter-spacing:2px; text-transform:uppercase; opacity:.85; }
-  header h1 { font-size:34px; font-weight:800; margin-top:2px; }
-  header .day { font-size:17px; margin-top:2px; opacity:.95; }
-  main { max-width:640px; margin:0 auto; padding:14px 12px 30px; }
-  .drive { display:flex; align-items:center; gap:8px; margin:10px 4px; color:#5a6b7d; font-size:14px; font-weight:600; }
-  .drive::before, .drive::after { content:""; flex:1; border-top:2px dashed #c3d2e2; }
-  .stop { background:#fff; border-radius:14px; padding:16px; box-shadow:0 1px 4px rgba(10,40,70,.10); border-left:6px solid #0058a3; }
-  .stop .time { font-size:21px; font-weight:800; color:#0058a3; }
-  .stop h2 { font-size:19px; font-weight:700; margin-top:3px; line-height:1.25; }
-  .stop .who { font-size:15px; color:#40536a; margin-top:2px; }
-  .stop .note { font-size:14px; color:#5a6b7d; margin-top:6px; }
-  .stop a.nav { display:inline-block; margin-top:10px; background:#0058a3; color:#fff; text-decoration:none; font-weight:700; font-size:15px; padding:10px 16px; border-radius:9px; }
-  .stop a.nav:active { background:#004a87; }
-  .stop .mats { margin-top:10px; background:#eef4fa; border-radius:9px; padding:10px 12px; }
-  .stop .mats .mh { font-size:13px; font-weight:800; letter-spacing:1px; color:#0058a3; text-transform:uppercase; }
-  .stop .mats ul { margin:6px 0 0 18px; font-size:15px; line-height:1.45; }
-  .load { background:#fff; border-radius:14px; padding:16px; box-shadow:0 1px 4px rgba(10,40,70,.10); border-top:6px solid #e8a33d; margin-bottom:6px; }
-  .load h2 { font-size:17px; font-weight:800; color:#14202e; }
-  .load ul { margin:8px 0 0 18px; font-size:15px; line-height:1.5; }
-  .load .cnt { color:#0058a3; font-weight:700; }
-  .addr { font-size:15px; margin-top:6px; color:#14202e; }
-  footer { max-width:640px; margin:0 auto; padding:0 16px 26px; color:#7b8b9d; font-size:13px; text-align:center; }
-  .empty { background:#fff; border-radius:14px; padding:22px 16px; text-align:center; font-size:17px; box-shadow:0 1px 4px rgba(10,40,70,.10); }
+  html { -webkit-text-size-adjust:100%; }
+  body { font-family:var(--body); background:var(--page); color:var(--ink); font-size:16px; line-height:1.45; }
+
+  header { background:#fff; border-bottom:3px solid var(--gold); }
+  .head-in { max-width:780px; margin:0 auto; padding:13px 16px; display:flex; align-items:center; justify-content:space-between; gap:14px; }
+  .head-in img.logo { height:52px; width:auto; display:block; }
+  .head-in .app { font-family:var(--head); font-weight:700; font-size:27px; color:var(--dnavy); letter-spacing:.6px; white-space:nowrap; text-transform:uppercase; }
+
+  main { max-width:780px; margin:0 auto; padding:0 14px 34px; }
+
+  /* ---- mission band ---- */
+  .mission { background:var(--dnavy); color:#fff; margin:0 -14px; padding:22px 18px 20px; }
+  .mission .kick { font-family:var(--head); font-weight:700; font-size:14px; letter-spacing:2.2px; color:var(--gold); text-transform:uppercase; }
+  .mission h1 { font-family:var(--head); font-weight:700; font-size:38px; line-height:1.02; margin-top:3px; }
+  .mission .plan { margin-top:7px; font-size:16.5px; color:#e8ecf6; }
+  .mission .plan b { color:#fff; }
+  .stats { display:flex; gap:0; margin-top:16px; border-top:1px solid #3a4f86; }
+  .stat { flex:1; padding:10px 10px 2px 0; }
+  .stat + .stat { padding-left:14px; border-left:1px solid #3a4f86; }
+  .stat .v { font-family:var(--mono); font-weight:600; font-size:19px; color:#fff; white-space:nowrap; }
+  .stat .k { font-size:11.5px; font-weight:600; letter-spacing:1.4px; color:#aebadd; text-transform:uppercase; margin-top:1px; }
+  .prog { margin-top:15px; }
+  .prog .bar { height:9px; background:#3a4f86; border-radius:3px; overflow:hidden; }
+  .prog .fill { height:100%; background:var(--gold); width:0%; transition:width .35s ease; }
+  .prog .lbl { display:flex; justify-content:space-between; margin-top:6px; font-family:var(--mono); font-size:13px; color:#e8ecf6; }
+  .prog .lbl b { color:var(--gold); font-weight:600; }
+
+  /* ---- up next ---- */
+  .upnext { background:#fff; border:2px solid var(--gold); border-radius:5px; padding:15px 17px 16px; margin-top:18px; }
+  .upnext .kick { font-family:var(--head); font-weight:700; font-size:14px; letter-spacing:2px; color:var(--navy); text-transform:uppercase; }
+  .upnext .kick b { color:#b97c1e; }
+  .upnext h2 { font-family:var(--head); font-weight:700; font-size:27px; line-height:1.08; color:var(--ink); margin-top:3px; }
+  .upnext .meta { font-family:var(--mono); font-size:14.5px; color:var(--navy); font-weight:600; margin-top:4px; }
+  .upnext .addr { margin-top:3px; color:var(--gray); font-size:15.5px; }
+  .upnext a.nav { margin-top:12px; }
+
+  /* ---- panels ---- */
+  .panel { background:#fff; border:1px solid var(--line); border-radius:5px; padding:16px 18px; }
+  .panel h2.sec { font-family:var(--head); font-weight:700; font-size:22px; color:var(--navy);
+    border-bottom:2px solid var(--gold); padding-bottom:6px; margin-bottom:10px; }
+  .load { margin-top:18px; }
+  .load .hint { font-size:13.5px; color:var(--gray); margin:-4px 0 8px; }
+
+  /* checklists */
+  ul.check { list-style:none; }
+  ul.check li { padding:4px 0; }
+  ul.check label { display:flex; align-items:flex-start; gap:10px; cursor:pointer; font-size:16px; padding:3px 0; }
+  ul.check input { appearance:none; flex:0 0 auto; width:21px; height:21px; margin-top:1px;
+    border:2px solid var(--navy); border-radius:4px; background:#fff; cursor:pointer; position:relative; }
+  ul.check input:checked { background:var(--gold); border-color:var(--gold); }
+  ul.check input:checked::after { content:""; position:absolute; left:6px; top:2px; width:5px; height:10px;
+    border:solid var(--dnavy); border-width:0 3px 3px 0; transform:rotate(42deg); }
+  ul.check input:checked + span { color:var(--gray); text-decoration:line-through; }
+  .load .cnt { font-family:var(--mono); font-size:13px; color:var(--gray); margin-left:6px; text-decoration:none; display:inline-block; }
+
+  /* ---- drawn route ---- */
+  .route { position:relative; margin-top:8px; }
+  .route::before { content:""; position:absolute; left:19px; top:26px; bottom:30px; width:3px; background:var(--navy); }
+  .node-row { position:relative; padding-left:52px; }
+  .node { position:absolute; left:5px; top:16px; width:31px; height:31px; border-radius:50%;
+    background:var(--navy); color:#fff; font-family:var(--mono); font-weight:600; font-size:14.5px;
+    display:flex; align-items:center; justify-content:center; border:3px solid var(--page); z-index:1; }
+  .node.start, .node.finish { background:var(--dnavy); font-size:12px; letter-spacing:.3px; }
+  .node.next { background:var(--gold); color:var(--dnavy); }
+  .node.done { background:#fff; color:var(--navy); border-color:var(--navy); }
+  .driveleg { position:relative; margin:2px 0 2px 52px; }
+  .driveleg span { display:inline-block; font-family:var(--mono); font-size:12.5px; font-weight:600; letter-spacing:.6px;
+    color:var(--gray); background:var(--page); border:1px solid var(--line); border-radius:20px; padding:3px 11px; text-transform:uppercase; }
+  .startcard, .finishcard { margin:14px 0 14px 0; padding:13px 17px; }
+  .startcard .slabel, .finishcard .slabel { font-family:var(--head); font-weight:700; font-size:15px; letter-spacing:1.8px; color:var(--navy); text-transform:uppercase; }
+  .startcard .saddr { font-size:16px; margin-top:2px; }
+  .finishcard .saddr { font-family:var(--mono); font-size:15px; color:var(--gray); margin-top:2px; }
+
+  /* ---- stop cards ---- */
+  .stop { margin:12px 0; padding:15px 17px 16px; }
+  .stop.isnext { border:2px solid var(--gold); }
+  .stop.isdone { opacity:.62; }
+  .stop .top { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .stop .time { font-family:var(--mono); font-weight:600; font-size:17.5px; color:var(--navy); }
+  .stop .dur { font-family:var(--mono); font-size:12.5px; font-weight:600; color:var(--gray);
+    border:1px solid var(--line); border-radius:20px; padding:2px 9px; }
+  .stop .tag { font-family:var(--head); font-weight:700; font-size:13px; letter-spacing:1.4px; text-transform:uppercase;
+    background:var(--gold); color:var(--dnavy); border-radius:3px; padding:3px 8px 2px; }
+  .stop .tag.insp { background:var(--dnavy); color:var(--gold); }
+  .stop h2.title { font-family:var(--head); font-weight:700; font-size:24px; line-height:1.12; color:var(--ink); margin-top:8px; }
+  .stop .who { display:inline-block; margin-top:5px; font-size:13px; font-weight:700; letter-spacing:1.1px;
+    text-transform:uppercase; color:var(--navy); background:var(--page); border:1px solid var(--line); border-radius:3px; padding:3px 8px 2px; }
+  .stop .addr { font-size:16px; margin-top:7px; }
+  .stop .note { font-size:15.5px; color:var(--gray); margin-top:4px; }
+  .stop .mats { margin-top:12px; border-top:1px solid var(--line); padding-top:10px; }
+  .stop .mats h3 { font-family:var(--head); font-weight:700; font-size:17px; color:var(--navy);
+    border-bottom:2px solid var(--gold); padding-bottom:5px; margin-bottom:7px; }
+  .stop .mats .none { font-size:15.5px; color:var(--gray); }
+  a.nav { display:flex; align-items:center; justify-content:center; min-height:49px; margin-top:13px;
+    background:var(--navy); color:#fff; text-decoration:none; font-weight:600; font-size:16px; border-radius:5px; }
+  a.nav:active { background:var(--dnavy); }
+  .donebtn { display:flex; align-items:center; justify-content:center; min-height:45px; width:100%; margin-top:9px;
+    background:#fff; color:var(--navy); border:2px solid var(--navy); border-radius:5px;
+    font-family:var(--body); font-weight:700; font-size:15.5px; cursor:pointer; }
+  .donebtn.on { background:var(--gold); border-color:var(--gold); color:var(--dnavy); }
+
+  .empty { margin-top:18px; font-size:16px; }
+  footer { max-width:780px; margin:0 auto; padding:4px 16px 30px; color:var(--gray); font-size:13.5px; text-align:center; }
+  footer .mono { font-family:var(--mono); }
+  @media (max-width:480px){
+    .head-in img.logo{height:44px} .head-in .app{font-size:23px}
+    .mission h1{font-size:33px} .stat .v{font-size:16.5px}
+    .route::before{left:17px} .node{left:3px}
+  }
 </style>
 </head>
 <body>
 <header>
-  <div class="brand">Sharma Electric &amp; HVAC</div>
-  <h1>MY DAY</h1>
-  <div class="day" id="dayLabel">Loading…</div>
+  <div class="head-in">
+    <img class="logo" src="logo.png" alt="Sharma Electric &amp; HVAC">
+    <div class="app">My Day</div>
+  </div>
 </header>
-<main id="stops"></main>
+<main>
+  <div class="mission" id="mission" hidden>
+    <div class="kick">The mission</div>
+    <h1 id="dayLabel">Loading…</h1>
+    <div class="plan" id="planLine"></div>
+    <div class="stats" id="stats"></div>
+    <div class="prog" id="prog" hidden>
+      <div class="bar"><div class="fill" id="progFill"></div></div>
+      <div class="lbl"><span id="progText"></span><span id="progPct"></span></div>
+    </div>
+  </div>
+  <div id="upnext"></div>
+  <div id="stops"></div>
+</main>
 <footer id="foot"></footer>
 <script>
+function parseTime(t) {
+  const m = /(\d+):(\d+)\s*(AM|PM)/i.exec(t || '');
+  if (!m) return null;
+  let h = +m[1] % 12; if (/PM/i.test(m[3])) h += 12;
+  return h * 60 + (+m[2]);
+}
+function fmtDur(min) {
+  if (!min) return '';
+  return min >= 60 ? Math.floor(min / 60) + 'h ' + String(min % 60).padStart(2, '0') + 'm' : min + ' min';
+}
+const store = {
+  get(k, f) { try { return JSON.parse(localStorage.getItem(k)) ?? f; } catch { return f; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+};
+
 fetch('data.json', {cache:'no-store'}).then(r => r.json()).then(d => {
-  document.getElementById('dayLabel').textContent = d.dayLabel || '';
+  const stops = d.stops || [];
+  const key = 'myday-' + (d.date || '');
+  const doneSet = new Set(store.get(key + '-done', []));
+  const checkSet = new Set(store.get(key + '-check', []));
   const main = document.getElementById('stops');
-  if (!d.stops || !d.stops.length) {
-    main.innerHTML = '<div class="empty">Nothing scheduled today. Enjoy the clear day.</div>';
+
+  document.getElementById('dayLabel').textContent = d.dayLabel || '';
+  document.getElementById('mission').hidden = false;
+
+  if (!stops.length) {
+    main.innerHTML = '<div class="panel empty">Nothing scheduled today. Enjoy the quiet.</div>';
+    document.getElementById('planLine').textContent = 'No stops on the board.';
   } else {
+    /* ---------- mission band ---------- */
+    const driveTotal = stops.reduce((a, s) => a + (s.driveFromPrev || 0), 0);
+    const kinds = [];
+    const count = (re) => stops.filter(s => re.test(s.title)).length;
+    const tug = count(/TUG install/i), und = count(/underground/i),
+          pick = count(/pickup/i), walk = count(/walk/i);
+    if (tug) kinds.push('<b>' + tug + '</b> TUG install' + (tug > 1 ? 's' : ''));
+    if (und) kinds.push('<b>' + und + '</b> underground' + (und > 1 ? 's' : ''));
+    if (pick) kinds.push('<b>' + pick + '</b> supply pickup');
+    if (walk) kinds.push('<b>' + walk + '</b> walkthrough');
+    const other = stops.length - tug - und - pick - walk;
+    if (other > 0) kinds.push('<b>' + other + '</b> more stop' + (other > 1 ? 's' : ''));
+    document.getElementById('planLine').innerHTML =
+      kinds.join(' &middot; ') + '. One truck, one route &mdash; let&rsquo;s roll.';
+    document.getElementById('stats').innerHTML =
+      '<div class="stat"><div class="v">' + stops[0].start + '</div><div class="k">First stop</div></div>' +
+      '<div class="stat"><div class="v">' + stops[stops.length - 1].end + '</div><div class="k">Day done</div></div>' +
+      '<div class="stat"><div class="v">' + fmtDur(driveTotal) + '</div><div class="k">Driving</div></div>' +
+      '<div class="stat"><div class="v">' + stops.length + '</div><div class="k">Stops</div></div>';
+
+    const prog = document.getElementById('prog');
+    function paintProgress() {
+      prog.hidden = false;
+      const n = stops.filter((_, i) => doneSet.has(i)).length;
+      document.getElementById('progFill').style.width = (stops.length ? (n / stops.length) * 100 : 0) + '%';
+      document.getElementById('progText').innerHTML =
+        n === stops.length ? '<b>Day complete.</b> Every stop done.' :
+        '<b>' + n + ' of ' + stops.length + '</b> stops done';
+      document.getElementById('progPct').textContent = Math.round((n / stops.length) * 100) + '%';
+    }
+
+    /* ---------- where are we in the day ---------- */
+    const now = new Date();
+    const todayStr = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+    const nowMin = now.getHours() * 60 + now.getMinutes();
+    let nextIdx = -1, nowIdx = -1;
+    if (d.date === todayStr) {
+      stops.forEach((s, i) => {
+        const a = parseTime(s.start), b = parseTime(s.end);
+        if (a !== null && b !== null && nowMin >= a && nowMin < b) nowIdx = i;
+        if (a !== null && nowMin < a && nextIdx === -1) nextIdx = i;
+      });
+    }
+    const focusIdx = nowIdx >= 0 ? nowIdx : (nextIdx >= 0 ? nextIdx : 0);
+
+    /* ---------- up next ---------- */
+    const fs = stops[focusIdx];
+    const fmaps = 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(fs.address || fs.title);
+    const un = document.createElement('section');
+    un.className = 'upnext';
+    un.innerHTML =
+      '<div class="kick">' + (nowIdx >= 0 ? 'Happening <b>now</b>' : (d.date === todayStr ? 'Up <b>next</b>' : 'First <b>up</b>')) + '</div>' +
+      '<h2>' + fs.title + '</h2>' +
+      '<div class="meta">' + fs.start + ' &ndash; ' + fs.end + (fs.who ? ' &middot; ' + fs.who : '') + '</div>' +
+      (fs.address ? '<div class="addr">' + fs.address + '</div>' : '') +
+      '<a class="nav" href="' + fmaps + '" target="_blank" rel="noopener">Navigate</a>';
+    document.getElementById('upnext').appendChild(un);
+
+    /* ---------- load the truck ---------- */
     const counts = {};
-    d.stops.forEach(s => (s.materials || []).forEach(m => { counts[m] = (counts[m] || 0) + 1; }));
+    stops.forEach(s => (s.materials || []).forEach(m => { counts[m] = (counts[m] || 0) + 1; }));
     const items = Object.keys(counts);
     if (items.length) {
       const load = document.createElement('section');
-      load.className = 'load';
-      load.innerHTML = '<h2>🧰 LOAD THE TRUCK — everything for today</h2><ul>' +
-        items.map(m => '<li>' + m + (counts[m] > 1 ? ' <span class="cnt">× ' + counts[m] + ' stops</span>' : '') + '</li>').join('') +
-        '</ul>';
+      load.className = 'panel load';
+      load.innerHTML = '<h2 class="sec">Load the truck</h2>' +
+        '<div class="hint">Everything for the whole route, in one list. Tick it off as it goes on the truck.</div><ul class="check">' +
+        items.map(m => {
+          const id = 'load|' + m;
+          return '<li><label><input type="checkbox" data-check="' + id + '"' + (checkSet.has(id) ? ' checked' : '') + '><span>' +
+            m + (counts[m] > 1 ? '<span class="cnt">&times; ' + counts[m] + ' stops</span>' : '') + '</span></label></li>';
+        }).join('') + '</ul>';
       main.appendChild(load);
     }
-    d.stops.forEach((s, i) => {
+
+    /* ---------- the drawn route ---------- */
+    const route = document.createElement('div');
+    route.className = 'route';
+    main.appendChild(route);
+
+    if (d.start) {
+      const row = document.createElement('div');
+      row.className = 'node-row';
+      const firstNav = 'https://www.google.com/maps/dir/?api=1&origin=' + encodeURIComponent(d.start) +
+        '&destination=' + encodeURIComponent(stops[0].address || stops[0].title);
+      row.innerHTML = '<div class="node start">GO</div>' +
+        '<section class="panel startcard"><div class="slabel">Start</div>' +
+        '<div class="saddr">' + d.start + '</div>' +
+        '<a class="nav" href="' + firstNav + '" target="_blank" rel="noopener">Navigate to first stop</a></section>';
+      route.appendChild(row);
+    }
+
+    stops.forEach((s, i) => {
       if (s.driveFromPrev) {
         const dv = document.createElement('div');
-        dv.className = 'drive';
-        dv.textContent = '🚗 ' + s.driveFromPrev + ' min drive';
-        main.appendChild(dv);
+        dv.className = 'driveleg';
+        dv.innerHTML = '<span>' + s.driveFromPrev + ' min drive</span>';
+        route.appendChild(dv);
       }
-      const el = document.createElement('section');
-      el.className = 'stop';
+      const row = document.createElement('div');
+      row.className = 'node-row';
+      const done = doneSet.has(i);
+      const nodeCls = 'node' + (done ? ' done' : (i === focusIdx ? ' next' : ''));
+      const nodeTxt = done ? '&#10003;' : (i + 1);
+      const a = parseTime(s.start), b = parseTime(s.end);
+      const dur = (a !== null && b !== null && b > a) ? '<span class="dur">' + fmtDur(b - a) + '</span>' : '';
+      const insp = /inspection/i.test(s.note || '') ? '<span class="tag insp">Inspection day</span>' : '';
+      const nextTag = (!done && i === focusIdx) ? '<span class="tag">' + (nowIdx >= 0 ? 'Now' : 'Next up') + '</span>' : '';
       const maps = 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(s.address || s.title);
-      el.innerHTML =
-        '<div class="time">' + s.start + ' – ' + s.end + '</div>' +
-        '<h2>' + s.title + '</h2>' +
+      row.innerHTML = '<div class="' + nodeCls + '">' + nodeTxt + '</div>' +
+        '<section class="panel stop' + (done ? ' isdone' : (!done && i === focusIdx ? ' isnext' : '')) + '">' +
+        '<div class="top"><div class="time">' + s.start + ' &ndash; ' + s.end + '</div>' + dur + insp + nextTag + '</div>' +
+        '<h2 class="title">' + s.title + '</h2>' +
         (s.who ? '<div class="who">' + s.who + '</div>' : '') +
-        (s.address ? '<div class="addr">📍 ' + s.address + '</div>' : '') +
+        (s.address ? '<div class="addr">' + s.address + '</div>' : '') +
         (s.note ? '<div class="note">' + s.note + '</div>' : '') +
-        ((s.materials && s.materials.length)
-          ? '<div class="mats"><div class="mh">Materials needed</div><ul>' + s.materials.map(m => '<li>' + m + '</li>').join('') + '</ul></div>'
-          : '<div class="mats"><div class="mh">Materials needed</div><ul><li>None — walkthrough only</li></ul></div>') +
-        '<a class="nav" href="' + maps + '" target="_blank" rel="noopener">Navigate →</a>';
-      main.appendChild(el);
+        '<div class="mats"><h3>Materials needed</h3>' +
+          ((s.materials && s.materials.length)
+            ? '<ul class="check">' + s.materials.map(m => {
+                const id = 'stop' + i + '|' + m;
+                return '<li><label><input type="checkbox" data-check="' + id + '"' + (checkSet.has(id) ? ' checked' : '') + '><span>' + m + '</span></label></li>';
+              }).join('') + '</ul>'
+            : '<div class="none">None &mdash; walkthrough only</div>') +
+        '</div>' +
+        '<a class="nav" href="' + maps + '" target="_blank" rel="noopener">Navigate</a>' +
+        '<button class="donebtn' + (done ? ' on' : '') + '" data-done="' + i + '">' + (done ? '&#10003; Done' : 'Mark stop done') + '</button>' +
+        '</section>';
+      route.appendChild(row);
+    });
+
+    const fin = document.createElement('div');
+    fin.className = 'node-row';
+    fin.innerHTML = '<div class="node finish">&#9873;</div>' +
+      '<section class="panel finishcard"><div class="slabel">Finish</div>' +
+      '<div class="saddr">Last stop ends ' + stops[stops.length - 1].end + ' &mdash; day complete.</div></section>';
+    route.appendChild(fin);
+
+    paintProgress();
+
+    /* ---------- interactions ---------- */
+    main.addEventListener('change', (e) => {
+      const cb = e.target.closest('input[data-check]');
+      if (cb) {
+        if (cb.checked) checkSet.add(cb.dataset.check); else checkSet.delete(cb.dataset.check);
+        store.set(key + '-check', [...checkSet]);
+      }
+    });
+    main.addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-done]');
+      if (!btn) return;
+      const i = +btn.dataset.done;
+      if (doneSet.has(i)) doneSet.delete(i); else doneSet.add(i);
+      store.set(key + '-done', [...doneSet]);
+      location.reload();
     });
   }
-  document.getElementById('foot').textContent =
-    'Sharma standard: TUG install 30 min · Underground 45 min · Drive time between stops included. Updated ' +
-    new Date(d.updatedAt).toLocaleString('en-US', {month:'short', day:'numeric', hour:'numeric', minute:'2-digit'});
+
+  document.getElementById('foot').innerHTML =
+    'Sharma standard: TUG install 30 min &middot; Underground 45 min &middot; Drive time between stops included.<br>' +
+    'EC13013924 &middot; CAC1823596 &middot; Updated <span class="mono">' +
+    new Date(d.updatedAt).toLocaleString('en-US', {month:'short', day:'numeric', hour:'numeric', minute:'2-digit'}) + '</span>';
 }).catch(() => {
   document.getElementById('dayLabel').textContent = 'Could not load the schedule.';
+  document.getElementById('mission').hidden = false;
 });
 </script>
 </body>
