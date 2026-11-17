@@ -4,210 +4,234 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="robots" content="noindex">
-<title>My Day — Sharma Electric &amp; HVAC</title>
+<title>My Day — Sharma Electric & HVAC</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --navy:#264387; --navy-dark:#1a2f61; --gold:#F0A846;
-    --ink:#1d2433; --gray:#5b6478; --line:#dfe4ee; --page:#f4f6fb;
-    --r:4px;
+    --navy:#264387; --dnavy:#1a2f61; --gold:#F0A846;
+    --ink:#1d2433; --gray:#5b6478; --line:#dfe4ee; --bg:#f4f6fb;
+    --r:4px; --r2:6px;
     --head:'Barlow Semi Condensed','Arial Narrow',Arial,sans-serif;
     --body:'Inter',-apple-system,'Segoe UI',Arial,sans-serif;
     --mono:'IBM Plex Mono',Menlo,Consolas,monospace;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{-webkit-text-size-adjust:100%;}
-  body{background:var(--page);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.45;}
-  a{color:inherit;}
-  .wrap{max-width:960px;margin:0 auto;padding:0 16px;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.45;}
+  a{color:var(--navy);}
+  b{font-weight:600;}
   .mono{font-family:var(--mono);font-variant-numeric:tabular-nums;}
+  .muted{color:var(--gray);}
+  .wrap{max-width:1240px;margin:0 auto;padding:0 16px;}
+  [hidden]{display:none !important;}
 
   /* Header: white, real logo, 3px gold line */
   header.top{background:#fff;border-bottom:3px solid var(--gold);}
-  header.top .wrap{display:flex;align-items:center;gap:12px;min-height:76px;padding-top:10px;padding-bottom:10px;}
-  header.top img{height:44px;width:auto;max-width:62vw;display:block;}
-  header.top .app{margin-left:auto;text-align:right;font-family:var(--head);font-weight:700;font-size:18px;line-height:1.1;letter-spacing:.06em;text-transform:uppercase;color:var(--navy-dark);}
-  header.top .app small{display:block;font-family:var(--mono);font-weight:500;font-size:13px;letter-spacing:0;text-transform:none;color:var(--gray);margin-top:3px;}
-  @media (min-width:700px){ header.top img{height:56px;} }
+  header.top .wrap{display:flex;align-items:center;gap:14px;min-height:64px;padding-top:10px;padding-bottom:10px;}
+  header.top img{height:40px;width:auto;max-width:44vw;display:block;}
+  header.top .t{border-left:1px solid var(--line);padding-left:14px;min-width:0;}
+  header.top h1{font:700 24px/1 var(--head);color:var(--dnavy);text-transform:uppercase;letter-spacing:.03em;}
+  header.top .d{font-size:15px;line-height:1.25;color:var(--gray);margin-top:3px;}
+  @media (max-width:699px){ header.top img{height:32px;} header.top .t{padding-left:12px;} header.top h1{font-size:22px;} }
+  @media (min-width:700px){ header.top img{height:52px;} header.top h1{font-size:28px;} header.top .d{font-size:16px;} }
 
-  /* Day hero + summary strip */
-  .hero{background:#fff;border-bottom:1px solid var(--line);}
-  .hero .wrap{padding-top:16px;padding-bottom:16px;}
-  .hero-row{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;}
-  .kicker{font-family:var(--head);font-weight:700;font-size:16px;letter-spacing:.08em;text-transform:uppercase;color:var(--gray);}
-  .hero h1{font-family:var(--head);font-weight:700;font-size:32px;line-height:1.05;color:var(--navy-dark);margin-top:2px;}
-  .hero .btns{margin-left:auto;display:flex;gap:8px;}
-  .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;margin-top:14px;border:1px solid var(--line);border-radius:var(--r);background:var(--line);overflow:hidden;}
-  .stat{padding:10px 12px;background:#fff;}
-  .stat:last-child{grid-column:1/-1;}
-  .stat .n{font-family:var(--mono);font-weight:600;font-size:28px;line-height:1.1;color:var(--navy-dark);font-variant-numeric:tabular-nums;}
-  .stat .n small{font-size:16px;font-weight:500;color:var(--gray);margin-left:2px;}
-  .stat .l{font-family:var(--head);font-weight:700;font-size:16px;letter-spacing:.06em;text-transform:uppercase;color:var(--gray);}
-  @media (min-width:700px){ .stats{grid-template-columns:repeat(5,1fr);} .stat:last-child{grid-column:auto;} }
-  .progress{margin-top:12px;display:flex;align-items:center;gap:12px;}
-  .progress .bar{flex:1;height:6px;background:var(--line);border-radius:2px;overflow:hidden;}
-  .progress .bar i{display:block;height:6px;background:var(--gold);width:0;}
-  .progress .txt{font-family:var(--mono);font-size:16px;color:var(--ink);white-space:nowrap;}
+  main{padding:16px 0 8px;}
 
   /* Week picker */
-  .week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:14px;}
-  .week .chip{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:56px;border:1px solid var(--line);border-radius:var(--r);background:#fff;color:var(--navy-dark);text-decoration:none;}
-  .week .chip .dn{font-family:var(--head);font-weight:700;font-size:16px;letter-spacing:.06em;text-transform:uppercase;line-height:1;}
-  .week .chip .dd{font-family:var(--mono);font-weight:600;font-size:18px;line-height:1.2;}
-  .week a.chip{border-color:var(--navy);}
-  .week .chip.on{background:var(--navy);border-color:var(--navy);color:#fff;border-bottom:4px solid var(--gold);}
-  .week .chip.off{background:var(--page);color:var(--gray);}
+  .days-wrap{background:#fff;border:1px solid var(--line);border-radius:var(--r2);padding:2px 6px;margin-bottom:14px;}
+  .days{display:flex;}
+  .days > *{flex:1;min-width:0;min-height:52px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--gray);text-decoration:none;font-size:15px;border-bottom:3px solid transparent;line-height:1.2;}
+  .days .n{font-family:var(--mono);font-size:16px;font-weight:500;}
+  .days a{color:var(--navy);}
+  .days a .dn{text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px;}
+  .days .on{color:var(--dnavy);font-weight:600;border-bottom-color:var(--gold);}
+  .days .on .n{font-weight:600;}
+  .days .off{color:#9aa2b3;}
 
-  /* Tabs */
-  .tabs{display:flex;gap:0;margin-top:14px;border:1px solid var(--navy);border-radius:var(--r);overflow:hidden;}
-  .tab{flex:1;min-height:52px;border:none;background:#fff;color:var(--navy);font-family:var(--head);font-weight:700;font-size:20px;letter-spacing:.04em;text-transform:uppercase;cursor:pointer;}
-  .tab + .tab{border-left:1px solid var(--navy);}
-  .tab.on{background:var(--navy);color:#fff;}
-  .tab .cnt{font-family:var(--mono);font-size:16px;font-weight:600;background:var(--gold);color:var(--navy-dark);border-radius:3px;padding:0 7px;margin-left:8px;}
-  .tab .cnt:empty{display:none;}
+  /* Masthead */
+  .mast{text-align:center;background:#fff;border:1px solid var(--line);border-bottom:3px solid var(--dnavy);border-radius:var(--r2) var(--r2) 0 0;padding:14px 16px 12px;}
+  .mast .paper{font:700 14px/1 var(--head);letter-spacing:.18em;color:var(--gray);text-transform:uppercase;}
+  .mast .title{font:700 48px/.95 var(--head);margin:8px 0 6px;letter-spacing:.02em;color:var(--dnavy);text-transform:uppercase;}
+  .mast .rule{height:2px;background:var(--gold);margin:8px 0;}
+  .mast .dateline{font:500 13px/1.5 var(--mono);color:var(--gray);display:flex;flex-direction:column;align-items:center;gap:1px;text-transform:uppercase;letter-spacing:.02em;}
+  .mast .dateline .ed{color:var(--dnavy);font-weight:600;}
+  @media (min-width:900px){ .mast .title{font-size:64px;} .mast .dateline{font-size:14px;} }
 
-  /* Panels and section heads */
-  main{padding:16px 0 8px;}
-  .panel{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:16px;}
-  .panel > h2{font-family:var(--head);font-weight:700;font-size:24px;line-height:1.1;color:var(--navy-dark);padding-bottom:6px;border-bottom:2px solid var(--gold);margin-bottom:4px;display:flex;align-items:baseline;gap:10px;}
-  .panel > h2 .sub{margin-left:auto;font-family:var(--mono);font-weight:500;font-size:16px;color:var(--gray);}
-  @media (min-width:900px){
-    .grid{display:grid;grid-template-columns:1.35fr 1fr;gap:16px;align-items:start;}
-    .grid .panel{margin-bottom:16px;}
-  }
+  /* Lead story = first stop */
+  .lead{background:#fff;border:1px solid var(--line);border-top:0;border-radius:0 0 var(--r2) var(--r2);padding:16px;}
+  .kicker{font:700 13px/1 var(--head);color:var(--gold);text-transform:uppercase;letter-spacing:.14em;margin-bottom:6px;}
+  .lead h2{font:700 32px/1.05 var(--head);color:var(--dnavy);margin:0 0 8px;text-transform:uppercase;letter-spacing:.02em;overflow-wrap:anywhere;}
+  .lead .deck{font-size:18px;line-height:1.45;color:var(--ink);margin:0 0 4px;}
+  .lead .who{font-size:16px;color:var(--ink);margin-top:4px;}
+  @media (min-width:900px){ .lead{padding:20px 24px;} .lead h2{font-size:40px;} .lead .deck{font-size:19px;max-width:860px;} }
+
+  .fact{display:grid;grid-template-columns:76px 1fr;gap:10px;padding:10px 0;border-top:1px solid var(--line);font-size:16px;}
+  .fact .k{font:600 14px/1.5 var(--mono);color:var(--dnavy);white-space:nowrap;}
+  .fact .k small{display:block;font-size:12px;font-weight:500;color:var(--gray);}
+  .fact > div:last-child{min-width:0;}
+  .lead .fact{margin-top:14px;}
 
   /* Buttons */
-  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;min-width:48px;padding:0 16px;border:1px solid var(--navy);border-radius:var(--r);background:#fff;color:var(--navy);font-family:var(--head);font-weight:700;font-size:18px;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;cursor:pointer;white-space:nowrap;}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;min-width:48px;padding:0 18px;border:1px solid var(--navy);border-radius:var(--r2);background:#fff;color:var(--navy);font:600 16px/1 var(--body);text-decoration:none;cursor:pointer;white-space:nowrap;}
   .btn.solid{background:var(--navy);color:#fff;}
-  .btn:active{background:var(--navy-dark);color:#fff;}
+  .btn:active{background:var(--dnavy);border-color:var(--dnavy);color:#fff;}
+  .btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
+  .navrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:10px;}
+  .lnk{font-size:16px;font-weight:600;color:var(--navy);text-decoration:none;border-bottom:2px solid var(--gold);padding:12px 0 2px;}
+  .tel{color:var(--navy);font-weight:600;text-decoration:none;border-bottom:1px solid var(--gold);white-space:nowrap;}
 
-  /* Route timeline */
-  .tl{margin-top:8px;}
-  .node{display:grid;grid-template-columns:76px 24px 1fr;}
-  .node .tm{padding-top:14px;text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;}
-  .node .tm .t{font-size:18px;font-weight:600;color:var(--ink);line-height:1.2;white-space:nowrap;}
-  .node .tm .e{font-size:16px;color:var(--gray);white-space:nowrap;}
-  .rail{position:relative;}
-  .rail::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;background:var(--line);transform:translateX(-1px);}
-  .node .rail::after{content:"";position:absolute;left:50%;top:18px;width:12px;height:12px;background:#fff;border:2px solid var(--navy);border-radius:2px;transform:translateX(-50%);}
-  .node.start .rail::after{background:var(--navy);}
-  .node.next .rail::after{background:var(--gold);border-color:var(--gold);}
-  .node.done .rail::after{background:var(--line);border-color:var(--gray);}
-  .node.first .rail::before{top:20px;}
-  .node.last .rail::before{bottom:auto;height:20px;}
-  .node .bd{padding:12px 0 16px 12px;min-width:0;}
-  .node.next .bd{border-left:3px solid var(--gold);padding-left:12px;margin-left:4px;}
-  .leg{display:grid;grid-template-columns:76px 24px 1fr;min-height:40px;}
-  .leg .rail::before{background:none;width:0;border-left:2px dashed var(--navy);}
-  .leg .dv{display:flex;align-items:center;padding-left:12px;font-family:var(--mono);font-size:16px;color:var(--gray);}
-  .leg .dv b{font-weight:600;color:var(--navy-dark);margin-right:6px;}
-  .leg .dv.unk{color:var(--gray);font-style:italic;}
-  .ttl{display:flex;align-items:flex-start;gap:10px;}
-  .ttl .name{font-family:var(--head);font-weight:700;font-size:22px;line-height:1.15;color:var(--ink);flex:1;min-width:0;}
-  .node.done .name{text-decoration:line-through;color:var(--gray);}
-  .node.done .bd > *:not(.ttl){opacity:.6;}
-  .addr{margin-top:2px;font-size:16px;color:var(--gray);}
-  .job{margin-top:4px;font-size:17px;color:var(--navy);font-weight:600;}
-  .meta{margin-top:4px;font-size:16px;color:var(--ink);}
-  .sf{margin-top:6px;font-family:var(--mono);font-size:16px;color:var(--ink);}
-  .flag{display:inline-block;margin-top:8px;padding:6px 10px;border:1px solid var(--gold);border-left:6px solid var(--gold);border-radius:var(--r);background:#fff;font-family:var(--head);font-weight:700;font-size:16px;letter-spacing:.05em;text-transform:uppercase;color:var(--navy-dark);}
-  .acts{display:flex;align-items:center;gap:10px;margin-top:10px;flex-wrap:wrap;}
-  .acts .lnk{font-size:16px;font-weight:600;color:var(--navy);text-decoration:none;border-bottom:2px solid var(--gold);padding:12px 0 2px;}
-  .taskicon{width:44px;height:44px;border-radius:var(--r);flex:none;display:block;}
-  .taskbanner{display:none;width:100%;height:auto;border-radius:var(--r);margin-bottom:10px;}
-  .node.next .taskbanner{display:block;}
+  /* Flags and tags */
+  .flag{display:inline-block;margin-top:6px;padding:4px 10px;border:1px solid var(--gold);border-left:6px solid var(--gold);border-radius:var(--r);background:#fff;color:var(--dnavy);font-weight:600;font-size:15px;}
+  .crew{display:inline-flex;align-items:center;min-height:32px;font-size:15px;color:var(--gray);border:1px solid var(--line);border-radius:var(--r);padding:2px 8px;background:var(--bg);}
+
+  /* The three columns */
+  .brief-grid{display:grid;gap:0;}
+  .col{background:#fff;border:1px solid var(--line);border-radius:var(--r2);padding:12px 14px 6px;margin-top:14px;min-width:0;}
+  .col > h3{font:700 20px/1.1 var(--head);color:var(--dnavy);text-transform:uppercase;letter-spacing:.04em;padding-bottom:6px;border-bottom:2px solid var(--gold);margin:4px 0 0;display:flex;justify-content:space-between;align-items:baseline;gap:8px;}
+  .col > h3 small{font:500 15px var(--body);color:var(--gray);text-transform:none;letter-spacing:0;}
+  .col > h3.sub2{margin-top:22px;}
+  @media (min-width:900px){
+    .brief-grid{grid-template-columns:1.3fr .95fr .95fr;gap:24px;margin-top:16px;padding-top:4px;}
+    .col{background:none;border:0;border-radius:0;padding:0;margin-top:0;}
+    .col + .col{border-left:1px solid var(--line);padding-left:24px;}
+    .col > h3{font-size:19px;}
+  }
+
+  /* The run */
+  .stop .nm{display:flex;align-items:flex-start;gap:10px;}
+  .stop .nm b{font:700 19px/1.2 var(--head);color:var(--ink);flex:1;min-width:0;}
+  .stop .addr{color:var(--gray);}
+  .stop .job{color:var(--navy);font-weight:600;}
+  .stop .sf{font-family:var(--mono);font-size:14px;margin-top:4px;}
+  .stop.next{box-shadow:inset 3px 0 0 var(--gold);padding-left:8px;margin-left:-8px;}
+  .stop.done .nm b{text-decoration:line-through;color:var(--gray);}
+  .stop.done > div:last-child > *:not(.nm){opacity:.6;}
+  .nexttag{display:inline-block;font:600 11px/1 var(--mono);color:var(--dnavy);background:var(--gold);border-radius:3px;padding:3px 5px;margin-top:4px;letter-spacing:.04em;}
+  .drive{font-family:var(--mono);font-size:15px;}
+  .drive.unk{color:var(--gray);font-style:italic;}
+  .taskicon{width:36px;height:36px;border-radius:var(--r);flex:none;display:block;}
+  .taskbanner{display:none;width:100%;height:auto;border-radius:var(--r);margin:4px 0 8px;border:1px solid var(--line);}
+  .stop.next .taskbanner{display:block;}
   .brand{display:flex;align-items:center;gap:10px;margin-top:8px;}
-  .brand img{height:32px;max-width:170px;object-fit:contain;display:block;}
-  .bbadge{font-family:var(--head);font-weight:700;font-size:16px;letter-spacing:.08em;color:var(--navy-dark);border:1px solid var(--navy);border-radius:var(--r);padding:3px 10px;}
-  .mats{margin-top:10px;}
-  .mlabel{font-family:var(--head);font-weight:700;font-size:16px;letter-spacing:.06em;text-transform:uppercase;color:var(--navy);border-bottom:2px solid var(--gold);padding-bottom:3px;}
+  .brand img{height:28px;max-width:150px;object-fit:contain;display:block;}
+  .bbadge{font:700 14px/1 var(--head);letter-spacing:.08em;color:var(--dnavy);border:1px solid var(--navy);border-radius:var(--r);padding:4px 8px;}
+  .mlabel{font:700 14px/1 var(--head);letter-spacing:.08em;text-transform:uppercase;color:var(--navy);margin-top:10px;padding-bottom:4px;border-bottom:1px solid var(--line);}
 
   /* Checklists */
   .list{list-style:none;}
   .list li{border-bottom:1px solid var(--line);}
   .list li:last-child{border-bottom:none;}
   .ck{display:flex;align-items:flex-start;gap:12px;min-height:48px;padding:11px 0;cursor:pointer;}
-  .chk{appearance:none;-webkit-appearance:none;flex:none;width:26px;height:26px;margin-top:0;background:#fff;border:2px solid var(--navy);border-radius:3px;cursor:pointer;position:relative;}
+  .chk{appearance:none;-webkit-appearance:none;flex:none;width:26px;height:26px;background:#fff;border:2px solid var(--navy);border-radius:var(--r);cursor:pointer;position:relative;}
   .chk:checked{background:var(--gold);border-color:var(--gold);}
-  .chk:checked::after{content:"";position:absolute;left:7.5px;top:3px;width:6px;height:12px;border:solid var(--navy-dark);border-width:0 3px 3px 0;transform:rotate(42deg);}
-  .ck .txt{flex:1;min-width:0;font-size:17px;}
-  .off .txt{color:var(--gray);text-decoration:line-through;}
-  .ck .cnt{font-family:var(--mono);font-size:16px;color:var(--gray);flex:none;}
-  .stopck{min-height:0;padding:0;margin-top:2px;}
-  .matph{width:40px;height:40px;object-fit:cover;border-radius:3px;flex:none;border:1px solid var(--line);background:#fff;margin-top:-7px;}
-  .tasklist a.tel{color:var(--navy);font-family:var(--mono);font-weight:600;text-decoration:none;border-bottom:2px solid var(--gold);white-space:nowrap;}
+  .chk:checked::after{content:"";position:absolute;left:7.5px;top:3px;width:6px;height:12px;border:solid var(--dnavy);border-width:0 3px 3px 0;transform:rotate(42deg);}
+  .chk:focus-visible{outline:3px solid var(--gold);outline-offset:2px;}
+  .ck .txt{flex:1;min-width:0;padding-top:2px;}
+  .off .txt,.off .more{color:var(--gray);text-decoration:line-through;}
+  .ck .cnt{font-family:var(--mono);font-size:14px;color:var(--gray);flex:none;padding-top:3px;}
+  .stopck{min-height:0;padding:0;margin-top:-2px;flex:none;}
+  .matph{width:36px;height:36px;object-fit:cover;border-radius:3px;flex:none;border:1px solid var(--line);background:#fff;margin-top:-5px;}
+  .mats .ck{min-height:44px;padding:9px 0;font-size:15px;}
+
+  /* Desk tasks with a "+" for the long ones */
+  .task{display:flex;align-items:flex-start;gap:4px;}
+  .task .ck{flex:1;min-width:0;}
+  .task .txt b{font-weight:600;}
+  .task-li .more{display:none;font-size:15px;color:var(--gray);padding:0 0 12px 38px;}
+  .task-li.open .more{display:block;}
+  .plus{flex:none;width:44px;min-height:48px;border:0;background:none;color:var(--gray);font:500 20px/1 var(--mono);cursor:pointer;}
+  .plus:focus-visible{outline:3px solid var(--gold);}
 
   /* Inspections */
-  .insp{border-top:1px solid var(--line);padding:14px 0;}
-  .insp:first-of-type{border-top:none;}
-  .insp .row1{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;}
-  .insp .it{font-family:var(--mono);font-weight:600;font-size:22px;color:var(--navy-dark);}
-  .insp .ty{font-family:var(--head);font-weight:700;font-size:20px;color:var(--ink);}
-  .insp .pm{margin-left:auto;font-family:var(--mono);font-size:16px;color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:1px 8px;background:var(--page);}
-  .insp .ia{margin-top:4px;font-size:17px;font-weight:600;}
-  .insp .ip{margin-top:2px;font-size:16px;color:var(--gray);}
-  .insp .in{margin-top:4px;font-size:16px;color:var(--ink);}
-  .insp .acts .btn{font-size:17px;}
-  .crewtag{display:inline-block;margin-top:6px;font-family:var(--head);font-weight:700;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:var(--navy-dark);background:var(--page);border:1px solid var(--line);border-radius:3px;padding:2px 8px;}
+  .insp{padding:12px 0;border-bottom:1px solid var(--line);}
+  .insp:last-child{border-bottom:0;}
+  .itime{font:600 16px var(--mono);color:var(--dnavy);}
+  .insp .ty{font-weight:600;}
+  .insp .navrow{margin-top:8px;gap:8px;}
+  .insp .btn{padding:0 14px;}
+  .tmeta{font:500 14px/1.5 var(--mono);color:var(--dnavy);margin-top:2px;}
 
-  footer{padding:16px 0 32px;font-size:16px;color:var(--gray);}
-  footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:14px;}
-  .err{background:#fff;border:1px solid var(--line);border-left:6px solid var(--gold);border-radius:var(--r);padding:16px;font-size:17px;color:var(--ink);margin-top:16px;}
-  [hidden]{display:none !important;}
+  /* Utility bar and footer */
+  .util{display:flex;flex-direction:column;align-items:flex-start;gap:10px;margin-top:20px;padding-top:14px;border-top:1px solid var(--line);}
+  .util .acts{display:flex;gap:8px;flex-wrap:wrap;}
+  @media (min-width:700px){ .util{flex-direction:row;align-items:center;justify-content:space-between;} }
+  footer{padding:10px 0 16px;font-size:15px;color:var(--gray);}
+  footer .wrap{display:flex;justify-content:space-between;gap:8px 12px;flex-wrap:wrap;}
+  .err{background:#fff;border:1px solid var(--line);border-left:6px solid var(--gold);border-radius:var(--r);padding:16px;font-size:16px;color:var(--ink);}
 
-  /* Print — the paper route sheet (Letter) */
-  @page{size:Letter;margin:.5in;}
+  /* Print — the paper edition (Letter) */
+  @page{size:Letter;margin:.45in;}
   @media print{
     *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
-    body{background:#fff;font-size:12pt;}
+    body{background:#fff;font-size:9.5pt;line-height:1.35;}
     .wrap{max-width:none;padding:0;}
-    .btns,.week,.tabs,.acts .btn,#sl-lockbtn{display:none !important;}
-    #inspview{display:block !important;}
-    #app{display:block !important;}
-    .grid{display:block;}
-    .panel{break-inside:avoid;border-color:#bbb;}
-    .node,.insp{break-inside:avoid;}
+    main{padding:6pt 0 0;}
+    header.top{border-bottom-width:2pt;}
+    header.top .wrap{min-height:0;padding:0 0 6pt;}
+    header.top img{height:34pt;}
+    header.top h1{font-size:18pt;}
+    .days-wrap,.util .acts,.navrow .btn,.plus,#sl-lockbtn{display:none !important;}
+    .navrow:not(:has(.lnk,.crew)){display:none;}
+    .mast{border:0;border-bottom:2pt solid var(--dnavy);border-radius:0;padding:4pt 0 6pt;}
+    .mast .title{font-size:34pt;margin:4pt 0;}
+    .mast .rule{margin:4pt 0;}
+    .mast .dateline{font-size:8.5pt;}
+    .lead{border:0;border-radius:0;padding:8pt 0 4pt;}
+    .lead h2{font-size:22pt;}
+    .lead .deck{font-size:11pt;}
+    .fact{grid-template-columns:62pt 1fr;padding:5pt 0;font-size:9.5pt;}
+    .fact .k{font-size:8.5pt;}
+    .brief-grid{grid-template-columns:1.3fr 1fr 1fr;gap:14pt;margin-top:6pt;border-top:1pt solid var(--line);padding-top:6pt;}
+    .col{background:none;border:0;border-radius:0;padding:0;margin:0;}
+    .col + .col{border-left:1pt solid var(--line);padding-left:12pt;}
+    .col > h3{font-size:12pt;}
+    .stop .nm b{font-size:11pt;}
+    .fact,.insp,.task-li,.mats li{break-inside:avoid;}
+    .ck{min-height:0;padding:4pt 0;gap:6pt;}
+    .mats .ck{min-height:0;padding:3pt 0;font-size:9pt;}
+    .chk{width:11pt;height:11pt;border-width:1pt;}
     .chk:checked{background:#fff;border-color:var(--navy);}
     .chk:checked::after{content:none;}
-    .off .txt{color:var(--ink);text-decoration:none;}
-    .node.done .name{text-decoration:none;color:var(--ink);}
-    .node.done .bd > *{opacity:1 !important;}
-    .taskbanner{display:none !important;}
-    .acts .lnk::after{content:" — " attr(href);font-weight:400;font-size:9pt;color:var(--gray);}
-    .hero{border:none;}
+    .matph,.taskicon,.taskbanner{display:none !important;}
+    .task-li .more{display:block !important;padding:0 0 4pt 17pt;font-size:8.5pt;}
+    .off .txt,.off .more,.stop.done .nm b{color:var(--ink);text-decoration:none;}
+    .stop.done > div:last-child > *{opacity:1 !important;}
+    .stop.next{box-shadow:none;padding-left:0;margin-left:0;}
+    .nexttag{display:none;}
+    .lnk{padding:0;font-size:8.5pt;}
+    .lnk::after{content:" — " attr(href);font-weight:400;font-size:7.5pt;color:var(--gray);}
+    .itime{font-size:10pt;}
+    .drive,.tmeta,.sf{font-size:8.5pt;}
+    .mlabel{font-size:8pt;margin-top:4pt;}
+    .flag{font-size:8.5pt;padding:1pt 5pt;}
+    .crew{min-height:0;font-size:8pt;padding:0 4pt;}
+    .util{margin-top:8pt;padding-top:6pt;font-size:8.5pt;}
+    footer{padding:4pt 0 0;font-size:8pt;}
   }
 </style>
 </head>
 <body>
 <header class="top"><div class="wrap">
-  <img src="https://sharmaelechvac.github.io/sharma-ar/assets/logo.png" onerror="this.onerror=null;this.src='logo.png'" alt="Sharma Electric &amp; HVAC" width="900" height="193">
-  <div class="app">My Day<small id="updated"></small></div>
+  <img src="https://sharmaelechvac.github.io/sharma-ar/assets/logo.png" onerror="this.onerror=null;this.src='logo.png'" alt="Sharma Electric & HVAC" width="900" height="193">
+  <div class="t"><h1>My Day</h1><div class="d" id="hdrDate">&nbsp;</div></div>
 </div></header>
 
-<section class="hero" id="hero" hidden><div class="wrap">
-  <div class="hero-row">
-    <div><div class="kicker" id="kicker">Today</div><h1 id="dsDate"></h1></div>
-    <div class="btns"><button class="btn" type="button" onclick="window.print()">Print / PDF</button></div>
-  </div>
-  <div class="stats" id="stats"></div>
-  <div class="progress"><div class="bar"><i id="dsBar"></i></div><div class="txt" id="dsProg"></div></div>
-  <nav class="week" id="weeknav" hidden></nav>
-  <div class="tabs" id="tabs" hidden>
-    <button class="tab on" id="tabDay" type="button">My Day</button>
-    <button class="tab" id="tabInsp" type="button">Inspections<span class="cnt" id="inspCnt"></span></button>
-  </div>
-</div></section>
-
 <main class="wrap">
+  <nav class="days-wrap" id="weeknav" aria-label="Week" hidden><div class="days" id="days"></div></nav>
   <div id="app"><div class="err" id="loading">Loading the day…</div></div>
-  <div id="inspview" hidden></div>
+  <div class="util" id="util" hidden>
+    <span class="mono muted" id="updated"></span>
+    <div class="acts">
+      <button class="btn" type="button" onclick="location.reload()">Refresh</button>
+      <button class="btn" type="button" onclick="window.print()">Print / PDF</button>
+    </div>
+  </div>
 </main>
 
 <footer><div class="wrap">
-  <div>Sharma Electric &amp; HVAC · <span class="mono">EC13013924 · CAC1823596</span></div>
-  <div class="mono" id="updated2"></div>
+  <div>Sharma Electric & HVAC · <span class="mono" style="white-space:nowrap">EC13013924 · CAC1823596</span></div>
 </div></footer>
 
 <script src="lock.js"></script>
@@ -217,7 +241,7 @@ const mapsDir = (dest, origin) => {
   if (origin) u += '&origin=' + encodeURIComponent(origin);
   return u;
 };
-const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&','<':'<','>':'>','"':'"'}[c]));
 /* Phone numbers become tap-to-call links (text is escaped first). */
 const PHONE = /(\(?\b\d{3}\)?[\s.-]?\d{3}[\s.-]\d{4}\b|\b1-\d{3}-\d{3}-\d{4}\b)/g;
 const telify = s => esc(s).replace(PHONE, m => '<a class="tel" href="tel:' + m.replace(/\D/g, '') + '">' + m + '</a>');
@@ -258,7 +282,6 @@ const timeHTML = t => { const m = /^(.*?)\s*(AM|PM)$/i.exec(t || ''); return m ?
 const needsPurpose = s => !s.purpose && !s.who && (!s.note || /^\s*after\b/i.test(s.note));
 
 const DAYPARAM = new URLSearchParams(location.search).get('day');
-
 window.SharmaLock.load('day.enc.json', { appName: 'Sharma My Day', logo: 'https://sharmaelechvac.github.io/sharma-ar/assets/logo.png', blurb: 'Enter the office code to see your day.' }).then(bundle => {
   const isLive = !DAYPARAM || !bundle.days || !bundle.days[DAYPARAM] || DAYPARAM === (bundle.index || {}).liveDate;
   const raw = isLive ? bundle.live : bundle.days[DAYPARAM];
@@ -270,10 +293,28 @@ window.SharmaLock.load('day.enc.json', { appName: 'Sharma My Day', logo: 'https:
   document.getElementById('app').innerHTML = '<div class="err">Could not load the day. ' + esc(err && err.message ? err.message : '') + ' Check your connection and refresh.</div>';
 });
 
+/* Helpers for the brief */
+const splitTitle = s => {
+  const t = s.title || '', street = (s.address || '').split(',')[0].trim();
+  const name = t.includes(' — ') ? t.split(' — ')[0] : (t || street);
+  const job = t.includes(' — ') ? t.split(' — ').slice(1).join(' — ') : '';
+  return { name, job, street };
+};
+const sentence = x => { x = String(x || '').trim(); if (!x) return ''; x = x.charAt(0).toUpperCase() + x.slice(1); return /[.!?]$/.test(x) ? x : x + '.'; };
+const realNote = n => n && !/^\s*after\b/i.test(n);
+const streetOf = a => String(a || '').split(',')[0].trim();
+const cityOf = a => { const p = String(a || '').split(',').map(x => x.trim()).filter(Boolean); return p.length > 1 ? p[1] : ''; };
+const callLabel = c => {
+  const s = String(c || '').replace(PHONE, '').replace(/[·,\-–—\s]+$/,'').trim();
+  if (!s) return 'Call';
+  return 'Call ' + s.replace(/\bBuilding\s+/i, '');
+};
+
 function render(d, tasksObj, idx, isLive) {
   const stops = d.stops || [];
   const insps = d.inspections || [];
   const totalDrive = stops.reduce((a, s) => a + (s.driveFromPrev || 0), 0);
+  const unknownLegs = stops.filter((s, i) => s.driveFromPrev == null && (i > 0 || d.start)).length;
   const lsGet = (k, f) => { try { return JSON.parse(localStorage.getItem(k)) ?? f; } catch { return f; } };
   const lsSet = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} };
   const doneSet = new Set(lsGet('myday-' + d.date + '-done', []));
@@ -287,32 +328,16 @@ function render(d, tasksObj, idx, isLive) {
     .filter(x => !permits.some(p => String(x.text || '').includes(p)));
   const openTasks = () => tasks.filter(x => !checkSet.has('task|' + x.text)).length;
 
-  /* Hero */
-  document.getElementById('kicker').textContent = isLive ? 'My Day' : 'Saved day';
-  document.getElementById('dsDate').textContent = d.dayLabel || d.date || '';
-  const unknownLegs = stops.filter((s, i) => s.driveFromPrev == null && (i > 0 || d.start)).length;
-  const firstStart = stops[0] ? stops[0].start : '—';
-  const paintStats = () => {
-    document.getElementById('stats').innerHTML =
-      '<div class="stat"><div class="n">' + stops.length + '</div><div class="l">Stops</div></div>' +
-      '<div class="stat"><div class="n">' + insps.length + '</div><div class="l">Inspections</div></div>' +
-      '<div class="stat"><div class="n">' + totalDrive + '<small>min</small></div><div class="l">Driving' + (unknownLegs ? ' (+' + unknownLegs + ' leg?)' : '') + '</div></div>' +
-      '<div class="stat"><div class="n">' + openTasks() + '<small>/' + tasks.length + '</small></div><div class="l">Tasks open</div></div>' +
-      '<div class="stat"><div class="n">' + esc(firstStart) + '</div><div class="l">First stop</div></div>';
-  };
-  const paintStrip = () => {
-    const nx = nextIdx();
-    document.getElementById('dsProg').textContent = stops.length ? (nx >= 0 ? 'Stop ' + (nx + 1) + ' of ' + stops.length : 'Day complete') : 'No stops';
-    document.getElementById('dsBar').style.width = stops.length ? (doneCount() / stops.length * 100) + '%' : '0%';
-    paintStats();
-  };
-  document.getElementById('hero').hidden = false;
+  const dt = new Date((d.date || '') + 'T12:00:00');
+  const longDate = isNaN(dt) ? (d.dayLabel || d.date || '') : dt.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+  document.getElementById('hdrDate').textContent = (isLive ? '' : 'Saved day · ') + (d.dayLabel || longDate);
+
   if (d.updatedAt) {
     const t = new Date(String(d.updatedAt).replace(' ', 'T'));
     const s = isNaN(t) ? String(d.updatedAt) : t.toLocaleString('en-US', {month:'short', day:'numeric', hour:'numeric', minute:'2-digit'});
-    document.getElementById('updated').textContent = 'Updated ' + s;
-    document.getElementById('updated2').textContent = 'Updated ' + s + ' ET';
+    document.getElementById('updated').textContent = 'Updated ' + s + ' ET';
   }
+  document.getElementById('util').hidden = false;
 
   /* Week picker — Mon–Sun of the shown day; live day has no param, saved days use ?day= */
   if (idx && idx.days) {
@@ -323,127 +348,167 @@ function render(d, tasksObj, idx, isLive) {
     const names = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
     let nh = '';
     for (let k = 0; k < 7; k++) {
-      const dt = new Date(monday); dt.setDate(monday.getDate() + k);
-      const iso = dt.getFullYear() + '-' + String(dt.getMonth() + 1).padStart(2, '0') + '-' + String(dt.getDate()).padStart(2, '0');
-      const inner = '<span class="dn">' + names[k] + '</span><span class="dd">' + dt.getDate() + '</span>';
-      if (iso === d.date) nh += '<span class="chip on" aria-current="date">' + inner + '</span>';
-      else if (iso === liveDate) nh += '<a class="chip" href="./">' + inner + '</a>';
-      else if (archived.has(iso)) nh += '<a class="chip" href="?day=' + iso + '">' + inner + '</a>';
-      else nh += '<span class="chip off">' + inner + '</span>';
+      const x = new Date(monday); x.setDate(monday.getDate() + k);
+      const iso = x.getFullYear() + '-' + String(x.getMonth() + 1).padStart(2, '0') + '-' + String(x.getDate()).padStart(2, '0');
+      const inner = '<span class="dn">' + names[k] + '</span><span class="n">' + x.getDate() + '</span>';
+      if (iso === d.date) nh += '<span class="on" aria-current="date">' + inner + '</span>';
+      else if (iso === liveDate) nh += '<a href="./">' + inner + '</a>';
+      else if (archived.has(iso)) nh += '<a href="?day=' + iso + '">' + inner + '</a>';
+      else nh += '<span class="off">' + inner + '</span>';
     }
-    const nav = document.getElementById('weeknav');
-    nav.innerHTML = nh; nav.hidden = false;
+    document.getElementById('days').innerHTML = nh;
+    document.getElementById('weeknav').hidden = false;
   }
 
-  /* Inspections tab */
-  if (insps.length) {
-    let ih = '<div class="panel"><h2>Inspections<span class="sub">' + insps.length + ' today</span></h2>';
-    insps.forEach(x => {
-      const ph = phoneOf(x.contact);
-      const crew = /crew covers/i.test(x.note || '');
-      ih += '<div class="insp"><div class="row1"><span class="it">' + esc(x.time || '') + '</span><span class="ty">' + esc(x.type || '') + '</span>' +
-            (x.permit ? '<span class="pm">#' + esc(String(x.permit).replace(/^#/, '')) + '</span>' : '') + '</div>' +
-            '<div class="ia">' + esc(x.address || '') + '</div>' +
-            '<div class="ip">' + esc(x.inspector ? 'Inspector ' + x.inspector : '') + (x.contact ? ' · ' + telify(x.contact) : '') + '</div>' +
-            (x.note ? '<div class="in">' + esc(x.note) + '</div>' : '') +
-            (crew ? '<span class="crewtag">Crew covers</span>' : '') +
-            '<div class="acts">' + (x.address ? '<a class="btn" href="' + mapsDir(x.address) + '">Navigate</a>' : '') +
-            (ph ? '<a class="btn" href="tel:' + ph.replace(/\D/g, '') + '">Call</a>' : '') + '</div></div>';
-    });
-    ih += '</div>';
-    const inspView = document.getElementById('inspview');
-    inspView.innerHTML = ih;
-    document.getElementById('inspCnt').textContent = insps.length;
-    document.getElementById('tabs').hidden = false;
-    const appEl = document.getElementById('app');
-    const tabDay = document.getElementById('tabDay'), tabInsp = document.getElementById('tabInsp');
-    const showInsp = v => { inspView.hidden = !v; appEl.hidden = v; tabDay.classList.toggle('on', !v); tabInsp.classList.toggle('on', v); };
-    tabDay.addEventListener('click', () => showInsp(false));
-    tabInsp.addEventListener('click', () => showInsp(true));
-  }
+  /* Masthead */
+  const city = cityOf(d.start);
+  let h = '<header class="mast"><div class="paper">Sharma Electric & HVAC</div><div class="title">The Day</div><div class="rule"></div>' +
+          '<div class="dateline"><span>' + (city ? esc(city) + ' · ' : '') + esc(longDate) + '</span>' +
+          '<span id="counts"></span>' +
+          '<span id="drivect"></span>' +
+          '<span class="ed" id="edition"></span></div></header>';
 
-  /* Route timeline */
-  let r = '<div class="panel"><h2>Route<span class="sub">' + totalDrive + ' min driving</span></h2><div class="tl">';
-  if (d.start) {
-    r += '<div class="node start first' + (stops.length ? '' : ' last') + '"><div class="tm"><div class="t">Start</div></div><div class="rail"></div><div class="bd">' +
-         '<div class="ttl"><div class="name">Home</div></div><div class="addr">' + esc(d.start) + '</div>' +
-         (stops.length ? '<div class="acts"><a class="btn solid" href="' + mapsDir(stops[0].address, d.start) + '">Navigate</a></div>' : '') + '</div></div>';
+  /* Lead story — the first stop of the loaded day */
+  h += '<article class="lead">';
+  if (stops.length) {
+    const s0 = stops[0], t0 = splitTitle(s0);
+    const head = t0.name + (t0.street && !t0.name.toLowerCase().includes(t0.street.toLowerCase()) && !t0.street.toLowerCase().includes(t0.name.toLowerCase()) ? ' at ' + t0.street : '');
+    let deck = '';
+    if (s0.start) deck += s0.start + (s0.end ? ' to ' + s0.end : '') + '. ';
+    if (t0.job) deck += sentence(t0.job + (s0.who ? ' for ' + s0.who : '')) + ' ';
+    if (s0.purpose) deck += sentence(s0.purpose) + ' ';
+    if (realNote(s0.note)) deck += sentence(s0.note) + ' ';
+    if (d.start && s0.driveFromPrev) deck += s0.driveFromPrev + '-minute drive from home, ' + streetOf(d.start) + '.';
+    else if (d.start) deck += 'Drive time from home not set.';
+    h += '<div class="kicker">First stop</div><h2>' + esc(head) + '</h2><p class="deck">' + telify(deck.trim()) + '</p>';
+    if (s0.who && !t0.job) h += '<div class="who"><b>' + esc(s0.who) + '</b></div>';
+    if (needsPurpose(s0)) h += '<div class="flag">Purpose / contact not set</div>';
+    h += '<div class="navrow"><a class="btn solid" data-nav="0" href="' + mapsDir(s0.address, d.start) + '">Navigate</a></div>';
+    if (stops[1]) {
+      const s1 = stops[1], t1 = splitTitle(s1);
+      h += '<div class="fact"><div class="k">Then</div><div><b>' + esc(t1.name) + '</b>' + (t1.job ? ' — ' + esc(t1.job) : '') +
+           '<div class="tmeta">' + esc(s1.start || '') + (s1.end ? '–' + esc(s1.end) : '') +
+           (s1.driveFromPrev ? ' · ' + s1.driveFromPrev + ' min drive' : '') + '</div>' +
+           '<div class="muted">' + esc(s1.address || '') + '</div>' +
+           (needsPurpose(s1) ? '<div><span class="flag">Purpose / contact not set</span></div>' : '') +
+           '<div class="navrow"><a class="btn" data-nav="1" href="' + mapsDir(s1.address) + '">Navigate</a></div>' +
+           (stops.length > 2 ? '<div class="muted" style="margin-top:8px">+ ' + (stops.length - 2) + ' more on the run below</div>' : '') +
+           '</div></div>';
+    }
+  } else {
+    h += '<div class="kicker">The route</div><h2>No stops today</h2>' +
+         (insps.length || tasks.length ? '<p class="deck">See inspections and the desk below.</p>' : '');
   }
+  h += '</article>';
+
+  /* Column 1 — The run */
+  let run = '<section class="col"><h3>The run<small class="mono">' + totalDrive + ' min driving' + (unknownLegs ? ' +' + unknownLegs + ' leg?' : '') + '</small></h3>';
+  if (d.start) run += '<div class="fact"><div class="k">Start</div><div>' + esc(d.start) + '</div></div>';
   stops.forEach((s, i) => {
+    const t = splitTitle(s);
     if (i > 0 || d.start) {
-      r += '<div class="leg"><div></div><div class="rail"></div>' + (s.driveFromPrev ? '<div class="dv"><b>' + s.driveFromPrev + ' min</b> drive</div>' : '<div class="dv unk">drive time not set</div>') + '</div>';
+      run += '<div class="fact"><div class="k">Drive</div><div class="drive' + (s.driveFromPrev ? '' : ' unk') + '">' +
+             (s.driveFromPrev ? s.driveFromPrev + ' min to ' + esc(t.name) : 'drive time not set') + '</div></div>';
     }
-    const isDone = doneSet.has(i), isNext = i === nextIdx();
-    const cls = 'node' + (i === 0 && !d.start ? ' first' : '') + (i === stops.length - 1 ? ' last' : '') + (isNext ? ' next' : '') + (isDone ? ' done' : '');
-    const street = (s.address || '').split(',')[0];
-    const rest = (s.address || '').split(',').slice(1).join(',').trim();
-    const name = (s.title || '').includes(' — ') ? s.title.split(' — ')[0] : (s.title || street);
-    const job = (s.title || '').includes(' — ') ? s.title.split(' — ')[1] : '';
     const icon = /TUG/i.test(s.title) ? 'icons/tug.png' : /underground/i.test(s.title) ? 'icons/underground.png' : /walk/i.test(s.title) ? 'icons/walk.png' : null;
     const banner = icon ? icon.replace('.png', '-banner.png') : null;
-    r += '<div class="' + cls + '" id="stop-' + i + '"><div class="tm"><div class="t">' + timeHTML(s.start) + '</div><div class="e">' + esc(s.end || '') + '</div></div><div class="rail"></div><div class="bd">';
-    if (banner) r += '<img class="taskbanner" src="' + banner + '" alt="">';
-    r += '<div class="ttl"><label class="ck stopck" title="Mark done"><input type="checkbox" class="chk" data-done="' + i + '"' + (isDone ? ' checked' : '') + ' aria-label="Done"></label>' +
-         (icon ? '<img class="taskicon" src="' + icon + '" alt="">' : '') + '<div class="name">' + esc(name) + '</div></div>';
-    r += '<div class="addr">' + esc(s.address || '') + '</div>';
-    if (job) r += '<div class="job">' + esc(job) + '</div>';
-    if (s.who) r += '<div class="meta"><b>' + esc(s.who) + '</b></div>';
-    if (s.purpose) r += '<div class="meta">' + telify(s.purpose) + '</div>';
-    if (s.note) r += '<div class="meta">' + telify(s.note) + '</div>';
-    if (needsPurpose(s)) r += '<div class="flag">Purpose / contact not set</div>';
+    run += '<div class="fact stop" id="stop-' + i + '"><div class="k">' + esc(s.start || '') + (s.end ? '<small>to ' + esc(s.end) + '</small>' : '') + '<span class="nexttag" hidden>NEXT</span></div><div>';
+    if (banner) run += '<img class="taskbanner" src="' + banner + '" alt="">';
+    run += '<div class="nm"><label class="ck stopck" title="Mark done"><input type="checkbox" class="chk" data-done="' + i + '"' + (doneSet.has(i) ? ' checked' : '') + ' aria-label="Done"></label>' +
+           (icon ? '<img class="taskicon" src="' + icon + '" alt="">' : '') + '<b>' + esc(t.name) + '</b></div>';
+    if (t.job) run += '<div class="job">' + esc(t.job) + '</div>';
+    run += '<div class="addr">' + esc(s.address || '') + '</div>';
+    if (s.who) run += '<div><b>' + esc(s.who) + '</b></div>';
+    if (s.purpose) run += '<div>' + telify(s.purpose) + '</div>';
+    if (s.note) run += '<div>' + telify(s.note) + '</div>';
+    if (needsPurpose(s)) run += '<span class="flag">Purpose / contact not set</span>';
     if (s.address && s.who && (s.livingSf != null || s.underRoofSf != null || s.livingSF != null || s.underRoofSF != null)) {
       const v = x => (x === null || x === undefined || x === '') ? 'not on file' : (typeof x === 'number' ? x.toLocaleString('en-US') : esc(String(x)));
-      r += '<div class="sf">Living ' + v(s.livingSf ?? s.livingSF) + ' sf · Under roof ' + v(s.underRoofSf ?? s.underRoofSF) + ' sf</div>';
+      run += '<div class="sf">Living ' + v(s.livingSf ?? s.livingSF) + ' sf · Under roof ' + v(s.underRoofSf ?? s.underRoofSF) + ' sf</div>';
     }
     const b = brandFor(s);
     const jobUrl = s.trackUrl || (b && b.link);
-    r += '<div class="acts"><a class="btn' + (isNext ? ' solid' : '') + '" href="' + mapsDir(s.address) + '"' + (isDone ? ' hidden' : '') + '>Navigate</a>' +
-         (jobUrl ? '<a class="lnk" href="' + esc(jobUrl) + '">SHARMATRACK job page</a>' : '') + '</div>';
-    if (b) r += '<div class="brand">' + (b.logo ? '<img src="' + b.logo + '" alt="' + esc(b.alt) + '">' : '<span class="bbadge">' + esc(b.badge) + '</span>') + '</div>';
+    run += '<div class="navrow"><a class="btn" data-nav="' + i + '" href="' + mapsDir(s.address, i === 0 ? d.start : undefined) + '">Navigate</a>' +
+           (jobUrl ? '<a class="lnk" href="' + esc(jobUrl) + '">SHARMATRACK job page</a>' : '') + '</div>';
+    if (b) run += '<div class="brand">' + (b.logo ? '<img src="' + b.logo + '" alt="' + esc(b.alt) + '">' : '<span class="bbadge">' + esc(b.badge) + '</span>') + '</div>';
     const mats = s.materials || [];
     if (mats.length) {
-      r += '<div class="mats"><div class="mlabel">Materials</div><ul class="list">';
+      run += '<div class="mats"><div class="mlabel">Materials</div><ul class="list">';
       mats.forEach(m => {
         const id = 's' + i + '|' + m;
-        r += '<li' + (checkSet.has(id) ? ' class="off"' : '') + '><label class="ck"><input type="checkbox" class="chk" data-check="' + esc(id) + '"' +
-             (checkSet.has(id) ? ' checked' : '') + '>' + matImg(m) + '<span class="txt">' + matHTML(m) + '</span></label></li>';
+        run += '<li' + (checkSet.has(id) ? ' class="off"' : '') + '><label class="ck"><input type="checkbox" class="chk" data-check="' + esc(id) + '"' +
+               (checkSet.has(id) ? ' checked' : '') + '>' + matImg(m) + '<span class="txt">' + matHTML(m) + '</span></label></li>';
       });
-      r += '</ul></div>';
+      run += '</ul></div>';
     }
-    r += '</div></div>';
+    run += '</div></div>';
   });
-  if (!stops.length) r += '<div class="meta" style="padding:12px 0">No stops on the route.</div>';
-  r += '</div></div>';
+  if (!stops.length) run += '<div class="fact"><div class="k">—</div><div class="muted">No stops on the route.</div></div>';
+  run += '</section>';
 
-  /* Load the truck */
+  /* Column 2 — Inspections */
+  const allCrew = insps.length && insps.every(x => /crew covers/i.test(x.note || ''));
+  let ins = '<section class="col"><h3>Inspections<small>' + (insps.length ? (allCrew ? 'crew covers' : insps.length + ' today') : '') + '</small></h3>';
+  insps.forEach(x => {
+    const ph = phoneOf(x.contact);
+    const crew = /crew covers/i.test(x.note || '');
+    const who = x.inspector ? x.inspector : '';
+    ins += '<div class="insp"><div class="itime">' + esc(x.time || '') + '</div>' +
+           '<div class="ty">' + esc(x.type || '') + '</div>' +
+           '<div>' + esc(x.address || '') + '</div>' +
+           '<div class="muted">' + (x.permit ? '<span class="mono">#' + esc(String(x.permit).replace(/^#/, '')) + '</span>' : '') +
+             (x.permit && who ? ' · ' : '') + esc(who ? 'Inspector ' + who : '') + '</div>' +
+           (x.contact ? '<div class="muted">' + telify(x.contact) + '</div>' : '') +
+           (x.note ? '<div class="muted" style="margin-top:4px">' + esc(x.note) + '</div>' : '') +
+           (crew ? '<div style="margin-top:8px"><span class="crew">Crew covers</span></div>' : '') +
+           '<div class="navrow">' +
+             (ph ? '<a class="btn" href="tel:' + ph.replace(/\D/g, '') + '">' + esc(x.contact && phoneOf(x.contact) && String(x.contact).replace(PHONE, '').trim() ? callLabel(x.contact) : (who ? 'Call ' + who : 'Call')) + '</a>' : '') +
+             (x.address ? '<a class="btn" href="' + mapsDir(x.address) + '">Navigate</a>' : '') + '</div></div>';
+  });
+  if (!insps.length) ins += '<div class="insp muted">No inspections today.</div>';
+  ins += '</section>';
+
+  /* Column 3 — Desk (office tasks) + Load the truck */
+  let desk = '<section class="col"><h3>Desk<small id="taskSub"></small></h3><ul class="list">';
+  tasks.forEach((x, k) => {
+    const id = 'task|' + x.text;
+    const txt = String(x.text || '');
+    const cut = txt.indexOf(' — ');
+    const head = cut > 0 ? txt.slice(0, cut) : txt, more = cut > 0 ? txt.slice(cut + 3) : '';
+    desk += '<li class="task-li' + (checkSet.has(id) ? ' off' : '') + '"><div class="task"><label class="ck"><input type="checkbox" class="chk" data-check="' + esc(id) + '"' +
+            (checkSet.has(id) ? ' checked' : '') + '><span class="txt"><b>' + telify(head) + '</b></span></label>' +
+            (more ? '<button class="plus" type="button" aria-expanded="false" aria-controls="tm' + k + '" aria-label="More">+</button>' : '') + '</div>' +
+            (more ? '<div class="more" id="tm' + k + '">' + telify(more) + '</div>' : '') + '</li>';
+  });
+  if (!tasks.length) desk += '<li class="muted" style="padding:12px 0">No office tasks.</li>';
+  desk += '</ul>';
   const loadMap = new Map();
   stops.forEach(s => (s.materials || []).forEach(m => loadMap.set(m, (loadMap.get(m) || 0) + 1)));
   const load = [...loadMap.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
-  let side = '';
-  if (tasks.length) {
-    side += '<div class="panel"><h2>Office Tasks<span class="sub" id="taskSub"></span></h2><ul class="list tasklist">';
-    tasks.forEach(x => {
-      const id = 'task|' + x.text;
-      side += '<li' + (checkSet.has(id) ? ' class="off"' : '') + '><label class="ck"><input type="checkbox" class="chk" data-check="' + esc(id) + '"' +
-              (checkSet.has(id) ? ' checked' : '') + '><span class="txt">' + telify(x.text) + '</span></label></li>';
-    });
-    side += '</ul></div>';
-  }
   if (load.length) {
-    side += '<div class="panel"><h2>Load the Truck</h2><ul class="list">';
+    desk += '<h3 class="sub2">Load the truck<small>' + load.length + ' items</small></h3><ul class="list mats">';
     load.forEach(([nm, n]) => {
       const id = 'load|' + nm;
-      side += '<li' + (checkSet.has(id) ? ' class="off"' : '') + '><label class="ck"><input type="checkbox" class="chk" data-check="' + esc(id) + '"' +
+      desk += '<li' + (checkSet.has(id) ? ' class="off"' : '') + '><label class="ck"><input type="checkbox" class="chk" data-check="' + esc(id) + '"' +
               (checkSet.has(id) ? ' checked' : '') + '>' + matImg(nm) + '<span class="txt">' + esc(nm) + '</span>' + (n > 1 ? '<span class="cnt">×' + n + '</span>' : '') + '</label></li>';
     });
-    side += '</ul></div>';
+    desk += '</ul>';
   }
+  desk += '</section>';
 
   const app = document.getElementById('app');
-  app.innerHTML = '<div class="grid"><div>' + r + '</div><div>' + side + '</div></div>';
-  const paintTaskSub = () => { const el = document.getElementById('taskSub'); if (el) el.textContent = openTasks() + ' open'; };
-  paintTaskSub();
+  app.innerHTML = h + '<div class="brief-grid">' + run + ins + desk + '</div>';
 
+  const paintCounts = () => {
+    document.getElementById('counts').textContent =
+      stops.length + ' stop' + (stops.length === 1 ? '' : 's') + ' · ' + insps.length + ' insp. · ' + openTasks() + ' task' + (openTasks() === 1 ? '' : 's') + ' open';
+    document.getElementById('drivect').textContent =
+      totalDrive + ' min driving' + (unknownLegs ? ' (+' + unknownLegs + ' leg?)' : '');
+    const nx = nextIdx();
+    document.getElementById('edition').textContent = (isLive ? '' : 'Saved edition · ') +
+      (stops.length ? (nx >= 0 ? 'Stop ' + (nx + 1) + ' of ' + stops.length + ' next' : 'Day complete') : 'No stops');
+    const ts = document.getElementById('taskSub'); if (ts) ts.textContent = openTasks() + ' open';
+  };
   const paintDay = () => {
     const nx = nextIdx();
     stops.forEach((_, i) => {
@@ -451,13 +516,20 @@ function render(d, tasksObj, idx, isLive) {
       if (!el) return;
       el.classList.toggle('done', doneSet.has(i));
       el.classList.toggle('next', i === nx);
-      const nav = el.querySelector('.acts .btn');
+      const tag = el.querySelector('.nexttag'); if (tag) tag.hidden = i !== nx;
+      const nav = el.querySelector('.navrow .btn');
       if (nav) { nav.hidden = doneSet.has(i); nav.classList.toggle('solid', i === nx); }
     });
-    paintStrip();
+    paintCounts();
   };
-  paintStrip();
+  paintDay();
 
+  app.addEventListener('click', e => {
+    const p = e.target.closest('.plus');
+    if (!p) return;
+    const li = p.closest('li'); const open = li.classList.toggle('open');
+    p.textContent = open ? '−' : '+'; p.setAttribute('aria-expanded', open);
+  });
   app.addEventListener('change', e => {
     const cb = e.target;
     if (cb.matches('input[data-check]')) {
@@ -475,7 +547,7 @@ function render(d, tasksObj, idx, isLive) {
         }
       });
       lsSet('myday-' + d.date + '-check', [...checkSet]);
-      paintTaskSub(); paintStats();
+      paintCounts();
     }
     if (cb.matches('input[data-done]')) {
       const i = +cb.dataset.done;
