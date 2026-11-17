@@ -241,7 +241,7 @@ const mapsDir = (dest, origin) => {
   if (origin) u += '&origin=' + encodeURIComponent(origin);
   return u;
 };
-const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&','<':'<','>':'>','"':'"'}[c]));
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'\u0026amp;','<':'\u0026lt;','>':'\u0026gt;','"':'\u0026quot;'}[c]));
 /* Phone numbers become tap-to-call links (text is escaped first). */
 const PHONE = /(\(?\b\d{3}\)?[\s.-]?\d{3}[\s.-]\d{4}\b|\b1-\d{3}-\d{3}-\d{4}\b)/g;
 const telify = s => esc(s).replace(PHONE, m => '<a class="tel" href="tel:' + m.replace(/\D/g, '') + '">' + m + '</a>');
