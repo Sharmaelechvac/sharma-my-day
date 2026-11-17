@@ -82,6 +82,37 @@ def main():
         c.drawString(L, y, d["start"])
         y -= 20
 
+    # Today's inspections
+    insps = d.get("inspections") or []
+    if insps:
+        need(30 + 26 * len(insps))
+        c.setFillColor(DNAVY)
+        c.setFont("Helvetica-Bold", 14)
+        c.drawString(L, y, "Today's Inspections")
+        y -= 4
+        c.setFillColor(GOLD)
+        c.rect(L, y, R - L, 1.6, stroke=0, fill=1)
+        y -= 15
+        for x in insps:
+            c.setFillColor(INK)
+            c.setFont("Helvetica-Bold", 10.5)
+            head = "%s  %s — %s" % (x.get("time", ""), x.get("type", ""),
+                                    (x.get("address") or "").split(",")[0])
+            c.drawString(L, y, head)
+            y -= 12
+            meta = " · ".join(v for v in [
+                "#" + x["permit"] if x.get("permit") else "",
+                ("Inspector " + x["inspector"]) if x.get("inspector") else "",
+                x.get("contact") or "",
+                x.get("note") or ""] if v)
+            c.setFillColor(GRAY)
+            c.setFont("Helvetica", 9.5)
+            c.drawString(L, y, meta)
+            y -= 14
+        c.setStrokeColor(LINE)
+        c.line(L, y, R, y)
+        y -= 16
+
     # Load the Truck (two columns)
     counts = {}
     for s in stops:

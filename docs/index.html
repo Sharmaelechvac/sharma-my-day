@@ -49,6 +49,18 @@
   /* Panels (summary blocks: Start, Load the Truck) */
   .panel{border:1px solid var(--line);border-radius:var(--radius);padding:14px;}
   .panel h2{font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:24px;line-height:28px;color:var(--navy-dark);border-bottom:2px solid var(--gold);padding-bottom:6px;}
+  .insp{padding:10px 0;border-bottom:1px solid var(--line);}
+  .insp:last-child{border-bottom:none;padding-bottom:2px;}
+  .insp .itime{font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:25px;color:var(--navy-dark);}
+  .insp .itype{font-weight:700;font-size:19px;margin-left:8px;}
+  .insp .iaddr{font-size:19px;font-weight:600;}
+  .insp .imeta{font-size:17px;color:var(--gray);}
+  .insp{padding:10px 0;border-bottom:1px solid var(--line);}
+  .insp:last-child{border-bottom:none;padding-bottom:2px;}
+  .insp .itime{font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:25px;color:var(--navy-dark);}
+  .insp .itype{font-weight:700;font-size:19px;}
+  .insp .iaddr{font-size:19px;font-weight:600;}
+  .insp .imeta{font-size:17px;color:var(--gray);}
   .label{font-size:13px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--navy);}
   .start-row{display:flex;align-items:center;gap:12px;padding-top:8px;}
   .start-row .addr{font-size:18px;line-height:24px;font-weight:500;flex:1;min-width:0;}
@@ -218,8 +230,8 @@ const MATPH = {
   '¾-in PVC': 'mat/pvc.jpg',
   '¾-in 90s': 'mat/elbow.jpg',
   '¾-in plastic Romex connectors': 'mat/romex.jpg',
-  'THHN/stripped Romex — 12 AWG copper': 'mat/wire-cu.jpg',
-  'THHN/stripped Romex — 10 AWG CCA': 'mat/wire-cca.jpg',
+  'THHN or stripped Romex — 12 AWG copper': 'mat/wire-cu.jpg',
+  'THHN or stripped Romex — 10 AWG CCA': 'mat/wire-cca.jpg',
   'PVC cement': 'mat/cement.jpg',
   'Pull string': 'mat/pullstring.jpg',
   'Stub-up cap / protection': 'mat/cap.jpg',
@@ -305,6 +317,19 @@ fetch(DAYPARAM ? 'archive/' + DAYPARAM + '.json' : 'data.json', {cache:'no-store
     h += '<section><div class="panel"><div class="label">Start</div><div class="start-row"><div class="addr">' + esc(d.start) + '</div>' +
          (stops.length ? '<a class="nav-btn" href="' + mapsDir(stops[0].address, d.start) + '">Navigate</a>' : '') +
          '</div><div class="start-note">First leg: home to ' + esc(stops[0] ? stops[0].title : '') + '</div></div></section>';
+  }
+
+  const insps = d.inspections || [];
+  if (insps.length) {
+    h += '<section><div class="panel"><h2>Today\'s Inspections</h2>';
+    insps.forEach(x => {
+      const meta = [x.permit ? '#' + x.permit : '', x.inspector ? 'Inspector ' + x.inspector : '', x.contact || ''].filter(Boolean).join(' · ');
+      h += '<div class="insp"><span class="itime">' + esc(x.time || '') + '</span> <span class="itype">' + esc(x.type || '') + '</span>' +
+           '<div class="iaddr">' + esc(x.address || '') + '</div>' +
+           (meta ? '<div class="imeta">' + esc(meta) + '</div>' : '') +
+           (x.note ? '<div class="imeta">' + esc(x.note) + '</div>' : '') + '</div>';
+    });
+    h += '</div></section>';
   }
 
   if (load.length) {

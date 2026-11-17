@@ -30,9 +30,9 @@
     "end": "",
     "livingSf": 2325,
     "materials": [],
-    "note": "TUG inspection #261556-2026 \u00b7 Inspector James Calhoun",
+    "note": "TUG inspection #261556-2026 · Inspector James Calhoun",
     "start": "4:12 PM",
-    "title": "601 Marion Oaks Golf Rd \u2014 TUG inspection",
+    "title": "601 Marion Oaks Golf Rd — TUG inspection",
     "trackUrl": "https://sharmaelechvac.github.io/exj-root-tracker/601/",
     "underRoofSf": 3076,
     "who": "EXJ Root"
@@ -43,9 +43,9 @@
     "end": "",
     "livingSf": 2123,
     "materials": [],
-    "note": "TUG inspection #261557-2026 \u00b7 Inspector James Calhoun",
+    "note": "TUG inspection #261557-2026 · Inspector James Calhoun",
     "start": "4:13 PM",
-    "title": "14065 SW 48th Ave \u2014 TUG inspection",
+    "title": "14065 SW 48th Ave — TUG inspection",
     "trackUrl": "https://sharmaelechvac.github.io/exj-root-tracker/14065/",
     "underRoofSf": 2788,
     "who": "EXJ Root"
@@ -56,21 +56,59 @@
     "end": "",
     "livingSf": 2325,
     "materials": [],
-    "note": "TUG inspection #261558-2026 \u00b7 Inspector James Calhoun",
+    "note": "TUG inspection #261558-2026 · Inspector James Calhoun",
     "start": "4:14 PM",
-    "title": "16321 SW 26th Terrace Rd \u2014 TUG inspection",
+    "title": "16321 SW 26th Terrace Rd — TUG inspection",
     "trackUrl": "https://sharmaelechvac.github.io/exj-root-tracker/16321/",
     "underRoofSf": 3076,
     "who": "EXJ Root"
    }
   ],
-  "updatedAt": "2026-11-16T21:52:00-05:00"
+  "updatedAt": "2026-11-16T21:52:00-05:00",
+  "inspections": [
+   {
+    "time": "10:59 AM",
+    "type": "Electrical — Underground",
+    "address": "178 Fisher Loop, Ocklawaha, FL",
+    "permit": "266804-2026",
+    "inspector": "Douglas Mudge",
+    "contact": "(352) 844-6654",
+    "note": "Crew covers — Sanjay doesn't need to attend"
+   },
+   {
+    "time": "4:12 PM",
+    "type": "Electrical — TUG",
+    "address": "601 Marion Oaks Golf Rd, Ocala, FL 34473",
+    "permit": "261556-2026",
+    "inspector": "James Calhoun",
+    "contact": "Marion Building Safety (352) 438-2400",
+    "note": "EXJ Root · VTX · Florence 1"
+   },
+   {
+    "time": "4:13 PM",
+    "type": "Electrical — TUG",
+    "address": "14065 SW 48th Ave, Ocala, FL 34473",
+    "permit": "261557-2026",
+    "inspector": "James Calhoun",
+    "contact": "Marion Building Safety (352) 438-2400",
+    "note": "EXJ Root · Infinity · Milano"
+   },
+   {
+    "time": "4:14 PM",
+    "type": "Electrical — TUG",
+    "address": "16321 SW 26th Terrace Rd, Ocala, FL 34473",
+    "permit": "261558-2026",
+    "inspector": "James Calhoun",
+    "contact": "Marion Building Safety (352) 438-2400",
+    "note": "EXJ Root · VTX · Florence 1"
+   }
+  ]
  },
  "tasks": {
   "date": "2026-11-17",
   "tasks": [
    {
-    "text": "Follow up with Progressive \u2014 auto policy 877625499 was CANCELLED 10/19/2026; balance due $338.28 (paying it does NOT reinstate \u2014 needs a new policy); also fix mailing address, their mail was returned \u00b7 Call 1-800-776-4737 (press 0); payments 1-800-999-8781"
+    "text": "Follow up with Progressive — auto policy 877625499 was CANCELLED 10/19/2026; balance due $338.28 (paying it does NOT reinstate — needs a new policy); also fix mailing address, their mail was returned · Call 1-800-776-4737 (press 0); payments 1-800-999-8781"
    },
    {
     "text": "Call Sal Rivas"
@@ -79,22 +117,19 @@
     "text": "Deposit Sal Rivas check"
    },
    {
-    "text": "Try to sway Bella Collina for electric \u2014 Tommy Logan (Logan Construction) \u00b7 (321) 432-1706 \u2014 Lot 69 electric went to another sub ('I'll get you on the next one'); Lot 317 scope still unconfirmed \u2014 pitch Sharma for the electric"
+    "text": "Try to sway Bella Collina for electric — Tommy Logan (Logan Construction) · (321) 432-1706 — Lot 69 electric went to another sub ('I'll get you on the next one'); Lot 317 scope still unconfirmed — pitch Sharma for the electric"
    },
    {
     "text": "Make more leads"
    },
    {
-    "text": "Fisher Loop \u2014 Electrical Underground inspection 10:59 AM \u00b7 #266804-2026 \u00b7 Inspector Douglas Mudge (352) 844-6654 \u00b7 178 Fisher Loop, Ocklawaha"
+    "text": "Fisher Loop — Electrical Underground inspection 10:59 AM · #266804-2026 · Inspector Douglas Mudge (352) 844-6654 · 178 Fisher Loop, Ocklawaha · Crew covers — Sanjay doesn't need to attend"
    },
    {
-    "text": "Call Ordonez Construction \u2014 Adan Ordonez \u00b7 (352) 780-8182 \u2014 pitch Sharma as electrical + HVAC sub for his Marion County spec volume; GET HIS EMAIL (none published anywhere)"
+    "text": "Call Ordonez Construction — Adan Ordonez · (352) 780-8182 — pitch Sharma as electrical + HVAC sub for his Marion County spec volume; GET HIS EMAIL (none published anywhere)"
    },
    {
-    "text": "Get Paul DeCost's correct email \u2014 invoice #3088 ($13,300) bounced, undelivered"
-   },
-   {
-    "text": "BR Ross change-of-sub \u2014 permit still lists Super Bright; filing goes through Rafael"
+    "text": "BR Ross change-of-sub — permit still lists Super Bright; filing goes through Rafael"
    },
    {
     "text": "Deposit check for $275"
