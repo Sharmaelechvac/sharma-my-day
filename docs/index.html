@@ -446,14 +446,21 @@ function render(d, tasksObj, idx, isLive) {
   if (!stops.length) run += '<div class="fact"><div class="k">—</div><div class="muted">No stops on the route.</div></div>';
   run += '</section>';
 
-  /* Column 2 — Inspections */
+  /* Column 2 — Inspections, split by trade: Electrical and HVAC separately (Sanjay, 2026-11-17) */
   const allCrew = insps.length && insps.every(x => /crew covers/i.test(x.note || ''));
   let ins = '<section class="col"><h3>Inspections<small>' + (insps.length ? (allCrew ? 'crew covers' : insps.length + ' today') : '') + '</small></h3>';
-  insps.forEach(x => {
+  const tradeOf = x => {
+    const t = String(x.trade || '').toLowerCase();
+    if (t.indexOf('hvac') === 0 || t.indexOf('mech') === 0) return 'hvac';
+    if (t.indexOf('elec') === 0) return 'elec';
+    const ty = String(x.type || '').toLowerCase();
+    return (ty.indexOf('hvac') === 0 || ty.indexOf('mechanical') === 0) ? 'hvac' : 'elec';
+  };
+  const inspCard = x => {
     const ph = phoneOf(x.contact);
     const crew = /crew covers/i.test(x.note || '');
     const who = x.inspector ? x.inspector : '';
-    ins += '<div class="insp"><div class="itime">' + esc(x.time || '') + '</div>' +
+    return '<div class="insp"><div class="itime">' + esc(x.time || '') + '</div>' +
            '<div class="ty">' + esc(x.type || '') + '</div>' +
            '<div>' + esc(x.address || '') + '</div>' +
            '<div class="muted">' + (x.permit ? '<span class="mono">#' + esc(String(x.permit).replace(/^#/, '')) + '</span>' : '') +
@@ -464,8 +471,15 @@ function render(d, tasksObj, idx, isLive) {
            '<div class="navrow">' +
              (ph ? '<a class="btn" href="tel:' + ph.replace(/\D/g, '') + '">' + esc(x.contact && phoneOf(x.contact) && String(x.contact).replace(PHONE, '').trim() ? callLabel(x.contact) : (who ? 'Call ' + who : 'Call')) + '</a>' : '') +
              (x.address ? '<a class="btn" href="' + mapsDir(x.address) + '">Navigate</a>' : '') + '</div></div>';
-  });
-  if (!insps.length) ins += '<div class="insp muted">No inspections today.</div>';
+  };
+  const elecIns = insps.filter(x => tradeOf(x) === 'elec');
+  const hvacIns = insps.filter(x => tradeOf(x) === 'hvac');
+  ins += '<h3 class="sub2">Electrical<small>' + (elecIns.length ? elecIns.length + ' today' : '') + '</small></h3>';
+  if (elecIns.length) elecIns.forEach(x => { ins += inspCard(x); });
+  else ins += '<div class="insp muted">No electrical inspections today.</div>';
+  ins += '<h3 class="sub2">HVAC<small>' + (hvacIns.length ? hvacIns.length + ' today' : '') + '</small></h3>';
+  if (hvacIns.length) hvacIns.forEach(x => { ins += inspCard(x); });
+  else ins += '<div class="insp muted">No HVAC inspections today.</div>';
   ins += '</section>';
 
   /* Column 3 — Desk (office tasks) + Load the truck */
