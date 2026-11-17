@@ -49,12 +49,15 @@
   /* Panels (summary blocks: Start, Load the Truck) */
   .panel{border:1px solid var(--line);border-radius:var(--radius);padding:14px;}
   .panel h2{font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:24px;line-height:28px;color:var(--navy-dark);border-bottom:2px solid var(--gold);padding-bottom:6px;}
-  .insp{padding:10px 0;border-bottom:1px solid var(--line);}
-  .insp:last-child{border-bottom:none;padding-bottom:2px;}
-  .insp .itime{font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:25px;color:var(--navy-dark);}
-  .insp .itype{font-weight:700;font-size:19px;margin-left:8px;}
-  .insp .iaddr{font-size:19px;font-weight:600;}
-  .insp .imeta{font-size:17px;color:var(--gray);}
+  .insptab-wrap{overflow-x:auto;}
+  .insptab{width:100%;border-collapse:collapse;margin-top:6px;}
+  .insptab th{font-family:'Barlow Semi Condensed',sans-serif;font-size:17px;text-align:left;color:var(--gray);text-transform:uppercase;letter-spacing:.4px;padding:6px 8px;border-bottom:2px solid var(--gold);white-space:nowrap;}
+  .insptab td{font-size:18px;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top;}
+  .insptab tr:last-child td{border-bottom:none;}
+  .insptab .itime{font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:23px;color:var(--navy-dark);white-space:nowrap;}
+  .insptab .itype{font-weight:700;white-space:nowrap;}
+  .insptab .iaddr{font-weight:600;}
+  .insptab .imeta{font-size:17px;color:var(--gray);font-weight:400;}
   .label{font-size:13px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--navy);}
   .start-row{display:flex;align-items:center;gap:12px;padding-top:8px;}
   .start-row .addr{font-size:18px;line-height:24px;font-weight:500;flex:1;min-width:0;}
@@ -315,15 +318,14 @@ fetch(DAYPARAM ? 'archive/' + DAYPARAM + '.json' : 'data.json', {cache:'no-store
 
   const insps = d.inspections || [];
   if (insps.length) {
-    h += '<section><div class="panel"><h2>Today\'s Inspections</h2>';
+    h += '<section><div class="panel"><h2>Today\'s Inspections</h2><div class="insptab-wrap"><table class="insptab"><thead><tr><th>Time</th><th>Inspection</th><th>Address</th><th>Permit #</th><th>Inspector</th></tr></thead><tbody>';
     insps.forEach(x => {
-      const meta = [x.permit ? '#' + x.permit : '', x.inspector ? 'Inspector ' + x.inspector : '', x.contact || ''].filter(Boolean).join(' · ');
-      h += '<div class="insp"><span class="itime">' + esc(x.time || '') + '</span> <span class="itype">' + esc(x.type || '') + '</span>' +
-           '<div class="iaddr">' + esc(x.address || '') + '</div>' +
-           (meta ? '<div class="imeta">' + esc(meta) + '</div>' : '') +
-           (x.note ? '<div class="imeta">' + esc(x.note) + '</div>' : '') + '</div>';
+      h += '<tr><td class="itime">' + esc(x.time || '') + '</td><td class="itype">' + esc(x.type || '') + '</td>' +
+           '<td class="iaddr">' + esc(x.address || '') + (x.note ? '<div class="imeta">' + esc(x.note) + '</div>' : '') + '</td>' +
+           '<td>' + esc(x.permit ? '#' + x.permit : '') + '</td>' +
+           '<td>' + esc(x.inspector || '') + (x.contact ? '<div class="imeta">' + esc(x.contact) + '</div>' : '') + '</td></tr>';
     });
-    h += '</div></section>';
+    h += '</tbody></table></div></div></section>';
   }
 
   if (load.length) {
