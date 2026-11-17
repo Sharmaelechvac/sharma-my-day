@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Generate the My Day paper route sheet (Letter PDF) from docs/data.json.
+"""Generate the My Day paper route sheet (Letter PDF) from private/data.json (decrypt first: python3 tools/encrypt.py --decrypt).
 
 Usage: python3 make_pdf.py [path-to-data.json]
-Writes docs/my-day-<date>.pdf next to the data file. Empty tick boxes
+Writes private/my-day-<date>.pdf next to the data file (local only: the site is
+locked, so never publish a plain PDF to docs/). Empty tick boxes
 throughout, for pen use on the dash.
 """
 import json
@@ -22,7 +23,7 @@ GRAY = HexColor("#5b6478")
 LINE = HexColor("#dfe4ee")
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-DATA = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, "docs", "data.json")
+DATA = sys.argv[1] if len(sys.argv) > 1 else os.path.join(HERE, "private", "data.json")
 
 
 def box(c, x, y, s=9):
