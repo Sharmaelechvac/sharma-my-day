@@ -22,45 +22,6 @@
    "start": "10:10 AM",
    "title": "Lake Nona",
    "who": null
-  },
-  {
-   "address": "601 Marion Oaks Golf Rd, Ocala, FL",
-   "driveFromPrev": 100,
-   "end": "",
-   "livingSf": 2325,
-   "materials": [],
-   "note": "TUG inspection #261556-2026 · Inspector James Calhoun",
-   "start": "4:12 PM",
-   "title": "601 Marion Oaks Golf Rd — TUG inspection",
-   "trackUrl": "https://sharmaelechvac.github.io/exj-root-tracker/601/",
-   "underRoofSf": 3076,
-   "who": "EXJ Root"
-  },
-  {
-   "address": "14065 SW 48th Ave, Ocala, FL",
-   "driveFromPrev": 10,
-   "end": "",
-   "livingSf": 2123,
-   "materials": [],
-   "note": "TUG inspection #261557-2026 · Inspector James Calhoun",
-   "start": "4:13 PM",
-   "title": "14065 SW 48th Ave — TUG inspection",
-   "trackUrl": "https://sharmaelechvac.github.io/exj-root-tracker/14065/",
-   "underRoofSf": 2788,
-   "who": "EXJ Root"
-  },
-  {
-   "address": "16321 SW 26th Terrace Rd, Ocala, FL",
-   "driveFromPrev": 10,
-   "end": "",
-   "livingSf": 2325,
-   "materials": [],
-   "note": "TUG inspection #261558-2026 · Inspector James Calhoun",
-   "start": "4:14 PM",
-   "title": "16321 SW 26th Terrace Rd — TUG inspection",
-   "trackUrl": "https://sharmaelechvac.github.io/exj-root-tracker/16321/",
-   "underRoofSf": 3076,
-   "who": "EXJ Root"
   }
  ],
  "updatedAt": "2026-11-16T21:52:00-05:00",
@@ -81,7 +42,7 @@
    "permit": "261556-2026",
    "inspector": "James Calhoun",
    "contact": "Marion Building Safety (352) 438-2400",
-   "note": "EXJ Root · VTX · Florence 1"
+   "note": "EXJ Root · VTX · Florence 1 · Crew covers — Sanjay not attending"
   },
   {
    "time": "4:13 PM",
@@ -90,7 +51,7 @@
    "permit": "261557-2026",
    "inspector": "James Calhoun",
    "contact": "Marion Building Safety (352) 438-2400",
-   "note": "EXJ Root · Infinity · Milano"
+   "note": "EXJ Root · Infinity · Milano · Crew covers — Sanjay not attending"
   },
   {
    "time": "4:14 PM",
@@ -99,7 +60,7 @@
    "permit": "261558-2026",
    "inspector": "James Calhoun",
    "contact": "Marion Building Safety (352) 438-2400",
-   "note": "EXJ Root · VTX · Florence 1"
+   "note": "EXJ Root · VTX · Florence 1 · Crew covers — Sanjay not attending"
   }
  ]
 }
