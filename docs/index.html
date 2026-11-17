@@ -34,6 +34,14 @@
   .daystrip .bar{margin-top:8px;height:3px;background:var(--line);}
   .daystrip .bar i{display:block;height:3px;background:var(--gold);width:0;}
 
+  /* Week navigation — go through any day of the week */
+  .weeknav{display:flex;gap:6px;padding:12px 18px 0;flex-wrap:wrap;}
+  .weeknav .chip{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;min-width:52px;min-height:54px;padding:4px 6px;border:1.5px solid var(--navy);border-radius:var(--radius);color:var(--navy);text-decoration:none;background:#fff;flex:1;}
+  .weeknav .chip .dn{font-family:'Barlow Semi Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:.06em;text-transform:uppercase;line-height:1;}
+  .weeknav .chip .dd{font-size:19px;font-weight:700;line-height:1.15;}
+  .weeknav .chip.on{background:var(--navy);color:#fff;}
+  .weeknav .chip.off{border-color:var(--line);color:var(--gray);background:var(--page);}
+
   main{padding:18px 18px 8px;}
   section{margin-top:28px;}
   section:first-of-type{margin-top:0;}
@@ -138,6 +146,7 @@
     .sheet{max-width:none;border:none;min-height:0;}
     .print-btn{display:none;}
     .pdflink{display:none;}
+    .weeknav{display:none;}
     .nav-btn{display:none;}
     .chk:checked{background:#fff;border-color:var(--navy);}
     .chk:checked::after{content:none;}
@@ -168,6 +177,7 @@
     <div class="t"><span id="dsTotals"></span><span id="dsProg"></span></div>
     <div class="bar"><i id="dsBar"></i></div>
   </div>
+  <nav class="weeknav" id="weeknav" hidden></nav>
   <main id="app"><div class="err">Loading the day…</div></main>
   <footer>
     <div>Sharma Electric &amp; HVAC · EC13013924 · CAC1823596</div>
@@ -234,7 +244,10 @@ const brandFor = s => {
   return null;
 };
 
-fetch('data.json', {cache:'no-store'}).then(r => r.json()).then(d => {
+const DAYPARAM = new URLSearchParams(location.search).get('day');
+fetch(DAYPARAM ? 'archive/' + DAYPARAM + '.json' : 'data.json', {cache:'no-store'}).then(r => r.json()).then(raw => {
+  const d = raw.data || raw;
+  const archTasks = raw.tasks || null;
   const stops = d.stops || [];
   const totalDrive = stops.reduce((a, s) => a + (s.driveFromPrev || 0), 0);
   const lsGet = (k, f) => { try { return JSON.parse(localStorage.getItem(k)) ?? f; } catch { return f; } };
@@ -256,6 +269,30 @@ fetch('data.json', {cache:'no-store'}).then(r => r.json()).then(d => {
   };
   paintStrip();
   document.getElementById('daystrip').hidden = false;
+
+  /* Week navigation — chips for Mon–Sun of the displayed day's week.
+     Live day loads with no param; past days load from the daily archive. */
+  fetch('archive/index.json', {cache:'no-store'}).then(r => r.ok ? r.json() : null).then(idx => {
+    if (!idx || !idx.days) return;
+    const archived = new Set(idx.days.map(x => x.date));
+    const liveDate = idx.liveDate;
+    const cur = new Date(d.date + 'T00:00:00');
+    const monday = new Date(cur); monday.setDate(cur.getDate() - ((cur.getDay() + 6) % 7));
+    const names = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+    let nh = '';
+    for (let k = 0; k < 7; k++) {
+      const dt = new Date(monday); dt.setDate(monday.getDate() + k);
+      const iso = dt.getFullYear() + '-' + String(dt.getMonth() + 1).padStart(2, '0') + '-' + String(dt.getDate()).padStart(2, '0');
+      const inner = '<span class="dn">' + names[k] + '</span><span class="dd">' + dt.getDate() + '</span>';
+      if (iso === d.date) nh += '<span class="chip on">' + inner + '</span>';
+      else if (iso === liveDate) nh += '<a class="chip" href="./">' + inner + '</a>';
+      else if (archived.has(iso)) nh += '<a class="chip" href="?day=' + iso + '">' + inner + '</a>';
+      else nh += '<span class="chip off">' + inner + '</span>';
+    }
+    const nav = document.getElementById('weeknav');
+    nav.innerHTML = nh;
+    nav.hidden = false;
+  }).catch(() => {});
   const pdfLink = document.getElementById('pdflink');
   if (d.date) { pdfLink.href = 'my-day-' + d.date + '.pdf'; pdfLink.hidden = false; }
 
@@ -376,7 +413,7 @@ fetch('data.json', {cache:'no-store'}).then(r => r.json()).then(d => {
     }
   });
 
-  fetch('tasks.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(t => {
+  const renderTasks = t => {
     if (!t || t.date !== d.date || !t.tasks || !t.tasks.length) return;
     const slot = document.getElementById('tasks-slot');
     if (!slot) return;
@@ -388,7 +425,9 @@ fetch('data.json', {cache:'no-store'}).then(r => r.json()).then(d => {
     });
     th += '</ul></div>';
     slot.innerHTML = th;
-  }).catch(() => {});
+  };
+  if (archTasks) renderTasks(archTasks);
+  else fetch('tasks.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : null).then(renderTasks).catch(() => {});
 
   if (d.updatedAt) {
     const t = new Date(d.updatedAt);

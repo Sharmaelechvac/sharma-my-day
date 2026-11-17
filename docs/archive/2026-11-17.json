@@ -1,0 +1,107 @@
+{
+ "data": {
+  "date": "2026-11-17",
+  "dayLabel": "Tuesday, November 17",
+  "start": "6117 Arbor Watch Loop, Orlando, FL",
+  "stops": [
+   {
+    "address": "Winter Park Golf Course, Winter Park, FL",
+    "driveFromPrev": null,
+    "end": "9:30 AM",
+    "materials": [],
+    "note": "Every Tuesday",
+    "start": "8:00 AM",
+    "title": "BNI Networking",
+    "who": null
+   },
+   {
+    "address": "Lake Nona, Orlando, FL",
+    "driveFromPrev": 40,
+    "end": "2:30 PM",
+    "materials": [],
+    "note": "After BNI",
+    "start": "10:10 AM",
+    "title": "Lake Nona",
+    "who": null
+   },
+   {
+    "address": "601 Marion Oaks Golf Rd, Ocala, FL",
+    "driveFromPrev": 100,
+    "end": "",
+    "livingSf": 2325,
+    "materials": [],
+    "note": "TUG inspection #261556-2026 \u00b7 Inspector James Calhoun",
+    "start": "4:12 PM",
+    "title": "601 Marion Oaks Golf Rd \u2014 TUG inspection",
+    "trackUrl": "https://sharmaelechvac.github.io/exj-root-tracker/601/",
+    "underRoofSf": 3076,
+    "who": "EXJ Root"
+   },
+   {
+    "address": "14065 SW 48th Ave, Ocala, FL",
+    "driveFromPrev": 10,
+    "end": "",
+    "livingSf": 2123,
+    "materials": [],
+    "note": "TUG inspection #261557-2026 \u00b7 Inspector James Calhoun",
+    "start": "4:13 PM",
+    "title": "14065 SW 48th Ave \u2014 TUG inspection",
+    "trackUrl": "https://sharmaelechvac.github.io/exj-root-tracker/14065/",
+    "underRoofSf": 2788,
+    "who": "EXJ Root"
+   },
+   {
+    "address": "16321 SW 26th Terrace Rd, Ocala, FL",
+    "driveFromPrev": 10,
+    "end": "",
+    "livingSf": 2325,
+    "materials": [],
+    "note": "TUG inspection #261558-2026 \u00b7 Inspector James Calhoun",
+    "start": "4:14 PM",
+    "title": "16321 SW 26th Terrace Rd \u2014 TUG inspection",
+    "trackUrl": "https://sharmaelechvac.github.io/exj-root-tracker/16321/",
+    "underRoofSf": 3076,
+    "who": "EXJ Root"
+   }
+  ],
+  "updatedAt": "2026-11-16T21:52:00-05:00"
+ },
+ "tasks": {
+  "date": "2026-11-17",
+  "tasks": [
+   {
+    "text": "Follow up with Progressive \u2014 auto policy 877625499 was CANCELLED 10/19/2026; balance due $338.28 (paying it does NOT reinstate \u2014 needs a new policy); also fix mailing address, their mail was returned \u00b7 Call 1-800-776-4737 (press 0); payments 1-800-999-8781"
+   },
+   {
+    "text": "Call Sal Rivas"
+   },
+   {
+    "text": "Deposit Sal Rivas check"
+   },
+   {
+    "text": "Try to sway Bella Collina for electric \u2014 Tommy Logan (Logan Construction) \u00b7 (321) 432-1706 \u2014 Lot 69 electric went to another sub ('I'll get you on the next one'); Lot 317 scope still unconfirmed \u2014 pitch Sharma for the electric"
+   },
+   {
+    "text": "Make more leads"
+   },
+   {
+    "text": "Fisher Loop \u2014 Electrical Underground inspection 10:59 AM \u00b7 #266804-2026 \u00b7 Inspector Douglas Mudge (352) 844-6654 \u00b7 178 Fisher Loop, Ocklawaha"
+   },
+   {
+    "text": "Call Ordonez Construction \u2014 Adan Ordonez \u00b7 (352) 780-8182 \u2014 pitch Sharma as electrical + HVAC sub for his Marion County spec volume; GET HIS EMAIL (none published anywhere)"
+   },
+   {
+    "text": "Get Paul DeCost's correct email \u2014 invoice #3088 ($13,300) bounced, undelivered"
+   },
+   {
+    "text": "BR Ross change-of-sub \u2014 permit still lists Super Bright; filing goes through Rafael"
+   },
+   {
+    "text": "Deposit check for $275"
+   },
+   {
+    "text": "Call Billy and get final going"
+   }
+  ]
+ }
+}
