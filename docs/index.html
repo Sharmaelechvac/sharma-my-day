@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" class="sk" data-scheme="light">
+<html lang="en" class="sk">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="robots" content="noindex">
 <title>My Day — Sharma Electric & HVAC</title>
 <meta name="theme-color" content="#264387">
+  <meta name="color-scheme" content="light">
+  <script>(function(){try{if(localStorage.getItem("sk-scheme")==="dark"){var d=document.documentElement;d.setAttribute("data-scheme","dark");var m=document.querySelector('meta[name="theme-color"]');if(m)m.content=d.getAttribute("data-theme")==="track"?"#1C1C1E":"#1a2f61"}}catch(e){}})()</script>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -229,6 +231,7 @@
 <header class="top"><div class="wrap">
   <img src="https://sharma-kit.sharma-crew.workers.dev/assets/logo-white-header.png" alt="Sharma Electric & HVAC" width="103" height="20">
   <div class="t"><h1>My Day</h1><div class="d" id="hdrDate">&nbsp;</div></div>
+  <button class="sk-header__btn" id="gearBtn" aria-label="More" style="margin-left:auto"><svg class="sk-icon"><use href="#i-more"/></svg></button>
 </div></header>
 
 <main class="wrap">
@@ -295,7 +298,7 @@ const timeHTML = t => { const m = /^(.*?)\s*(AM|PM)$/i.exec(t || ''); return m ?
 const needsPurpose = s => !s.purpose && !s.who && (!s.note || /^\s*after\b/i.test(s.note));
 
 const DAYPARAM = new URLSearchParams(location.search).get('day');
-window.SharmaLock.load('day.enc.json', { appName: 'Sharma My Day', logo: 'https://sharmaelechvac.github.io/sharma-ar/assets/logo.png', blurb: 'Enter the office code to see your day.' }).then(bundle => {
+window.SharmaLock.load('day.enc.json', { appName: 'Sharma My Day', logo: 'https://sharma-kit.sharma-crew.workers.dev/assets/logo.png', blurb: 'Enter the office code to see your day.' }).then(bundle => {
   const isLive = !DAYPARAM || !bundle.days || !bundle.days[DAYPARAM] || DAYPARAM === (bundle.index || {}).liveDate;
   const raw = isLive ? bundle.live : bundle.days[DAYPARAM];
   if (DAYPARAM && !isLive && !raw) throw new Error('no day');
@@ -585,6 +588,25 @@ function render(d, tasksObj, idx, isLive) {
   });
 }
 </script>
-<script>if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) { addEventListener("load", function(){ navigator.serviceWorker.register("sw.js?kit=https://sharma-kit.sharma-crew.workers.dev").catch(function(){}); }); }</script>
+<section class="sk-sheet" id="more-sheet" aria-label="More">
+  <div class="sk-sheet__grab"></div>
+  <div class="sk-sheet__head"><button type="button" class="sk-btn sk-btn--text" data-sheet-close>Close</button><div class="sk-sheet__title">More</div><span></span></div>
+  <div class="sk-sheet__body">
+    <div class="<redacted>"><span>Display</span></div>
+    <div class="sk-list" id="appearance"></div>
+    <div class="sk-list" style="margin-top:14px">
+      <div class="sk-row"><div class="sk-row__body"><div class="sk-row__title">My Day</div><div class="sk-row__sub">Sanjay's daily route card</div></div></div>
+      <div class="sk-row"><div class="sk-row__body"><div class="sk-row__title">Licenses</div><div class="sk-row__sub">EC13013924 · CAC1823596</div></div></div>
+    </div>
+  </div>
+</section>
+<script>
+document.addEventListener("DOMContentLoaded", function(){
+  if (window.SK && SK.scheme) SK.scheme.mountToggle(document.getElementById("appearance"));
+  var g = document.getElementById("gearBtn");
+  if (g) g.addEventListener("click", function(){ if (window.SK && SK.openSheet) SK.openSheet("more-sheet"); });
+});
+</script>
+<script>if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) { addEventListener("load", function(){ navigator.serviceWorker.register("sw.js?kit=https://sharma-kit.sharma-crew.workers.dev", { scope: "/sharma-my-day/" }).catch(function(){}); }); }</script>
 </body>
 </html>

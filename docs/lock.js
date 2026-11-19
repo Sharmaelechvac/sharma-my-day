@@ -7,7 +7,7 @@
   "use strict";
   var STORE = "sharma-myday-key:v1";
   var C = { navy: "#264387", dnavy: "#1a2f61", gold: "#F0A846", ink: "#1d2433", gray: "#5b6478", line: "#dfe4ee", bg: "#f4f6fb" };
-  var HEAD = "'Barlow Semi Condensed',Arial Narrow,Arial,sans-serif";
+  var HEAD = "'-apple-system','SF Pro Display',Inter,'Segoe UI',sans-serif";
   var BODY = "Inter,-apple-system,Segoe UI,Arial,sans-serif";
   var MONO = "'IBM Plex Mono',Menlo,Consolas,monospace";
   var subtle = window.crypto && window.crypto.subtle;
