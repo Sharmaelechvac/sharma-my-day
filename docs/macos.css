@@ -1,0 +1,14 @@
+/* macOS wide-screen polish (Sanjay 2026-11-19) — presentation only, active at >=960px.
+   My Day has no persistent navigation (its week picker is in-content), so no sidebar:
+   polish only. Phone layout/behaviour unchanged. */
+::selection{background:rgba(38,67,135,.16)}
+@media (min-width:960px){
+  main.wrap{max-width:1100px}
+  header.top .wrap{max-width:1100px}
+  .stop{border-radius:6px;padding-left:8px;margin-left:-8px}
+  .stop:hover{background:#eef2fa}
+  .btn:hover{border-color:var(--dnavy);color:var(--dnavy)}
+  .btn.solid:hover{background:var(--dnavy);color:#fff}
+  .days > *:hover{background:#f4f6fb}
+  a:hover{text-decoration-color:var(--gold)}
+}
