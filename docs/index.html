@@ -198,7 +198,7 @@
     header.top .wrap{min-height:0;padding:0 0 6pt;}
     header.top img{height:34pt;}
     header.top h1{font-size:18pt;}
-    .days-wrap,.daynav,.wm360,.util .acts,.navrow .btn,.plus,#sl-lockbtn{display:none !important;}
+    .days-wrap,.daynav,.wm360,#splash360,.util .acts,.navrow .btn,.plus,#sl-lockbtn{display:none !important;}
     .navrow:not(:has(.lnk,.crew)){display:none;}
     .mast{border:0;border-bottom:2pt solid var(--dnavy);border-radius:0;padding:4pt 0 6pt;}
     .mast .title{font-size:34pt;margin:4pt 0;}
@@ -257,10 +257,23 @@
      the lockup in monochrome, faint, fixed in the corner of the first screen;
      never interactive, never over the lock screen (z-index under it). */
   .wm360{position:fixed;right:12px;bottom:12px;width:104px;height:auto;opacity:.10;filter:grayscale(1);pointer-events:none;z-index:1;}
+
+  /* SHARMA360 startup splash (Sanjay 2026-11-23: "Make the sharma360 logo
+     front page last like 5 seconds on the webapp when u start it") — the real
+     lockup front and center on white for ~5s at app start, then the app comes
+     up. Once per app session (day flips inside the app don't replay it); a tap
+     skips it; a pure-CSS kill at 5.6s guarantees it can never trap the app. */
+  #splash360{position:fixed;inset:0;z-index:2000;background:#fff;display:flex;align-items:center;justify-content:center;padding:24px;transition:opacity .45s ease;animation:splashKill .5s ease 5.6s forwards;}
+  #splash360 img{width:min(74vw,430px);height:auto;display:block;animation:splashIn .6s ease both;}
+  #splash360.bye{opacity:0;pointer-events:none;}
+  @keyframes splashIn{from{opacity:0;transform:scale(.97);}to{opacity:1;transform:scale(1);}}
+  @keyframes splashKill{to{opacity:0;visibility:hidden;}}
 </style>
 </head>
 <body>
 <div class="sk-offline"></div>
+<div id="splash360" role="presentation"><img src="sharma360-logo.png" alt="SHARMA360 — Sharma Electric & HVAC"></div>
+<script>(function(){try{if(sessionStorage.getItem('md-splash')){var s=document.getElementById('splash360');if(s)s.remove();}}catch(e){}})()</script>
 <img class="wm360" src="sharma360-logo.png" alt="" aria-hidden="true">
 <header class="top"><div class="wrap">
   <img class="brand360" src="sharma360-logo.png" alt="SHARMA360 — Sharma Electric & HVAC" width="180" height="46">
@@ -672,5 +685,17 @@ document.addEventListener("DOMContentLoaded", function(){
 });
 </script>
 <script>if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) { addEventListener("load", function(){ navigator.serviceWorker.register("sw.js?kit=https://sharma-kit.sharma-crew.workers.dev", { scope: "/sharma-my-day/" }).catch(function(){}); }); }</script>
+<script>
+/* SHARMA360 splash: ~5 seconds at app start, tap to skip, once per session. */
+(function(){
+  var s = document.getElementById('splash360');
+  if (!s) return;
+  try { sessionStorage.setItem('md-splash', '1'); } catch (e) {}
+  var done = false;
+  function bye(){ if (done) return; done = true; s.classList.add('bye'); setTimeout(function(){ if (s.parentNode) s.remove(); }, 500); }
+  s.addEventListener('click', bye);
+  setTimeout(bye, 5000);
+})();
+</script>
 </body>
 </html>
