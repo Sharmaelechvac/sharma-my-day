@@ -198,7 +198,7 @@
     header.top .wrap{min-height:0;padding:0 0 6pt;}
     header.top img{height:34pt;}
     header.top h1{font-size:18pt;}
-    .days-wrap,.daynav,.util .acts,.navrow .btn,.plus,#sl-lockbtn{display:none !important;}
+    .days-wrap,.daynav,.wm360,.util .acts,.navrow .btn,.plus,#sl-lockbtn{display:none !important;}
     .navrow:not(:has(.lnk,.crew)){display:none;}
     .mast{border:0;border-bottom:2pt solid var(--dnavy);border-radius:0;padding:4pt 0 6pt;}
     .mast .title{font-size:34pt;margin:4pt 0;}
@@ -251,10 +251,17 @@
   header.top .d{color:var(--gray) !important;}
   header.top img.brand360{height:46px;width:auto;max-width:52vw;display:block;}
   @media (max-width:699px){ header.top img.brand360{height:36px;} }
+
+  /* SHARMA360 watermark (Sanjay 2026-11-23 — fleet-wide standing rule: every
+     app gets a small SHARMA360 watermark on its first page). Ghost treatment:
+     the lockup in monochrome, faint, fixed in the corner of the first screen;
+     never interactive, never over the lock screen (z-index under it). */
+  .wm360{position:fixed;right:12px;bottom:12px;width:104px;height:auto;opacity:.10;filter:grayscale(1);pointer-events:none;z-index:1;}
 </style>
 </head>
 <body>
 <div class="sk-offline"></div>
+<img class="wm360" src="sharma360-logo.png" alt="" aria-hidden="true">
 <header class="top"><div class="wrap">
   <img class="brand360" src="sharma360-logo.png" alt="SHARMA360 — Sharma Electric & HVAC" width="180" height="46">
   <div class="t"><h1>My Day</h1><div class="d" id="hdrDate">&nbsp;</div></div>
