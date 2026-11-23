@@ -241,12 +241,22 @@
   header.top{background:#264387 !important;border-bottom:3px solid #F0A846;}
   header.top h1{color:#fff !important;}
   header.top .d{color:#cdd8ef !important;}
+
+  /* SHARMA360 brand header (Sanjay 2026-11-23: "Sharma360 logo not on the app
+     top"): the real SHARMA360 lockup is the header now. Its wordmark is navy,
+     so the band is white — full-bleed, not a box — with the gold rule kept as
+     the header's bottom border. */
+  header.top{background:#fff !important;}
+  header.top h1{color:var(--dnavy) !important;}
+  header.top .d{color:var(--gray) !important;}
+  header.top img.brand360{height:46px;width:auto;max-width:52vw;display:block;}
+  @media (max-width:699px){ header.top img.brand360{height:36px;} }
 </style>
 </head>
 <body>
 <div class="sk-offline"></div>
 <header class="top"><div class="wrap">
-  <img src="https://sharma-kit.sharma-crew.workers.dev/assets/logo-white-header.png" alt="Sharma Electric & HVAC" width="103" height="20">
+  <img class="brand360" src="sharma360-logo.png" alt="SHARMA360 — Sharma Electric & HVAC" width="180" height="46">
   <div class="t"><h1>My Day</h1><div class="d" id="hdrDate">&nbsp;</div></div>
   <button class="sk-header__btn" id="gearBtn" aria-label="More" style="margin-left:auto"><svg class="sk-icon"><use href="#i-more"/></svg></button>
 </div></header>
@@ -316,7 +326,7 @@ const timeHTML = t => { const m = /^(.*?)\s*(AM|PM)$/i.exec(t || ''); return m ?
 const needsPurpose = s => !s.purpose && !s.who && (!s.note || /^\s*after\b/i.test(s.note));
 
 const DAYPARAM = new URLSearchParams(location.search).get('day');
-window.SharmaLock.load('day.enc.json', { appName: 'Sharma My Day', logo: 'https://sharma-kit.sharma-crew.workers.dev/assets/logo.png', blurb: 'Enter the office code to see your day.' }).then(bundle => {
+window.SharmaLock.load('day.enc.json', { appName: 'Sharma My Day', logo: 'sharma360-logo.png', blurb: 'Enter the office code to see your day.' }).then(bundle => {
   /* Day resolution (2026-11-22): the live day, a saved day from the bundle,
      or — for any other date — an honestly empty day, so the day mover at the
      top can flip across weeks without ever hitting a wall or an error. */
