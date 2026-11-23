@@ -60,6 +60,22 @@
   .days .on .n{font-weight:600;}
   .days .off{color:#9aa2b3;}
 
+  /* Day mover — at the very top (Sanjay 2026-11-22: "at the top — need access
+     to scroll the days so we can move between weeks"). Prev/next day buttons
+     flank the shown day; the week strip's end chevrons jump a whole week.
+     Every day is reachable — a day with nothing published renders honestly
+     as an empty day instead of blocking or erroring. */
+  .daynav{display:flex;align-items:stretch;gap:8px;margin-bottom:10px;}
+  .daynav a,.daynav .dn-cur{display:flex;align-items:center;justify-content:center;min-height:52px;border:1px solid var(--line);border-radius:var(--r2);background:#fff;color:var(--navy);text-decoration:none;font:600 16px/1.2 var(--body);}
+  .daynav a{flex:none;padding:0 16px;}
+  .daynav a:active{background:var(--dnavy);color:#fff;}
+  .daynav .dn-cur{flex:1;flex-direction:column;gap:1px;color:var(--dnavy);padding:6px 8px;text-align:center;cursor:default;}
+  .daynav .dn-cur .t{font:700 18px/1.15 var(--head);text-transform:uppercase;letter-spacing:.03em;}
+  .daynav .dn-cur .s{font-size:13px;color:var(--gray);font-weight:500;}
+  .days .wk{flex:0 0 42px;font-size:22px;color:var(--navy);text-decoration:none;}
+  .days a.off{color:#9aa2b3;}
+  .days a.off .dn{text-decoration-style:dashed;}
+
   /* Masthead */
   .mast{text-align:center;background:#fff;border:1px solid var(--line);border-bottom:3px solid var(--dnavy);border-radius:var(--r2) var(--r2) 0 0;padding:14px 16px 12px;}
   .mast .paper{font:700 14px/1 var(--head);letter-spacing:.18em;color:var(--gray);text-transform:uppercase;}
@@ -182,7 +198,7 @@
     header.top .wrap{min-height:0;padding:0 0 6pt;}
     header.top img{height:34pt;}
     header.top h1{font-size:18pt;}
-    .days-wrap,.util .acts,.navrow .btn,.plus,#sl-lockbtn{display:none !important;}
+    .days-wrap,.daynav,.util .acts,.navrow .btn,.plus,#sl-lockbtn{display:none !important;}
     .navrow:not(:has(.lnk,.crew)){display:none;}
     .mast{border:0;border-bottom:2pt solid var(--dnavy);border-radius:0;padding:4pt 0 6pt;}
     .mast .title{font-size:34pt;margin:4pt 0;}
@@ -236,6 +252,7 @@
 </div></header>
 
 <main class="wrap">
+  <nav class="daynav" id="daynav" aria-label="Day" hidden></nav>
   <nav class="days-wrap" id="weeknav" aria-label="Week" hidden><div class="days" id="days"></div></nav>
   <div id="app"><div class="err" id="loading">Loading the day…</div></div>
   <div class="util" id="util" hidden>
@@ -300,12 +317,22 @@ const needsPurpose = s => !s.purpose && !s.who && (!s.note || /^\s*after\b/i.tes
 
 const DAYPARAM = new URLSearchParams(location.search).get('day');
 window.SharmaLock.load('day.enc.json', { appName: 'Sharma My Day', logo: 'https://sharma-kit.sharma-crew.workers.dev/assets/logo.png', blurb: 'Enter the office code to see your day.' }).then(bundle => {
-  const isLive = !DAYPARAM || !bundle.days || !bundle.days[DAYPARAM] || DAYPARAM === (bundle.index || {}).liveDate;
-  const raw = isLive ? bundle.live : bundle.days[DAYPARAM];
-  if (DAYPARAM && !isLive && !raw) throw new Error('no day');
+  /* Day resolution (2026-11-22): the live day, a saved day from the bundle,
+     or — for any other date — an honestly empty day, so the day mover at the
+     top can flip across weeks without ever hitting a wall or an error. */
+  const liveDate = (bundle.index || {}).liveDate || ((bundle.live || {}).data || {}).date;
+  let mode = 'live', raw = bundle.live;
+  if (DAYPARAM && DAYPARAM !== liveDate) {
+    if (bundle.days && bundle.days[DAYPARAM]) { mode = 'saved'; raw = bundle.days[DAYPARAM]; }
+    else {
+      mode = 'empty';
+      const dt0 = new Date(DAYPARAM + 'T12:00:00');
+      raw = { data: { date: DAYPARAM, dayLabel: isNaN(dt0) ? DAYPARAM : dt0.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }), start: '', stops: [], inspections: [], updatedAt: '' }, tasks: null };
+    }
+  }
   const d = raw.data || raw;
   const tasksObj = raw.tasks || null;
-  render(d, tasksObj, bundle.index, isLive);
+  render(d, tasksObj, bundle.index, mode);
 }).catch(err => {
   document.getElementById('app').innerHTML = '<div class="err">Could not load the day. ' + esc(err && err.message ? err.message : '') + ' Check your connection and refresh.</div>';
 });
@@ -327,7 +354,13 @@ const callLabel = c => {
   return 'Call ' + s.replace(/\bBuilding\s+/i, '');
 };
 
-function render(d, tasksObj, idx, isLive) {
+function render(d, tasksObj, idx, mode) {
+  const isLive = mode === 'live';
+  const isEmpty = mode === 'empty';
+  const liveDate = idx ? idx.liveDate : null;
+  const isoOf = x => x.getFullYear() + '-' + String(x.getMonth() + 1).padStart(2, '0') + '-' + String(x.getDate()).padStart(2, '0');
+  const shiftISO = (iso, n) => { const x = new Date(iso + 'T12:00:00'); x.setDate(x.getDate() + n); return isoOf(x); };
+  const hrefFor = iso => iso === liveDate ? './' : '?day=' + iso;
   const stops = d.stops || [];
   const insps = d.inspections || [];
   const totalDrive = stops.reduce((a, s) => a + (s.driveFromPrev || 0), 0);
@@ -347,7 +380,7 @@ function render(d, tasksObj, idx, isLive) {
 
   const dt = new Date((d.date || '') + 'T12:00:00');
   const longDate = isNaN(dt) ? (d.dayLabel || d.date || '') : dt.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
-  document.getElementById('hdrDate').textContent = (isLive ? '' : 'Saved day · ') + (d.dayLabel || longDate);
+  document.getElementById('hdrDate').textContent = (isLive ? '' : isEmpty ? 'Not published yet · ' : 'Saved day · ') + (d.dayLabel || longDate);
 
   if (d.updatedAt) {
     const t = new Date(String(d.updatedAt).replace(' ', 'T'));
@@ -356,23 +389,36 @@ function render(d, tasksObj, idx, isLive) {
   }
   document.getElementById('util').hidden = false;
 
-  /* Week picker — Mon–Sun of the shown day; live day has no param, saved days use ?day= */
+  /* Day mover — at the very top: prev/next day around the shown day's label.
+     Always shown; every date is reachable (unpublished days render empty). */
+  {
+    const lbl = isNaN(dt) ? (d.dayLabel || d.date || '') : dt.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+    const tag = isLive ? 'Live day' : isEmpty ? 'No published day yet' : 'Saved day';
+    document.getElementById('daynav').innerHTML =
+      '<a href="' + hrefFor(shiftISO(d.date, -1)) + '" aria-label="Previous day">‹ Day</a>' +
+      '<div class="dn-cur"><span class="t">' + esc(lbl) + '</span><span class="s">' + tag + '</span></div>' +
+      '<a href="' + hrefFor(shiftISO(d.date, 1)) + '" aria-label="Next day">Day ›</a>';
+    document.getElementById('daynav').hidden = false;
+  }
+
+  /* Week strip — Mon–Sun of the shown day, chevrons at the ends jump a whole
+     week. Every cell is a link now: days with data read solid, days without
+     read muted (they open as an honest empty day, never a dead end). */
   if (idx && idx.days) {
-    const archived = new Set(idx.days.map(x => x.date));
-    const liveDate = idx.liveDate;
+    const dataDays = new Set(idx.days.map(x => x.date));
+    if (liveDate) dataDays.add(liveDate);
     const cur = new Date(d.date + 'T00:00:00');
     const monday = new Date(cur); monday.setDate(cur.getDate() - ((cur.getDay() + 6) % 7));
     const names = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-    let nh = '';
+    let nh = '<a class="wk" href="' + hrefFor(shiftISO(d.date, -7)) + '" aria-label="Previous week">‹</a>';
     for (let k = 0; k < 7; k++) {
       const x = new Date(monday); x.setDate(monday.getDate() + k);
-      const iso = x.getFullYear() + '-' + String(x.getMonth() + 1).padStart(2, '0') + '-' + String(x.getDate()).padStart(2, '0');
+      const iso = isoOf(x);
       const inner = '<span class="dn">' + names[k] + '</span><span class="n">' + x.getDate() + '</span>';
       if (iso === d.date) nh += '<span class="on" aria-current="date">' + inner + '</span>';
-      else if (iso === liveDate) nh += '<a href="./">' + inner + '</a>';
-      else if (archived.has(iso)) nh += '<a href="?day=' + iso + '">' + inner + '</a>';
-      else nh += '<span class="off">' + inner + '</span>';
+      else nh += '<a ' + (dataDays.has(iso) ? '' : 'class="off" ') + 'href="' + hrefFor(iso) + '">' + inner + '</a>';
     }
+    nh += '<a class="wk" href="' + hrefFor(shiftISO(d.date, 7)) + '" aria-label="Next week">›</a>';
     document.getElementById('days').innerHTML = nh;
     document.getElementById('weeknav').hidden = false;
   }
@@ -413,8 +459,8 @@ function render(d, tasksObj, idx, isLive) {
            '</div></div>';
     }
   } else {
-    h += '<div class="kicker">The route</div><h2>No stops today</h2>' +
-         (insps.length || tasks.length ? '<p class="deck">See inspections and the desk below.</p>' : '');
+    h += '<div class="kicker">The route</div><h2>' + (isEmpty ? 'Nothing published for this day yet' : 'No stops today') + '</h2>' +
+         (isEmpty ? '<p class="deck">This day has not been built. Flip to another day with the mover at the top.</p>' : (insps.length || tasks.length ? '<p class="deck">See inspections and the desk below.</p>' : ''));
   }
   h += '</article>';
 
@@ -536,7 +582,7 @@ function render(d, tasksObj, idx, isLive) {
     document.getElementById('drivect').textContent =
       totalDrive + ' min driving' + (unknownLegs ? ' (+' + unknownLegs + ' leg?)' : '');
     const nx = nextIdx();
-    document.getElementById('edition').textContent = (isLive ? '' : 'Saved edition · ') +
+    document.getElementById('edition').textContent = (isLive ? '' : isEmpty ? 'Not published · ' : 'Saved edition · ') +
       (stops.length ? (nx >= 0 ? 'Stop ' + (nx + 1) + ' of ' + stops.length + ' next' : 'Day complete') : 'No stops');
     const ts = document.getElementById('taskSub'); if (ts) ts.textContent = openTasks() + ' open';
   };
