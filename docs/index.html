@@ -529,7 +529,8 @@ function render(d, tasksObj, idx, mode) {
     const b = brandFor(s);
     const jobUrl = s.trackUrl || (b && b.link);
     run += '<div class="navrow"><a class="btn" data-nav="' + i + '" href="' + mapsDir(s.address, i === o0 ? d.start : undefined) + '">Navigate</a>' +
-           (jobUrl ? '<a class="lnk" href="' + esc(jobUrl) + '">SHARMATRACK job page</a>' : '') + '</div>';
+           (jobUrl ? '<a class="lnk" href="' + esc(jobUrl) + '">SHARMATRACK job page</a>' : '') +
+           (s.drawingsUrl ? '<a class="lnk" href="' + esc(s.drawingsUrl) + '">Drawings</a>' : '') + '</div>';
     if (b) run += '<div class="brand">' + (b.logo ? '<img src="' + b.logo + '" alt="' + esc(b.alt) + '">' : '<span class="bbadge">' + esc(b.badge) + '</span>') + '</div>';
     const mats = s.materials || [];
     if (mats.length) {
