@@ -393,6 +393,13 @@ function render(d, tasksObj, idx, mode) {
   const hrefFor = iso => iso === liveDate ? './' : '?day=' + iso;
   const stops = d.stops || [];
   const insps = d.inspections || [];
+  /* Sanjay's own stops vs crew work — crew shows separately (Sanjay, 2026-11-25) */
+  const isOwn = s => /sanjay/i.test(s.who || '');
+  const ownIdx = stops.map((s, i) => i).filter(i => isOwn(stops[i]));
+  const crewIdx = stops.map((s, i) => i).filter(i => !isOwn(stops[i]));
+  const o0 = ownIdx.length ? ownIdx[0] : 0;
+  const o1 = ownIdx.length ? (ownIdx.length > 1 ? ownIdx[1] : -1) : (stops.length > 1 ? 1 : -1);
+  const runLen = ownIdx.length ? ownIdx.length : stops.length;
   const totalDrive = stops.reduce((a, s) => a + (s.driveFromPrev || 0), 0);
   const unknownLegs = stops.filter((s, i) => s.driveFromPrev == null && (i > 0 || d.start)).length;
   const lsGet = (k, f) => { try { return JSON.parse(localStorage.getItem(k)) ?? f; } catch { return f; } };
@@ -400,7 +407,7 @@ function render(d, tasksObj, idx, mode) {
   const doneSet = new Set(lsGet('myday-' + d.date + '-done', []));
   const checkSet = new Set(lsGet('myday-' + d.date + '-check', []));
   const doneCount = () => stops.filter((_, i) => doneSet.has(i)).length;
-  const nextIdx = () => stops.findIndex((_, i) => !doneSet.has(i));
+  const nextIdx = () => { const o = ownIdx.find(i => !doneSet.has(i)); return o !== undefined ? o : stops.findIndex((_, i) => !doneSet.has(i)); };
 
   /* Office tasks: hide any task that repeats an inspection (same permit #) — it lives in Inspections. */
   const permits = insps.map(x => String(x.permit || '').replace(/^#/, '')).filter(Boolean);
@@ -464,7 +471,7 @@ function render(d, tasksObj, idx, mode) {
   /* Lead story — the first stop of the loaded day */
   h += '<article class="lead">';
   if (stops.length) {
-    const s0 = stops[0], t0 = splitTitle(s0);
+    const s0 = stops[o0], t0 = splitTitle(s0);
     const head = t0.name + (t0.street && !t0.name.toLowerCase().includes(t0.street.toLowerCase()) && !t0.street.toLowerCase().includes(t0.name.toLowerCase()) ? ' at ' + t0.street : '');
     let deck = '';
     if (s0.start) deck += s0.start + (s0.end ? ' to ' + s0.end : '') + '. ';
@@ -476,16 +483,16 @@ function render(d, tasksObj, idx, mode) {
     h += '<div class="kicker">First stop</div><h2>' + esc(head) + '</h2><p class="deck">' + telify(deck.trim()) + '</p>';
     if (s0.who && !t0.job) h += '<div class="who"><b>' + esc(s0.who) + '</b></div>';
     if (needsPurpose(s0)) h += '<div class="flag">Purpose / contact not set</div>';
-    h += '<div class="navrow"><a class="btn solid" data-nav="0" href="' + mapsDir(s0.address, d.start) + '">Navigate</a></div>';
-    if (stops[1]) {
-      const s1 = stops[1], t1 = splitTitle(s1);
+    h += '<div class="navrow"><a class="btn solid" data-nav="' + o0 + '" href="' + mapsDir(s0.address, d.start) + '">Navigate</a></div>';
+    if (o1 >= 0) {
+      const s1 = stops[o1], t1 = splitTitle(s1);
       h += '<div class="fact"><div class="k">Then</div><div><b>' + esc(t1.name) + '</b>' + (t1.job ? ' — ' + esc(t1.job) : '') +
            '<div class="tmeta">' + esc(s1.start || '') + (s1.end ? '–' + esc(s1.end) : '') +
            (s1.driveFromPrev ? ' · ' + s1.driveFromPrev + ' min drive' : '') + '</div>' +
            '<div class="muted">' + esc(s1.address || '') + '</div>' +
            (needsPurpose(s1) ? '<div><span class="flag">Purpose / contact not set</span></div>' : '') +
-           '<div class="navrow"><a class="btn" data-nav="1" href="' + mapsDir(s1.address) + '">Navigate</a></div>' +
-           (stops.length > 2 ? '<div class="muted" style="margin-top:8px">+ ' + (stops.length - 2) + ' more on the run below</div>' : '') +
+           '<div class="navrow"><a class="btn" data-nav="' + o1 + '" href="' + mapsDir(s1.address) + '">Navigate</a></div>' +
+           (runLen > 2 ? '<div class="muted" style="margin-top:8px">+ ' + (runLen - 2) + ' more on the run below</div>' : '') +
            '</div></div>';
     }
   } else {
@@ -497,9 +504,9 @@ function render(d, tasksObj, idx, mode) {
   /* Column 1 — The run */
   let run = '<section class="col"><h3>The run<small class="mono">' + totalDrive + ' min driving' + (unknownLegs ? ' +' + unknownLegs + ' leg?' : '') + '</small></h3>';
   if (d.start) run += '<div class="fact"><div class="k">Start</div><div>' + esc(d.start) + '</div></div>';
-  stops.forEach((s, i) => {
+  const stopCard = (s, i, groupFirst) => {
     const t = splitTitle(s);
-    if (i > 0 || d.start) {
+    if (!groupFirst || (i === o0 && d.start)) {
       run += '<div class="fact"><div class="k">Drive</div><div class="drive' + (s.driveFromPrev ? '' : ' unk') + '">' +
              (s.driveFromPrev ? s.driveFromPrev + ' min to ' + esc(t.name) : 'drive time not set') + '</div></div>';
     }
@@ -521,7 +528,7 @@ function render(d, tasksObj, idx, mode) {
     }
     const b = brandFor(s);
     const jobUrl = s.trackUrl || (b && b.link);
-    run += '<div class="navrow"><a class="btn" data-nav="' + i + '" href="' + mapsDir(s.address, i === 0 ? d.start : undefined) + '">Navigate</a>' +
+    run += '<div class="navrow"><a class="btn" data-nav="' + i + '" href="' + mapsDir(s.address, i === o0 ? d.start : undefined) + '">Navigate</a>' +
            (jobUrl ? '<a class="lnk" href="' + esc(jobUrl) + '">SHARMATRACK job page</a>' : '') + '</div>';
     if (b) run += '<div class="brand">' + (b.logo ? '<img src="' + b.logo + '" alt="' + esc(b.alt) + '">' : '<span class="bbadge">' + esc(b.badge) + '</span>') + '</div>';
     const mats = s.materials || [];
@@ -535,7 +542,13 @@ function render(d, tasksObj, idx, mode) {
       run += '</ul></div>';
     }
     run += '</div></div>';
-  });
+  };
+  ownIdx.forEach((i, k) => stopCard(stops[i], i, k === 0));
+  if (!ownIdx.length) stops.forEach((s, i) => stopCard(s, i, i === 0));
+  if (crewIdx.length && ownIdx.length) {
+    run += '<h3 class="sub2">Crew — company schedule<small>' + crewIdx.length + ' stop' + (crewIdx.length === 1 ? '' : 's') + '</small></h3>';
+    crewIdx.forEach((i, k) => stopCard(stops[i], i, k === 0));
+  }
   if (!stops.length) run += '<div class="fact"><div class="k">—</div><div class="muted">No stops on the route.</div></div>';
   run += '</section>';
 
