@@ -111,7 +111,7 @@
       ".sl-top{background:#fff;border-bottom:3px solid " + C.gold + "}" +
       ".sl-top-in,.sl-wrap{max-width:560px;margin:0 auto;padding:0 16px}" +
       ".sl-top-in{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:64px}" +
-      ".sl-logo{height:40px;width:auto;display:block}" +
+      ".sl-logo{height:40px;width:auto;display:block;background:#264387;padding:5px 9px;border-radius:6px}" +
       ".sl-app{font:700 16px/1.15 " + HEAD + ";color:" + C.dnavy + ";text-transform:uppercase;letter-spacing:.04em;text-align:right}" +
       ".sl-panel{margin:20px 0;background:#fff;border:1px solid " + C.line + ";border-radius:4px;padding:16px}" +
       ".sl h2{font:700 22px/1.15 " + HEAD + ";color:" + C.dnavy + ";margin:0 0 12px;padding-bottom:6px;border-bottom:2px solid " + C.gold + "}" +

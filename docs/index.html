@@ -249,21 +249,21 @@
   header.top{background:#fff !important;}
   header.top h1{color:var(--dnavy) !important;}
   header.top .d{color:var(--gray) !important;}
-  header.top img.brand360{height:46px;width:auto;max-width:52vw;display:block;}
+  header.top img.brand360{height:46px;width:auto;max-width:52vw;display:block;background:#264387;padding:6px 10px;border-radius:8px;}
   @media (max-width:699px){ header.top img.brand360{height:36px;} }
 
   /* SHARMA360 watermark (Sanjay 2026-11-23 — fleet-wide standing rule: every
      app gets a small SHARMA360 watermark on its first page). Ghost treatment:
      the lockup in monochrome, faint, fixed in the corner of the first screen;
      never interactive, never over the lock screen (z-index under it). */
-  .wm360{position:fixed;right:12px;bottom:12px;width:104px;height:auto;opacity:.10;filter:grayscale(1);pointer-events:none;z-index:1;}
+  .wm360{position:fixed;right:12px;bottom:12px;width:104px;height:auto;background:#264387;padding:7px 9px;border-radius:9px;pointer-events:none;z-index:1;}
 
   /* SHARMA360 startup splash (Sanjay 2026-11-23: "Make the sharma360 logo
      front page last like 5 seconds on the webapp when u start it") — the real
      lockup front and center on white for ~5s at app start, then the app comes
      up. Once per app session (day flips inside the app don't replay it); a tap
      skips it; a pure-CSS kill at 5.6s guarantees it can never trap the app. */
-  #splash360{position:fixed;inset:0;z-index:2000;background:#fff;display:flex;align-items:center;justify-content:center;padding:24px;transition:opacity .45s ease;animation:splashKill .5s ease 5.6s forwards;}
+  #splash360{position:fixed;inset:0;z-index:2000;background:#264387;display:flex;align-items:center;justify-content:center;padding:24px;transition:opacity .45s ease;animation:splashKill .5s ease 5.6s forwards;}
   #splash360 img{width:min(74vw,430px);height:auto;display:block;animation:splashIn .6s ease both;}
   #splash360.bye{opacity:0;pointer-events:none;}
   @keyframes splashIn{from{opacity:0;transform:scale(.97);}to{opacity:1;transform:scale(1);}}
